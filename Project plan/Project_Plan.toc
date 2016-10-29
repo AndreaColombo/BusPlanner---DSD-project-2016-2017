@@ -1,0 +1,28 @@
+\contentsline {section}{\numberline {1}INTRODUCTION}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}Purpose of this document}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Document organization}{4}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Intended audience}{4}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Scope}{5}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Definitions and Acronyms}{5}{subsection.1.5}
+\contentsline {subsubsection}{\numberline {1.5.1}Definitions}{5}{subsubsection.1.5.1}
+\contentsline {subsubsection}{\numberline {1.5.2}Acronyms and abbreviations}{5}{subsubsection.1.5.2}
+\contentsline {section}{\numberline {2}BACKGROUND AND OBJECTIVES}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}Background}{6}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Project goal}{6}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Requirements}{6}{subsection.2.3}
+\contentsline {section}{\numberline {3}ORGANIZATION}{7}{section.3}
+\contentsline {subsection}{\numberline {3.1}Project group}{7}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Roles}{7}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Customer}{7}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Supervisor}{8}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Communication}{8}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Tools}{8}{subsection.3.6}
+\contentsline {section}{\numberline {4}DEVELOPMENT PROCESS}{9}{section.4}
+\contentsline {subsection}{\numberline {4.1}Sprint Planning}{9}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Sprint Review}{9}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Sprint Retrospective}{9}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Daily Scrum meeting}{9}{subsection.4.4}
+\contentsline {section}{\numberline {5}DELIVERABLES}{10}{section.5}
+\contentsline {section}{\numberline {6}PROJECT PLAN}{11}{section.6}
+\contentsline {subsection}{\numberline {6.1}Time schedule}{11}{subsection.6.1}
+\contentsline {section}{\numberline {7}PROJECT RISKS}{12}{section.7}
