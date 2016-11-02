@@ -276,7 +276,7 @@ The following functional requirements describe the system’s behavior with resp
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
 			\item Respective web page is opened. 
-			\item Desired user is selected. 
+			\item Previous user requests are selected. 
 			\item Read data from the database.
 			\item Information is shown. 
 		\end{enumerate}\\
@@ -287,6 +287,10 @@ The following functional requirements describe the system’s behavior with resp
 		\hline
 	\end{tabular}
 \end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13cm]{View_previous_user_requests_fm}
+\end{figure}
 \newpage
 \item \hypertarget{Add_route_fm} Add route:
 \begin{table}[H]
@@ -368,6 +372,10 @@ The following functional requirements describe the system’s behavior with resp
 		\hline
 	\end{tabular}
 \end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13.5cm]{Delete_route_fm}
+\end{figure}
 \item \hypertarget{Get_bus_location_fm} Get bus location:
 \begin{table}[H]
 	\centering
@@ -392,6 +400,10 @@ The following functional requirements describe the system’s behavior with resp
 		\hline
 	\end{tabular}
 \end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13.5cm]{Get_bus_location_fm}
+\end{figure}
 \item \hypertarget{View_bus_utilization_fm} View bus utilization:
 \begin{table}[H]
 	\centering
@@ -416,6 +428,10 @@ The following functional requirements describe the system’s behavior with resp
 		\hline
 	\end{tabular}
 \end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13.5cm]{View_bus_utilization_fm}
+\end{figure}
 \end{itemize}
 \subsubsection{Bus driver}
 \begin{itemize}
@@ -424,7 +440,7 @@ The following functional requirements describe the system’s behavior with resp
 		\centering
 		\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 			\hline
-			\textbf{Name} & Login\\
+			\textbf{Name} & Login [\hyperlink{Login_bd_seq}{Sequence diagram}]\\
 			\hline
 			\textbf{Actor} & Bus driver\\
 			\hline
@@ -443,6 +459,10 @@ The following functional requirements describe the system’s behavior with resp
 			\hline
 		\end{tabular}
 	\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm]{Login_bd}
+\end{figure}
 	\item \hypertarget{View_schedule_bd} View schedule:
 	\begin{table}[H]
 		\centering
@@ -467,13 +487,17 @@ The following functional requirements describe the system’s behavior with resp
 			\hline
 		\end{tabular}
 	\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13.5cm]{View_schedule_bd}
+\end{figure}
 \newpage
 	\item \hypertarget{View_user_requests_bd} View user requests:
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 			\hline
-			\textbf{Name} & View user requests\\
+			\textbf{Name} & View user requests [\hyperlink{View_user_requests_bd_seq}{Sequence diagram}]\\
 			\hline
 			\textbf{Actor} & Bus driver\\
 			\hline
@@ -493,12 +517,16 @@ The following functional requirements describe the system’s behavior with resp
 			\hline
 		\end{tabular}
 	\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13cm]{View_user_requests_bd}
+\end{figure}
 	\item \hypertarget{Manage_user_requests_bd} Manage user requests:
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 			\hline
-			\textbf{Name} & Manage user requests\\
+			\textbf{Name} & Manage user requests [\hyperlink{Manage_user_requests_bd_seq}{Sequence diagram}]\\
 			\hline
 			\textbf{Actor} & Bus driver\\
 			\hline
@@ -518,6 +546,10 @@ The following functional requirements describe the system’s behavior with resp
 			\hline
 		\end{tabular}
 	\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13cm]{Manage_user_requests_bd}
+\end{figure}
 \end{itemize}
 \newpage
 \subsubsection{Sequence diagrams}
@@ -527,7 +559,7 @@ The following functional requirements describe the system’s behavior with resp
 		\centering
 		\includegraphics[height=19cm]{Generate_request}
 	\end{figure}
-	\item \hypertarget{Login_fm_seq} Login:
+	\item \hypertarget{Login_fm_seq} Fleet manager login:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=13cm]{Login_fm_seq}
@@ -615,9 +647,27 @@ The following functional requirements describe the system’s behavior with resp
 	\includegraphics[width=13cm]{Update_fleet_information_fm_seq}
 \end{figure}
 \newpage
+\item \hypertarget{Login_bd_seq} Bus driver login:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=13cm]{Login_bd_seq}
+\end{figure}
+\newpage
 \item \hypertarget{View_schedule_bd_seq} View schedule:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=13cm]{View_schedule_bd_seq}
+\end{figure}
+\newpage
+\item \hypertarget{View_user_requests_bd_seq} View user requests:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=13cm]{View_user_requests_bd_seq}
+\end{figure}
+\newpage
+\item \hypertarget{Manage_user_requests_bd_seq} Manage user requests:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=13cm]{Manage_user_requests_bd_seq}
 \end{figure}
 \end{itemize}
