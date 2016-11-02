@@ -1,0 +1,37 @@
+\section{NONFUNCTIONAL REQUIREMENTS}
+This section presents the nonfunctional requirements of our BusPlanner project, which describe the behavior of the system. We decided to divide them into 7 main categories.
+\subsection{Usability}
+\begin{itemize}
+	\item The application must be mobile responsive.
+	\item The seat reservation should be done in the minimum number of steps possible.
+	\item No fancy GUI.
+	\item Correct and up to date information.
+	\item Presenting data in a visible and understandable way.	
+\end{itemize}
+\subsection{External Libraries}
+\begin{itemize}
+	\item Our application makes usage of external libraries such as Bootstrap.
+\end{itemize}
+\subsection{Compatibility issue}
+\begin{itemize}
+	\item The application is suggested to work only with the deployed version of the used libraries. Updated versions might bring incompatibilities. 
+	\item The maps being used should offer the possibility to work with PHP and SQL.
+\end{itemize}
+\subsection{Security}
+\begin{itemize}
+	\item Only users of the application are allowed to use the project. 
+	\item The application needs to protect C.I.A elements (Confidentiality, Integrity and Availability) of user and nobody can see and change information of others.
+\end{itemize}
+\subsection{Availability}
+Considering that the application:
+\begin{itemize}
+	\item Can pave the way for users to take a bus as soon as possible with the aim of saving their time.
+	\item Can make it easier for users to take a bus from everywhere in bus timetable.
+	\item Can have friendly interface for users.
+	\item Performance should provide the user a fast experience using the application.
+	\item Has to handle user\textquotesingle s request all the time using any device with an Internet connection and an installed web browser.
+\end{itemize}
+\subsection{Uptime and data redundancy}
+The BusPlanner application should guarantee high availability and data redundancy. Still, since the application will be created in the context of the DSD course, our team will not build nor require any dedicated infrastructure for it and so estimating and proving exact value for data redundancy and uptime is not possible; however, in the case there\textquotesingle s the chance to build and test a dedicated infrastructure, an uptime of at least 99.99\% is desirable along with at least one database replication.
+\subsection{Performances}
+The application has to be able to manage a high volume of requests. Since this application will be created in the context of the DSD course, our team will not build nor require any dedicated infrastructure for it. Furthermore, it is impossible to estimate and prove the exact value for performances. However, it should be easy to update it and improve it if needed. 
