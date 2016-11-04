@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.10.20)  31 OCT 2016 16:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.10.20)  4 NOV 2016 17:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -305,7 +305,7 @@ LaTeX Warning: No \author given.
 [1{/usr/local/texlive/2016basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
  <./Images/Bus_logo.png>]
-Overfull \hbox (1.43301pt too wide) in paragraph at lines 42--53
+Overfull \hbox (1.433pt too wide) in paragraph at lines 42--53
  [][] 
  []
 
@@ -451,7 +451,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 63.
 Here is how much of TeX's memory you used:
  5414 strings out of 494447
  81345 string characters out of 6166765
- 164669 words of memory out of 5000000
+ 164670 words of memory out of 5000000
  8617 multiletter control sequences out of 15000+600000
  9284 words of font info for 33 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
@@ -462,7 +462,7 @@ mr12.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmr17.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmsy10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmtt12.pfb>
-Output written on Project_Plan.pdf (12 pages, 126714 bytes).
+Output written on Project_Plan.pdf (12 pages, 127088 bytes).
 PDF statistics:
  241 PDF objects out of 1000 (max. 8388607)
  217 compressed objects within 3 object streams
