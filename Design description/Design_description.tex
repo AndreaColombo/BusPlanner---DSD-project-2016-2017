@@ -1,0 +1,61 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{Images/}}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{textcomp}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=red,
+	filecolor=blue,      
+	urlcolor=cyan,
+}
+\title{
+	\textbf{D}istributed \textbf{S}oftware \textbf{D}evelopment: \textbf{BusPlanner}\\
+	\textbf{Design Description}\\
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=13cm, height=13cm]{Bus_logo}
+	\end{figure}
+	\date{}
+}
+\begin{document}
+	\begin{table}[t]
+		\centering
+		\begin{tabular}{| m{6cm} | m{6cm} |}
+			\hline
+			BusPlanner & Version: 1.0\\
+			\hline
+			Design Description & Date: 2016-11-11\\
+			\hline
+		\end{tabular}
+	\end{table}
+	\maketitle 
+	\begin{center}
+		\textbf{\Large Revision History}
+	\end{center}
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{| m{3cm} | m{3cm} | m{3cm} | m{3cm} |}
+			\hline
+			\textbf{Date} & \textbf{Version} & \textbf{Description} & \textbf{Author}\\
+			\hline
+			2016-11-11 & 1.0 & Initial draft & Team\\
+			\hline
+			&&&\\
+			\hline
+			&&&\\
+			\hline
+		\end{tabular}
+	\end{table}
+\newpage
+	\tableofcontents
+	\include{Introduction}
+	\include{Background_and_objectives}
+	\include{High_level_system_architecture}
+	\include{Software_architecture}
+	\include{Graphical_user_interface}
+	\include{Database_model}
+\end{document}

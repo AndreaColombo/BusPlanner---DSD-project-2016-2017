@@ -1,0 +1,142 @@
+\section{DATABASE MODEL}
+\setlength{\parindent}{0em}
+\textbf{Route}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		Route\_id & integer & PK\\
+		\hline
+		Route\_name & varchar & \\
+		\hline
+	\end{tabular}
+\end{table}
+\textbf{Login}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		Login\_id & varchar & PK\\
+		\hline
+		User\_name & varchar & \\
+		\hline
+		Password & varchar & \\
+		\hline
+		User\_type\_id & integer & \\
+		\hline
+	\end{tabular}
+\end{table}
+\textbf{UserType}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		User\_type\_id & integer & PK\\
+		\hline
+		User\_type & varchar & \\
+		\hline
+		Login\_id & integer & FK\\
+		\hline
+	\end{tabular}
+\end{table}
+\textbf{UserRequest}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		User\_id & integer & PK\\
+		\hline
+		Timestamp & timestamp & \\
+		\hline
+		Route\_id & integer & FK\\
+		\hline
+		Latitude & float & \\
+		\hline
+		Longitude & float & \\
+		\hline
+		Status & varchar & \\
+		\hline
+	\end{tabular}
+\end{table}
+\textbf{Bus}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		Bus\_id & integer & PK\\
+		\hline
+		Bus\_type & varchar & \\
+		\hline
+		Driver\_id & integer & FK\\
+		\hline
+		Bus\_capacity & integer & \\
+		\hline
+		Longitude & float & \\
+		\hline
+		Latitude & float & \\
+		\hline
+	\end{tabular}
+\end{table}
+\newpage
+\textbf{Driver}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		Driver\_id & integer & PK\\
+		\hline
+		Driver\_name & varchar & \\
+		\hline
+		Mobile\_number & varchar & \\
+		\hline
+	\end{tabular}
+\end{table}
+\textbf{FleetManager}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		Manager\_id & integer & PK\\
+		\hline
+		Manager\_name & varchar & \\
+		\hline
+		Mobile\_number & varchar & \\
+		\hline
+	\end{tabular}
+\end{table}
+\textbf{UserSchedule}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		User\_schedule\_id & integer & PK \\
+		\hline
+		User\_id & integer & FK \\
+		\hline
+		Driver\_id & integer & FK\\
+		\hline
+		Bus\_id & integer & FK \\
+		\hline
+		Route\_id & integer & FK \\
+		\hline
+		Status & varchar & \\
+		\hline
+	\end{tabular}
+\end{table}
+\textbf{RouteSchedule}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{4cm} | m{4cm} | m{4cm} |}
+		\hline
+		Route\_schedule\_id & integer & PK \\
+		\hline
+		Start\_time & timestamp & \\
+		\hline
+		Finish\_time & timestamp & \\
+		\hline
+		Bus\_id & integer & FK \\
+		\hline
+		Route\_id & integer & FK \\
+		\hline
+	\end{tabular}
+\end{table}
