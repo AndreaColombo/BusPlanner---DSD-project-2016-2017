@@ -56,6 +56,8 @@
 		\hline
 		Status & varchar & \\
 		\hline
+		Starting\_schedule & integer & \\
+		\hline
 	\end{tabular}
 \end{table}
 \textbf{Bus}
@@ -137,6 +139,20 @@
 		Bus\_id & integer & FK \\
 		\hline
 		Route\_id & integer & FK \\
+		\hline
+		Start\_point & varchar & \\
+		\hline
+		End\_point & varchar & \\
+		\hline
+		Timestamp\_departure & timestamp & \\
+		\hline
+		Timestamp\_arrival & timestamp & \\
+		\hline
+		Number\_onboarding & integer & \\
+		\hline
+		Number\_debording & integer & \\
+		\hline
+		Number\_current & integer & \\
 		\hline
 	\end{tabular}
 \end{table}
