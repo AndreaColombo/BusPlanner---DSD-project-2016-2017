@@ -1,0 +1,20 @@
+{
+  "Login" : {
+    "icona" : "fa-futbol-o",
+    "id" : "1",
+    "immagine" : "tv.jpg",
+    "titolo" : "TV e Intrattenimento"
+  },
+  "Route" : {
+    "Route1" :{
+        "id": "1",
+        "name": "First",
+        "stop": ["a","fg","df"]
+    },
+    "Route2" : {
+        "id": "2",
+        "name": "Second",
+        "stop": ["a","fg","df"]
+    }
+  }
+}
