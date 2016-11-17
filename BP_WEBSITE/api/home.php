@@ -10,13 +10,13 @@ header("Access-Control-Allow-Origin: *");
     </ol>
     <div class="carousel-inner" role="listbox" data-pause="hover">
     <div class="item active">
-    <img src="Images/Homepage2.jpg" style="min-width:100%; min-height:30%;" alt="Homepage2">
+    <img src="Images/Homepage2.jpg" style="min-width:100%; min-height:62%;" alt="Homepage2">
     <div class="carousel-caption">
     <h2>Fleet management</h2>
     </div>
     </div>
     <div class="item">
-    <img src="Images/Homepage1.png" style="min-width:100%; min-height:30%;" alt="Homepage1">
+    <img src="Images/Homepage1.png" style="min-width:100%; min-height:62%;" alt="Homepage1">
     <div class="carousel-caption">
     <h2>Customer trip management</h2>
     </div></div>

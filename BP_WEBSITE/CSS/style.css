@@ -2,7 +2,7 @@ html *
 {
    font-family: Trebuchet MS !important;
 }
-.background-image {
+#backgroundimage {
   position: fixed;
   left: 0;
   right: 0;
@@ -20,9 +20,14 @@ html *
   filter: blur(3px);
 }
 
-.content {
+#content {
   position: fixed;
   left: 0;
   right: 0;
   z-index: 9999;
+}
+
+#jumbo {
+    background: rgb(216, 213, 213);
+    background: rgba(216, 213, 213, 0.8);
 }

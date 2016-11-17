@@ -12,9 +12,21 @@ $( document ).ready(function() {
     //loads home main
     $.ajax({
         type:'GET',
-        url: "http://busplanner.altervista.org/api/home.php",
+        url: "api/home.php",
         crossDomain: true,
     }).success(function(result){
         $("#main").html(result);
+    });
+    
+    $( "body" ).on( "click", "#login",function(e){
+        $.ajax({
+            type:'GET',
+            url: "api/login.php",
+            crossDomain: true,
+        }).success(function(result){
+            $("#main").html(result);
+        });
+        window.location.hash = "login";
+        e.preventDefault();
     });
 });
