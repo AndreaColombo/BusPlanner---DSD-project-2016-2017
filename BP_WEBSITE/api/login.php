@@ -18,7 +18,7 @@ header("Access-Control-Allow-Origin: *");
                     <input type="text" class="form-control" style="margin-bottom:3%" placeholder="Username">
                     <input type="text" class="form-control" placeholder="Password">
                 </div>
-                <div class="text-center"><button type="button" class="btn btn-primary" style="min-width:20%">Login</button></div>
+                <div class="text-center"><button type="button" class="btn btn-primary" id="login2" style="min-width:20%">Login</button></div>
                 <h4 class="text-center">Did you forget your password? <a href="#">Click here</a></h4> 
                 </div>
                 <div class="col-md-2 col-sm-2 col-xs-2"></div>
