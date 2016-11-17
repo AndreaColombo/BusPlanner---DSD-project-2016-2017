@@ -29,4 +29,16 @@ $( document ).ready(function() {
         window.location.hash = "login";
         e.preventDefault();
     });
+
+    $( "body" ).on( "click", "#login2",function(e){
+        $.ajax({
+            type:'GET',
+            url: "api/homeFleetManager.php",
+            crossDomain: true,
+        }).success(function(result){
+            $("#main").html(result);
+        });
+        window.location.hash = "login";
+        e.preventDefault();
+    });
 });
