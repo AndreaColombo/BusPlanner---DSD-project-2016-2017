@@ -30,6 +30,28 @@ $( document ).ready(function() {
         e.preventDefault();
     });
 
+	 $( "body" ).on( "click", "#map",function(e){
+        $.ajax({
+            type:'GET',
+            url: "api/old/firebase.html",
+            crossDomain: true,
+        }).success(function(result){
+            $("#main").html(result);
+        });
+        window.location.hash = "login";
+        e.preventDefault();
+    });
+	$( "body" ).on( "click", "#loginnew",function(e){
+        $.ajax({
+            type:'GET',
+            url: "api/old/login1.html",
+            crossDomain: true,
+        }).success(function(result){
+            $("#main").html(result);
+        });
+        window.location.hash = "login2";
+        e.preventDefault();
+    });
     $( "body" ).on( "click", "#login2",function(e){
         $.ajax({
             type:'GET',
@@ -77,5 +99,17 @@ $( document ).ready(function() {
         }).success(function(result){
             $("#main").html(result);
         });
+    });
+	
+	
+	 $("#map").click(function(e){
+        $.ajax({
+            type:'GET',
+            url: "api/old/firebase.html",
+            crossDomain: true,
+        }).success(function(result){
+            $("#header").html(result);
+        });
+        
     });
 });

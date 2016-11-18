@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="CSS/style.css" rel="stylesheet" type="text/css">
+    <title>LOGIN</title>
+    
+<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBQchZ2V6xpY-SgQ9Z20-wFsL4xDx-Rw3w",
+    authDomain: "busplanner-f496d.firebaseapp.com",
+    databaseURL: "https://busplanner-f496d.firebaseio.com",
+    storageBucket: "busplanner-f496d.appspot.com",
+    messagingSenderId: "771650212189"
+  };
+  firebase.initializeApp(config);
+</script>
+    <script src="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.css" />
+    <script type="text/javascript">
+      // FirebaseUI config.
+      var uiConfig = {
+        'signInSuccessUrl': '<url-to-redirect-to-on-success>',
+        'signInOptions': [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+          firebase.auth.GithubAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        // Terms of service url.
+        'tosUrl': '<your-tos-url>',
+      };
+
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
+  </head>
+  <body>
+    <!-- The surrounding HTML is left untouched by FirebaseUI.
+         Your app may use that space for branding, controls and other customizations.-->
+    <h1>Login - First page</h1>
+	
+	<div class="background-image" id="backgroundimage"></div>
+    <div class="content" id="content">
+    <div class="row">
+        <div class="col-md-3 col-sm-3 col-xs-3"></div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+	
+            <div class="jumbotron" style="margin-top:9%" id="jumbo">
+				<div id="firebaseui-auth-container"></div>
+                <div class="row">
+                    <h2 class="text-center" style="margin-bottom:5%; font-size:50px;">Enter your credentials</h2>
+                    <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8"> 
+                    <div class="form-group form-group-lg">
+                        <input type="text" class="form-control" style="margin-bottom:3%" placeholder="Username">
+                        <input type="text" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="text-center"><button type="button" class="btn btn-primary" id="login2" style="min-width:20%">Login</button></div>
+                    <h4 class="text-center">Did you forget your password? <a href="#">Click here</a></h4> 
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3"></div>
+    </div>
+</div>
+    
+  </body>
+</html>
