@@ -37,8 +37,7 @@ ref.once("value")
   .then(function(snapshot) {
     var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
     console.log(name);
-	
-	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
+	var Login_id = snapshot.child("Login1").child("Login_id").val(); // "Ada"
 	document.write(Login_id);
 	var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
 	 document.write(Password);
@@ -46,7 +45,7 @@ ref.once("value")
 	 document.write(User_name);
 	var User_type_id= snapshot.child("Login1").child("User_type_id").val();
 	 document.write(User_type_id);
-	document.write("<div class="page_text"> your ID is : "+User_type_id+"</div>");//use this for css
+	document.write("<div class="page_text"> your ID is : "+User_type_id+User_name"</div>");//use this for css
   });
   
  </script>
