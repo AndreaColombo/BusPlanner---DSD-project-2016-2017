@@ -32,19 +32,22 @@
     messagingSenderId: "771650212189"
   };
   firebase.initializeApp(config);
-  
 var ref = firebase.database().ref("Login");
 ref.once("value")
   .then(function(snapshot) {
     var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
     console.log(name);
-	var Login_id = snapshot.child("Login1").child("Login_id").val(); // "Ada"
+	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
+    console.log(Login_id);
 	document.write(Login_id);
 	var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
+     console.log(Password);
 	 document.write(Password);
 	var User_name = snapshot.child("Login1").child("User_name").val();
+	 console.log(User_name);
 	 document.write(User_name);
 	var User_type_id= snapshot.child("Login1").child("User_type_id").val();
+	 console.log(User_type_id);
 	 document.write(User_type_id);
 	document.write("<div class='page_text'> your ID is : "+User_type_id+"</div>");//use this for css
   });
