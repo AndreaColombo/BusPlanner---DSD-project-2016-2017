@@ -28,18 +28,6 @@
   };
   firebase.initializeApp(config);
 
-
-
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        console.log ("logged");
-        email = user.email;
-        console.log (email);    
-    } else {
-        console.log ("Not logged");
-    }
-});
-
 function initMap() {
   var uluru = {lat: 64.01, lng: 19.05};
           var map = new google.maps.Map(document.getElementById('map'), {
