@@ -32,6 +32,7 @@
     messagingSenderId: "771650212189"
   };
   firebase.initializeApp(config);
+  
 var ref = firebase.database().ref("Login");
 ref.once("value")
   .then(function(snapshot) {

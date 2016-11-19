@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<title>Read</title>
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    height: 100%;
+  }
+</style>
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-messaging.js"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+     apiKey: "AIzaSyBQchZ2V6xpY-SgQ9Z20-wFsL4xDx-Rw3w",
+    authDomain: "busplanner-f496d.firebaseapp.com",
+    databaseURL: "https://busplanner-f496d.firebaseio.com",
+    storageBucket: "busplanner-f496d.appspot.com",
+    messagingSenderId: "771650212189"
+  };
+  firebase.initializeApp(config);
+var ref = firebase.database().ref("Login");
+ref.once("value")
+  .then(function(snapshot) {
+    var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
+    console.log(name);
+	
+	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
+    console.log(Login_id);
+	document.write(Login_id);
+	var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
+     console.log(Password);
+	 document.write(Password);
+	var User_name = snapshot.child("Login1").child("User_name").val();
+	 console.log(User_name);
+	 document.write(User_name);
+  });
+  
+ </script>
+  </head>
+  <body>
+ 
+
+ 
+  </body>
+</html>
