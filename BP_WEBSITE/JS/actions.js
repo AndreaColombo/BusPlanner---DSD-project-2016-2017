@@ -33,7 +33,7 @@ $( document ).ready(function() {
 	 $( "body" ).on( "click", "#map",function(e){
         $.ajax({
             type:'GET',
-            url: "api/old/firebase.html",
+            url: "api/old/map.html",
             crossDomain: true,
         }).success(function(result){
             $("#main").html(result);
@@ -101,15 +101,5 @@ $( document ).ready(function() {
         });
     });
 	
-	
-	 $("#map").click(function(e){
-        $.ajax({
-            type:'GET',
-            url: "api/old/firebase.html",
-            crossDomain: true,
-        }).success(function(result){
-            $("#header").html(result);
-        });
-        
-    });
+	 
 });
