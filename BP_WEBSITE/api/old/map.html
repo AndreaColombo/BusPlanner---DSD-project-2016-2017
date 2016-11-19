@@ -90,11 +90,11 @@ function initMap() {
   
 		  //here to read from db THE MARK IS FOR EACH POINT
 		  //TITLE SHOULD BE UNIQUE
-		var marker = new google.maps.Marker({
-          position: uluru,
-          map: map,
-		  title:User_type_id+'HERE WE SHOULD READ FROM DB KJFKLDSJFKLSDFJSLKFJ'
-        });
+//		var marker = new google.maps.Marker({
+//         position: uluru,
+//         map: map,
+//		  title:User_type_id+'HERE WE SHOULD READ FROM DB KJFKLDSJFKLSDFJSLKFJ'
+//       });
         firebase.database().ref('users').on('value', function(snapshot) {
             var msg = snapshot.val();
             for (i in msg) {
