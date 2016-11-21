@@ -15,7 +15,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <style type="text/css">
       html, body { height: 100%; margin: 0; padding: 0; }
+<<<<<<< HEAD:BP_WEBSITE/api/zold/map.html
       #map { width: 80%; height: 60%; }
+=======
+      #map { height: 50%;}
+>>>>>>> origin/master:BP_WEBSITE/api/old/map.html
     </style>
 <script>
     
@@ -30,6 +34,16 @@
     messagingSenderId: "771650212189"
   };
   firebase.initializeApp(config);
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        console.log ("logged");
+        email = user.email;
+        console.log (email);    
+    } else {
+        console.log ("Not logged");
+    }
+});
 
 function initMap() {
   var uluru = {lat: 64.01, lng: 19.05};
@@ -53,7 +67,18 @@ function initMap() {
             disableDoubleClickZoom: false
 	
           });
-		 
+		   var ref = firebase.database().ref("Login");
+ref.once("value")
+  .then(function(snapshot) {
+    var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
+    
+	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
+   
+	var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
+     
+	var User_name = snapshot.child("Login1").child("User_name").val();
+	
+     });
 		//HERE THE INFO FROM DB 
 		var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
@@ -75,6 +100,7 @@ function initMap() {
             '(last visited June 22, 2009).</p>'+
             '</div>'+
             '</div>';
+  
 			 var infowindow = new google.maps.InfoWindow({
           content: contentString
         });
@@ -120,9 +146,49 @@ var marker = new google.maps.Marker({
 </script>
   </head>
   <body>
-<div id="map"></div>
+ 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHNVxKQAn4wn4sqz_1i5yKIBenoiyWU5I&&libraries=visualization&callback=initMap"
+
+ 
+     <div id="map"></div>
+     <div>
+         
+         TEST DIV
+     
+      <script>
+      var ref = firebase.database().ref("Login");
+ref.once("value")
+  .then(function(snapshot) {
+    var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
+    console.log(name);
+	
+	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
+    console.log(Login_id);
+	//document.write(Login_id);
+	var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
+     console.log(Password);
+	 //document.write(Password);
+	var User_name = snapshot.child("Login1").child("User_name").val();
+	 console.log(User_name);
+	 //document.write(User_name);
+    document.getElementById("user").innerHTML = User_name.toString();
+    document.getElementById("login").innerHTML = Login_id.toString();
+  //  var html = '';
+ 
+    //html += '<div>';
+      //html += '<p id="login"></p>';
+      //html += '<p id="user"></p>';
+      
+    //html += '</div>';
+ 
+//  return html;
+  });
+      </script>
+      <p id="login"></p>
+      <p id="user"></p>
+   </div>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHNVxKQAn4wn4sqz_1i5yKIBenoiyWU5I&&libraries=visualization&callback=initMap"
 async defer></script>
+ 
   </body>
 </html>
