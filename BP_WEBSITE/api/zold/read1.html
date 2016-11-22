@@ -51,6 +51,8 @@ ref.once("value")
 	 console.log(User_type_id);
 	 document.write(User_type_id);
 	document.write("<div class='page_text'> your ID is : "+User_type_id+"</div>");//use this for css
+    
+    
     });
     
   
@@ -71,33 +73,12 @@ elem.value = "Login2"; // Change field
     ref2.startAt('1')
     ref2.endAt('3')
     ref2.once('value', function(snap) {
-       console.log('accounts matching ID', snap.val())
+        
+       console.log('accounts matching ID', snap.val());
+        
   });
       </script>
       
-      <!--RADIO BOX ID -->
- <form onsubmit="return send(this)">
-<div>
-    <input type="radio" id="1" name="check" value="check1" checked="checked">
-    <input type="radio" id="2" name="check" value="check2">
-    <input type="radio" id="3" name="check" value="check3">
-  </div>
-</form>
- 
- <script>
-      var radiochecked = "";
-
-
-for(i in formObj.check) {
-  if(formObj.check[i].checked) {
-    radiochecked = formObj.check[i].value;
-  }
-}
-
-function send(formObj) {
-  myFirebase.push({
-  checked: radiochecked
-});
-      </script>
+    
   </body>
 </html>
