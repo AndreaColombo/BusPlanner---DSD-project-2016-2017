@@ -32,24 +32,20 @@
     messagingSenderId: "771650212189"
   };
   firebase.initializeApp(config);
+  
 var ref = firebase.database().ref("Login");
 ref.once("value")
   .then(function(snapshot) {
     var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
     console.log(name);
-	
-	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
-    console.log(Login_id);
+	var Login_id = snapshot.child("Login1").child("Login_id").val(); // "Ada"
 	document.write(Login_id);
 	var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
-     console.log(Password);
 	 document.write(Password);
 	var User_name = snapshot.child("Login1").child("User_name").val();
-	 console.log(User_name);
 	 document.write(User_name);
-    if (Login_id = 1) {
-         document.write("THIS IS IF CONDITION WORKING");
-    }
+	var User_type_id= snapshot.child("Login1").child("User_type_id").val();
+	 document.write(User_type_id);
   });
   
  </script>

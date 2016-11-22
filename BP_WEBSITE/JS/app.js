@@ -28,35 +28,50 @@ $( document ).ready(function() {
     const btnLogo1 = document.getElementById('btnLogo1');
     const btnLogo2 = document.getElementById('btnLogo2');
     const btnMap = document.getElementById('btnMap');
+    const btnRead = document.getElementById('btnRead');
+    const preObject = document.getElementById('Login');
+    const ulList = document.getElementById('list');
+    const btnWrite = document.getElementById('btnWrite');
+    
+    // Create references
+    const dbRefObject = firebase.database().ref().child('Login');
+    const dbRefList = dbRefObject.child('Login1');
     
     document.getElementById('signup').addEventListener('click', e => {
         $("#main").html(' ');
         document.getElementById('firebaseui-auth-container').classList.remove('hide');
         document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         var uiConfig = {
-        'signInSuccessUrl': '<url-to-redirect-to-on-success>',
-        'signInOptions': [
-          // Leave the lines as is for the providers you want to offer your users.
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-          firebase.auth.GithubAuthProvider.PROVIDER_ID,
-          firebase.auth.EmailAuthProvider.PROVIDER_ID
-        ],
-        // Terms of service url.
-        'tosUrl': '<your-tos-url>',
-      };
+            'signInSuccessUrl': '<url-to-redirect-to-on-success>',
+            'signInOptions': [
+                // Leave the lines as is for the providers you want to offer your users.
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+                firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+                firebase.auth.GithubAuthProvider.PROVIDER_ID,
+                firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ],
+            // Terms of service url.
+            'tosUrl': '<your-tos-url>',
+        };
 
-      // Initialize the FirebaseUI Widget using Firebase.
-      var ui = new firebaseui.auth.AuthUI(firebase.auth());
-      // The start method will wait until the DOM is loaded.
-      ui.start('#firebaseui-auth-container', uiConfig); 
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig); 
+        window.location.hash = "signup";
+        e.preventDefault();
     });
 
     // Show login form
     btnLogin.addEventListener('click', e => {
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         $.ajax({
             type:'GET',
             url: "api/login.php",
@@ -71,6 +86,8 @@ $( document ).ready(function() {
     btnLogo1.addEventListener('click', e => {
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         $.ajax({
             type:'GET',
             url: "api/home.php",
@@ -85,6 +102,8 @@ $( document ).ready(function() {
     btnLogo2.addEventListener('click', e => {
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         $.ajax({
             type:'GET',
             url: "api/home.php",
@@ -99,6 +118,8 @@ $( document ).ready(function() {
     btnMap.addEventListener('click', e => {
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         $("#main").html(' ');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         document.getElementById('map').classList.remove('hide');
         var uluru = {lat: 64.01, lng: 19.05};
     
@@ -185,12 +206,15 @@ $( document ).ready(function() {
         console.log (msg)
     });
         window.location.hash = "map";
+        e.preventDefault();
     });
     
     // Add login event
     $( "body" ).on( "click", "#btnLogin2",function(e){
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         // Get email and psw
         const email = txtEmail.value;
         const pass = txtPassword.value;
@@ -205,6 +229,8 @@ $( document ).ready(function() {
     $( "body" ).on( "click", "#btnSignUp",function(e){
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         //Get email and psw
         const email = txtEmail.value;
         const pass = txtPassword.value;
@@ -219,6 +245,8 @@ $( document ).ready(function() {
     $( "body" ).on( "click", "#btnLogout",function(e){
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
        firebase.auth().signOut(); 
     });
     /*
@@ -233,4 +261,78 @@ $( document ).ready(function() {
         }
     });
     */
+    /*
+    // Read from database
+    btnRead.addEventListener('click', e => {
+        document.getElementById('firebaseui-auth-container').classList.add('hide');
+        document.getElementById('map').classList.add('hide');
+        var ref = firebase.database().ref("Login");
+        ref.once("value").then(function(snapshot) {
+           var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
+           console.log(name);
+	       var Login_id = snapshot.child("Login1").child("Login_id").val(); // "Ada"
+	       document.write(Login_id);
+	       var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
+	       document.write(Password);
+	       var User_name = snapshot.child("Login1").child("User_name").val();
+	       document.write(User_name);
+	       var User_type_id= snapshot.child("Login1").child("User_type_id").val();
+	       document.write(User_type_id);
+        });
+    });
+    */
+    
+    // Sync object and list changes, reading from database
+    btnRead.addEventListener('click', e => {
+        $('#main').html(' ');
+        document.getElementById('firebaseui-auth-container').classList.add('hide');
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.remove('hide');
+        document.getElementById('list').classList.remove('hide');
+        
+        dbRefObject.on('value', snap => {
+            preObject.innerText = JSON.stringify(snap.val(), null, 3);
+        });
+        
+        dbRefList.on('child_added', snap => {
+            const li = document.createElement('li');
+            li.innerText = snap.val();
+            li.id = snap.key;
+            ulList.appendChild(li);
+        });
+    
+        dbRefList.on('child_changed', snap => {
+            const liChanged = document.getElementById(snap.key);
+            liChanged.innerText = snap.val();
+        });
+    
+        dbRefList.on('child_removed', snap => {
+            const liToRemove = document.getElementById(snap.key);
+            liToRemove.remove();
+        });
+        window.location.hash = "read";
+        e.preventDefault();
+    });
+    
+    // Write on database
+    btnWrite.addEventListener('click', e => {
+        $('#main').html(' ');
+        document.getElementById('firebaseui-auth-container').classList.add('hide');
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.remove('hide');
+        document.getElementById('list').classList.add('hide');
+        
+        dbRefList.set({
+            Login_id: '1',
+            Password: 'abcdefg',
+            User_name: 'Ste',
+            User_type_id: '1'
+        });
+        
+        dbRefObject.on('value', snap => {
+            preObject.innerText = JSON.stringify(snap.val(), null, 3);
+        });
+        window.location.hash = "write";
+        e.preventDefault();
+    });
 });
