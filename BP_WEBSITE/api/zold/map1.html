@@ -82,19 +82,28 @@ function initMap() {
             '(last visited June 22, 2009).</p>'+
             '</div>'+
             '</div>';
+    var ref = firebase.database().ref("Login");
+ref.once("value")
+  .then(function(snapshot) {
+    var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
+    console.log(name);
+	
+	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
+    console.log(Login_id);
+     
 			 var infowindow = new google.maps.InfoWindow({
           content: contentString
         });
 		 var marker = new google.maps.Marker({
           position: uluru,
           map: map,
-		  title:'HERE WE SAY THIS IS THE MAINS STATION. OTHER MARKS SHOULD BE MADE WITHIN A LOOP, AS LONG AS WE HAVE DATA FROM DB, SHOW MARK'
+		  title: Login_id
         });
 		 marker.addListener('click', function() {
           infowindow.open(map, marker);
         });
 		//read from JSON
-
+ });
   
 		  //here to read from db THE MARK IS FOR EACH POINT
 		  //TITLE SHOULD BE UNIQUE
