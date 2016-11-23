@@ -82,56 +82,35 @@ function initMap() {
             '(last visited June 22, 2009).</p>'+
             '</div>'+
             '</div>';
-    var ref = firebase.database().ref("Login");
-ref.once("value")
+   
+  var query = firebase.database().ref("UserRequest").orderByKey();
+query.once("value")
   .then(function(snapshot) {
-    var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
-    console.log(name);
-	
-	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
-    console.log(Login_id);
+    
+    for (var i = 1; i <= 2; ++i) {
+   var lat = snapshot.child("UserRequest"+i+"/Latitude").val(); 
      
-			 var infowindow = new google.maps.InfoWindow({
-          content: contentString
+      var long = snapshot.child("UserRequest"+i+"/Longitude").val(); 
+       
+         var status = snapshot.child("UserRequest"+i+"/Status").val(); 
+          var latLng = new google.maps.LatLng(lat,long);
+                     
+                    var infowindow = new google.maps.InfoWindow({
+            content: status
         });
-		 var marker = new google.maps.Marker({
-          position: uluru,
-          map: map,
-		  title: Login_id
-        });
-		 marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
-		//read from JSON
- });
-  
-		  //here to read from db THE MARK IS FOR EACH POINT
-		  //TITLE SHOULD BE UNIQUE
-var marker = new google.maps.Marker({
-          position: uluru,
-          map: map,
-		  title:User_type_id+'HERE WE SHOULD READ FROM DB KJFKLDSJFKLSDFJSLKFJ'
-        });
-        firebase.database().ref('users').on('value', function(snapshot) {
-            var msg = snapshot.val();
-            for (i in msg) {
-                firebase.database().ref('users/' + i +"/vehicles").on('value', function(snapshot) {
-                    var gig = snapshot.val();
-
-                    console.log ("Inside the for loop");
-                    var latLng = new google.maps.LatLng(gig.latitude,
-                                gig.longitude);
                     var marker = new google.maps.Marker({
                             position: latLng,
                         map: map,
-						title:'HERE WE SHOULD READ FROM DB '
+						title:status
                     });
-                });
-            }
-            console.log (msg)
+                     marker.addListener('click', function() {
+            infowindow.open(map, marker);
         });
-
-    }
+  }
+});
+		  //here to read from db THE MARK IS FOR EACH POINT
+		  //TITLE SHOULD BE UNIQUE
+}
     google.maps.event.addDomListener(window, "load", initMap);
 </script>
   </head>
