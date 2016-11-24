@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Add to database</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <style type="text/css">
+    #contacts p, 
+    #contacts p.lead{
+      margin: 0;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase-messaging.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <h1>BusPlanner route schedule</h1>
+    <hr/>
+    <div class="row">
+      <div class="col-md-6">
+        <form method="post" name="contactForm">
+		  <div class="form-group">
+            <label for="Route_schedule_id">Route schedule ID</label>
+            <input type="number" class="form-control" id="Route_schedule_id" required placeholder="Route schedule ID">
+          </div>
+          <div class="form-group">
+            <label for="Bus_id">Bus ID</label>
+            <input type="number" class="form-control" id="Bus_id" required placeholder="Enter Bus ID">
+          </div>
+		  <div class="form-group">
+            <label for="Route_id">Route ID</label>
+            <input type="number" class="form-control" id="Route_id" required placeholder="Enter Route ID">
+          </div>
+		  
+		  <div class="form-group">
+            <label for="Timestamp_arrival">Time Stamp Arrival</label>
+            <input type="time" class="form-control" id="Timestamp_arrival" required placeholder="Time Stamp Arrival">
+          </div>
+		  <div class="form-group">
+            <label for="Timestamp_departure">Timestamp Departure</label>
+            <input type="time" class="form-control" id="Timestamp_departure" required placeholder="Time Stamp Departure">
+          </div>
+		  
+          <h3>Information of Bus</h3>
+		  <div class="form-group">
+            <label for="Start_point">Start Point</label>
+            <input type="test" class="form-control" id="Start_point" required placeholder="Enter Start Point">
+          </div>
+		  <div class="form-group">
+            <label for="End_point">End Point</label>
+            <input type="test" class="form-control" id="End_point" required placeholder="Enter End Point">
+          </div>
+		  <div class="form-group">
+            <label for="Start_time">Finish time</label>
+            <input type="number" class="form-control" id="Start_time" required placeholder="Enter Start time">
+          </div>
+		  <div class="form-group">
+            <label for="Finish_time">Finish time</label>
+            <input type="number" class="form-control" id="Finish_time" required placeholder="Enter Finish time">
+          </div>
+          <div class="form-group">
+            <label for="latitude">Latitude</label>
+            <input type="text" class="form-control" id="latitude" placeholder="Enter Latitude">
+          </div>
+		  <div class="form-group">
+            <label for="longitude">Longitude</label>
+            <input type="text" class="form-control" id="longitude" placeholder="Enter Longitude">
+          </div>
+		  <div class="form-group">
+            <label for="Stops">Stops</label>
+            <input type="text" class="form-control" id="Stops" placeholder="Enter Stops">
+          </div>
+		  <div class="form-group">
+            <label for="Number_current">Number current</label>
+            <input type="number" class="form-control" id="Number_current" placeholder="Enter Number Current">
+          </div>
+		  <div class="form-group">
+            <label for="Number_debording">Number debording</label>
+            <input type="number" class="form-control" id="Number_debording" placeholder="Enter Number Debording">
+          </div>
+		  <div class="form-group">
+            <label for="Number_onboarding">Number onboarding</label>
+            <input type="number" class="form-control" id="Number_onboarding" placeholder="Enter Number Onboarding">
+          </div>
+		  <button type="submit" class="btn btn-primary addValue">Submit</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <ul id="Login" class="list-group">
+          <!-- Conatct Object li.list-group-item.contact will be added here by js -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <!-- Latest compiled and minified Bootstrap -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <!-- Include Firebase Library -->
+ 
+  <!-- Contacts Store JavaScript -->
+  <script src="add.js"></script>
+</body>
+</html>
