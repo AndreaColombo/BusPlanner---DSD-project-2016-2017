@@ -123,28 +123,30 @@ $( document ).ready(function() {
         document.getElementById('map').classList.remove('hide');
         var uluru = {lat: 64.01, lng: 19.05};
     
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            lat: 64.01,
-            lng: 19.05
-        },
-        zoom: 14,
-        styles: [{
-            featureType: 'poi',
-            stylers: [{
-                visibility: 'on'
+    var uluru = {lat: 64.01, lng: 19.05};
+          var map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+              lat: 64.01,
+              lng: 19.05
+            },
+            zoom: 14,
+            styles: [{
+              featureType: 'poi',
+              stylers: [{
+              visibility: 'on'
             }] // Turn off points of interest.
-        }, {
-            featureType: 'transit.station',
-            stylers: [{
+            }, {
+              featureType: 'transit.station',
+              stylers: [{
               visibility: 'on'
             }] // Turn off bus stations, train stations, etc.
-        }],
-        disableDoubleClickZoom: false
-	});
+            }],
+            disableDoubleClickZoom: false
+	
+          });
 		 
-    //HERE THE INFO FROM DB 
-    var contentString = '<div id="content">'+
+		//HERE THE INFO FROM DB 
+		var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
@@ -164,50 +166,65 @@ $( document ).ready(function() {
             '(last visited June 22, 2009).</p>'+
             '</div>'+
             '</div>';
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-    
-    var marker = new google.maps.Marker({
-        position: uluru,
-        map: map,
-        title:'HERE WE SAY THIS IS THE MAINS STATION. OTHER MARKS SHOULD BE MADE WITHIN A LOOP, AS LONG AS WE HAVE DATA FROM DB, SHOW MARK'
-    });
-    
-    marker.addListener('click', function() {
-        infowindow.open(map, marker);
-    });
-
-    //read from JSON
-
+    var ref = firebase.database().ref("Login");
+ref.once("value")
+  .then(function(snapshot) {
+    var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
+    console.log(name);
+	
+	var Login_id = snapshot.child("Login1/Login_id").val(); // "Ada"
+    console.log(Login_id);
+     
+			 var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+		 var marker = new google.maps.Marker({
+          position: uluru,
+          map: map,
+		  title: Login_id
+        });
+		 marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+		//read from JSON
+ });
   
-    //here to read from db THE MARK IS FOR EACH POINT
-    //TITLE SHOULD BE UNIQUE
-    var marker = new google.maps.Marker({
-        position: uluru,
-        map: map,
-        title:User_type_id+'HERE WE SHOULD READ FROM DB KJFKLDSJFKLSDFJSLKFJ'
-    });
-    
-    firebase.database().ref('users').on('value', function(snapshot) {
-        var msg = snapshot.val();
-        for (i in msg) {
-            firebase.database().ref('users/' + i +"/vehicles").on('value', function(snapshot) {
-                var gig = snapshot.val();
-                console.log ("Inside the for loop");
-                var latLng = new google.maps.LatLng(gig.latitude, gig.longitude);
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-				    title:'HERE WE SHOULD READ FROM DB '
+		  //here to read from db THE MARK IS FOR EACH POINT
+		  //TITLE SHOULD BE UNIQUE
+var marker = new google.maps.Marker({
+          position: uluru,
+          map: map,
+		  title:User_type_id+'HERE WE SHOULD READ FROM DB KJFKLDSJFKLSDFJSLKFJ'
+        });
+        firebase.database().ref('users').on('value', function(snapshot) {
+            var msg = snapshot.val();
+            for (i in msg) {
+                firebase.database().ref('users/' + i +"/vehicles").on('value', function(snapshot) {
+                    var gig = snapshot.val();
+
+                    console.log ("Inside the for loop");
+                    var latLng = new google.maps.LatLng(gig.latitude,
+                                gig.longitude);
+                    var marker = new google.maps.Marker({
+                            position: latLng,
+                        map: map,
+						title:'HERE WE SHOULD READ FROM DB '
+                    });
                 });
-            });
-        }
-        console.log (msg)
-    });
+            }
+            console.log (msg)
+        });
         window.location.hash = "map";
         e.preventDefault();
     });
+    
+    function getEmail(txtEmail) {
+        const email = txtEmail.value;
+    }
+    
+    function getPassword(txtPassword) {
+        const pass = txtPassword.value;
+    }
     
     // Add login event
     $( "body" ).on( "click", "#btnLogin2",function(e){
@@ -215,7 +232,7 @@ $( document ).ready(function() {
         document.getElementById('map').classList.add('hide');
         document.getElementById('Login').classList.add('hide');
         document.getElementById('list').classList.add('hide');
-        // Get email and psw
+        // Get email and psw 
         const email = txtEmail.value;
         const pass = txtPassword.value;
         const auth = firebase.auth();
@@ -249,18 +266,18 @@ $( document ).ready(function() {
         document.getElementById('list').classList.add('hide');
        firebase.auth().signOut(); 
     });
-    /*
+    
     // Add a realtime listener: lets me know every single time the authentication state changes
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser) {
             console.log(firebaseUser);
-            btnLogout.classList.remove('hide');
+            $('btnLogout').classList.remove('hide');
         } else {
             console.log('not logged in');
-            btnLogout.classList.add('hide');
+            $('btnLogout').classList.add('hide');
         }
     });
-    */
+    
     /*
     // Read from database
     btnRead.addEventListener('click', e => {
