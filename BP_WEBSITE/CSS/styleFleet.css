@@ -1,0 +1,27 @@
+#fleetSection{
+    background-color: aliceblue;
+    height: 200px;
+    width: 50%
+    
+    
+}
+
+#imageHomeFleet{
+    height: 200px;
+    width: 100%;
+}
+
+.jumbotron{
+    border-radius: 8px;
+    background: rgba(216, 213, 213, 0.8);
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    
+}
+
+#jumboBuses{
+    background-image: url(../Images/modifyBuses.jpg);
+    
+ 
+}
