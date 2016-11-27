@@ -20,8 +20,18 @@
     
 }
 
-#jumboBuses{
-    background-image: url(../Images/modifyBuses.jpg);
+
+
+#jumboStyle{
+
     
- 
+    border: 1px solid black;
+    height: 200px;
+    
+}
+
+
+
+#imageText{
+    color: white;
 }

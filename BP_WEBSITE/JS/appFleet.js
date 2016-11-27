@@ -12,33 +12,59 @@ $( document ).ready(function() {
     // Load home main 
     $.ajax({
         type:'GET',
-        url: "api/homeFleetManager.php",
+        url: "api/homeFleet.php",
         crossDomain: true,
     }).success(function(result){
         $("#main").html(result);
     });
-    window.location.hash = "homeFleetManager";
+    window.location.hash = "homeFleet";
     
     // Get elements from DOM
     /*
     const txtEmail = document.getElementById('txtEmail');
     const txtPassword = document.getElementById('txtPassword');
     */
-    const btnLogin = document.getElementById('btnLogin');
+    const btnBus = document.getElementById('btnBus');
+    const btnLogo = document.getElementById('btnLogo');
     const btnLogo1 = document.getElementById('btnLogo1');
-    const btnLogo2 = document.getElementById('btnLogo2');
-    const btnMap = document.getElementById('btnMap');
-    const btnRead = document.getElementById('btnRead');
-    const preObject = document.getElementById('Login');
-    const ulList = document.getElementById('list');
-    const btnWrite = document.getElementById('btnWrite');
     
     
-    
- 
+    btnBus.addEventListener('click', e => {
+        $.ajax({
+            type:'GET',
+            url: "api/fleetBus.php",
+            crossDomain: true,
+        }).success(function(result){
+            $("#main").html(result);
+        });
+        window.location.hash = "fleetBus";
+        e.preventDefault();
+    });
 
 
+    btnLogo.addEventListener('click', e => {
+        $.ajax({
+            type:'GET',
+            url: "api/homeFleet.php",
+            crossDomain: true,
+        }).success(function(result){
+            $("#main").html(result);
+        });
+        window.location.hash = "homeFleet";
+        e.preventDefault();
+    });
     
+    btnLogo1.addEventListener('click', e => {
+        $.ajax({
+            type:'GET',
+            url: "api/homeFleet.php",
+            crossDomain: true,
+        }).success(function(result){
+            $("#main").html(result);
+        });
+        window.location.hash = "homeFleet";
+        e.preventDefault();
+    });
    
     
 
