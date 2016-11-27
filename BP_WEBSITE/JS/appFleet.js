@@ -25,8 +25,8 @@ $( document ).ready(function() {
     const txtPassword = document.getElementById('txtPassword');
     */
     const btnBus = document.getElementById('btnBus');
-    const btnLogo = document.getElementById('btnLogo');
     const btnLogo1 = document.getElementById('btnLogo1');
+    const btnLogo2 = document.getElementById('btnLogo2');
     
     
     btnBus.addEventListener('click', e => {
@@ -42,7 +42,7 @@ $( document ).ready(function() {
     });
 
 
-    btnLogo.addEventListener('click', e => {
+    btnLogo1.addEventListener('click', e => {
         $.ajax({
             type:'GET',
             url: "api/homeFleet.php",
@@ -54,7 +54,7 @@ $( document ).ready(function() {
         e.preventDefault();
     });
     
-    btnLogo1.addEventListener('click', e => {
+    btnLogo2.addEventListener('click', e => {
         $.ajax({
             type:'GET',
             url: "api/homeFleet.php",
@@ -62,7 +62,7 @@ $( document ).ready(function() {
         }).success(function(result){
             $("#main").html(result);
         });
-        window.location.hash = "homeFleet";
+        window.location.hash = "homeFleet1";
         e.preventDefault();
     });
    
