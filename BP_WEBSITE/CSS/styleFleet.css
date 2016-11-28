@@ -54,3 +54,7 @@
     text-align: center;
     font-size: 30px;
 }
+
+#intestation{
+    border-bottom: 1px solid lightBlue;
+}

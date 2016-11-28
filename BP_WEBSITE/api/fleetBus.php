@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 ?>
 
-<div class = "intestation">
+<div class = "intestation" id="intestation">
     <div class = "row" >
         <div class="col-md-6 col-sm-6 col-xs-6" >
             <h3 id = "titleIntestation" >Bus Management</h3>
@@ -18,9 +18,38 @@ header("Access-Control-Allow-Origin: *");
 
 <div>
     <div class="row">
+        
         <!--Bus list from database, button to add a bus -->
         <div class="col-md-6 col-sm-6 col-xs-6">
+        <script>
+        
+            $('#main').html(' ');
+            document.getElementById('firebaseui-auth-container').classList.add('hide');
+            document.getElementById('map').classList.add('hide');
+            document.getElementById('Login').classList.remove('hide');
+            document.getElementById('list').classList.remove('hide');
+  
+            var ref = firebase.database().ref("Login");
+            ref.once("value")
+            .then(function(snapshot) {
+                var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
+                console.log(name);
+	           var Login_id = snapshot.child("Login1").child("Login_id").val(); // "Ada"
+	           document.write(Login_id);
+	           var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
+	           document.write(Password);
+	           var User_name = snapshot.child("Login1").child("User_name").val();
+                document.write(User_name);
+	           var User_type_id= snapshot.child("Login1").child("User_type_id").val();
+	           document.write(User_type_id);
+            });
+  
+        </script>
+        
+            
         </div>
+        
+        
         <!-- Map with the location of all the bus -->
         <div class="col-md-6 col-sm-6 col-xs-6">
         </div>

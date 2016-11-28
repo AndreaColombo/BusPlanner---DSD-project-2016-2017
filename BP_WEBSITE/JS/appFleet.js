@@ -30,6 +30,10 @@ $( document ).ready(function() {
     
     
     btnBus.addEventListener('click', e => {
+        document.getElementById('firebaseui-auth-container').classList.add('hide');
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         $.ajax({
             type:'GET',
             url: "api/fleetBus.php",
@@ -43,6 +47,10 @@ $( document ).ready(function() {
 
 
     btnLogo1.addEventListener('click', e => {
+        document.getElementById('firebaseui-auth-container').classList.add('hide');
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         $.ajax({
             type:'GET',
             url: "api/homeFleet.php",
@@ -55,6 +63,10 @@ $( document ).ready(function() {
     });
     
     btnLogo2.addEventListener('click', e => {
+        document.getElementById('firebaseui-auth-container').classList.add('hide');
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
         $.ajax({
             type:'GET',
             url: "api/homeFleet.php",
@@ -63,6 +75,22 @@ $( document ).ready(function() {
             $("#main").html(result);
         });
         window.location.hash = "homeFleet1";
+        e.preventDefault();
+    });
+    
+    btnLogo1.addEventListener('click', e => {
+        document.getElementById('firebaseui-auth-container').classList.add('hide');
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('Login').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+        $.ajax({
+            type:'GET',
+            url: "api/home.php",
+            crossDomain: true,
+        }).success(function(result){
+            $("#main").html(result);
+        });
+        window.location.hash = "home";
         e.preventDefault();
     });
    
