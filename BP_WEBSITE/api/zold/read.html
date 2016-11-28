@@ -32,21 +32,36 @@
     messagingSenderId: "771650212189"
   };
   firebase.initializeApp(config);
-  
-var ref = firebase.database().ref("Login");
+
+
+    /* 
+var ref = firebase.database().ref("Bus");
 ref.once("value")
   .then(function(snapshot) {
-    var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
+    var name = snapshot.child("Bus1").val(); // { first: "Ada", last: "Lovelace"}
     console.log(name);
-	var Login_id = snapshot.child("Login1").child("Login_id").val(); // "Ada"
-	document.write(Login_id);
-	var Password = snapshot.child("Login1").child("Password").val(); // "Lovelace"
-	 document.write(Password);
-	var User_name = snapshot.child("Login1").child("User_name").val();
-	 document.write(User_name);
-	var User_type_id= snapshot.child("Login1").child("User_type_id").val();
-	 document.write(User_type_id);
+	var busId = snapshot.child("Bus1").child("Bus_id").val(); 
+	document.write(busId);
+	var busCapacity = snapshot.child("Bus1").child("Password").val(); 
+	 document.write(busCapacity);
+	var busDriver = snapshot.child("Bus1").child("User_name").val();
+	 document.write(busDriver);
   });
+  */
+    
+    
+    var query = firebase.database().ref("Bus").orderByKey();
+    query.once("value")
+  .then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      // key will be "ada" the first time and "alan" the second time
+      var key = childSnapshot.key;
+      // childData will be the actual contents of the child
+      var childData = childSnapshot.val();
+    console.log(childData);
+  });
+});
+    
   
  </script>
   </head>

@@ -32,7 +32,8 @@ header("Access-Control-Allow-Origin: *");
             var ref = firebase.database().ref("Login");
             var busList = document.getElementById('busList');
             
-            ref.child('value').limitToLast(10).on(,function(snaphot){
+            ref.once("value")
+            .then(function(snapshot) {
                 var name = snapshot.child("Login1").val(); // { first: "Ada", last: "Lovelace"}
                 console.log(name);
 	           var Login_id = snapshot.child("Login1").child("Login_id").val(); // "Ada"

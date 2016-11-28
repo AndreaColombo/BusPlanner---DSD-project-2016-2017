@@ -29,13 +29,15 @@ $( document ).ready(function() {
     const btnLogo2 = document.getElementById('btnLogo2');
     
     
-    btnBus.addEventListener('click', e => {
+    $("body").on("click", "#btnBus", function (e){
+
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         document.getElementById('map').classList.add('hide');
         document.getElementById('Login').classList.add('hide');
         document.getElementById('list').classList.add('hide');
         $.ajax({
             type:'GET',
+            //dataType: 'json',
             url: "api/fleetBus.php",
             crossDomain: true,
         }).success(function(result){
