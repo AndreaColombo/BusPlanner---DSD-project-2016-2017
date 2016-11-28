@@ -49,7 +49,7 @@ ref.once("value")
   });
   */
     
-    
+    function getData(){
     var query = firebase.database().ref("Bus").orderByKey();
     query.once("value")
   .then(function(snapshot) {
@@ -58,10 +58,20 @@ ref.once("value")
       var key = childSnapshot.key;
       // childData will be the actual contents of the child
       var childData = childSnapshot.val();
-    console.log(childData);
+    //console.log(childData);
+        return childData;
+        
+        
+   
   });
+        
+        
 });
-    
+}
+   
+    var busList = getData();
+    console.log(busList);
+   
   
  </script>
   </head>

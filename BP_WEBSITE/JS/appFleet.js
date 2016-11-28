@@ -96,10 +96,57 @@ $( document ).ready(function() {
         e.preventDefault();
     });
    
+    /*
+    function getBusFromDatabase() {
+        var query = firebase.database().ref("Bus").orderByKey();
+        query.once("value")
+            .then(function(snapshot){
+                snapshot.forEach(function(childSnaphot){
+                    var key = childSnaphot.key;
+                    var childData = childSnaphot.val();
+                    return childData;
+                    console.log(childData);
+                })
+            })
+    }
+    */
+    // Create references
+    const dbRefObject = firebase.database().ref().child('Bus');
+    const dbRefList = dbRefObject.child('Bus1');
+    
     
 
-    
+    btnBus.addEventListener('click', e => {
+        $('#main').html(' ');
+    document.getElementById('firebaseui-auth-container').classList.add('hide');
+    document.getElementById('map').classList.add('hide');
+    document.getElementById('Bus').classList.remove('hide');
+    document.getElementById('list').classList.remove('hide');
 
+    dbRefObject.on('value', snap => {
+        preObject.innerText = JSON.stringify(snap.val(), null, 3);
+    });
+
+    dbRefList.on('child_added', snap => {
+        const li = document.createElement('li');
+    li.innerText = snap.val();
+    li.id = snap.key;
+    ulList.appendChild(li);
+    });
+
+    dbRefList.on('child_changed', snap => {
+        const liChanged = document.getElementById(snap.key);
+    liChanged.innerText = snap.val();
+    });
+
+    dbRefList.on('child_removed', snap => {
+        const liToRemove = document.getElementById(snap.key);
+    liToRemove.remove();
+    });
+    window.location.hash = "read";
+    e.preventDefault();
+    });
+    
     
    
     
