@@ -39,56 +39,7 @@ $( document ).ready(function() {
         window.location.hash = "fleetBus";
         e.preventDefault();
     });
-
-
-    btnLogo1.addEventListener('click', e => {
-        document.getElementById('firebaseui-auth-container').classList.add('hide');
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('Login').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
-        $.ajax({
-            type:'GET',
-            url: "api/homeFleet.php",
-            crossDomain: true,
-        }).success(function(result){
-            $("#main").html(result);
-        });
-        window.location.hash = "homeFleet";
-        e.preventDefault();
-    });
     
-    btnLogo2.addEventListener('click', e => {
-        document.getElementById('firebaseui-auth-container').classList.add('hide');
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('Login').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
-        $.ajax({
-            type:'GET',
-            url: "api/homeFleet.php",
-            crossDomain: true,
-        }).success(function(result){
-            $("#main").html(result);
-        });
-        window.location.hash = "homeFleet1";
-        e.preventDefault();
-    });
-    
-    btnLogo1.addEventListener('click', e => {
-        document.getElementById('firebaseui-auth-container').classList.add('hide');
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('Login').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
-        $.ajax({
-            type:'GET',
-            url: "api/home.php",
-            crossDomain: true,
-        }).success(function(result){
-            $("#main").html(result);
-        });
-        window.location.hash = "home";
-        e.preventDefault();
-    });
-   
     /*
     function getBusFromDatabase() {
         var query = firebase.database().ref("Bus").orderByKey();
