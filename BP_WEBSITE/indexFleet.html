@@ -1,18 +1,20 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>BusPlanner</title>
+    <title>FleetManagerInterface</title>
     <meta charset="utf-8" http-equiv="encoding">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <link href="CSS/style.css" rel="stylesheet" type="text/css">
+    <link href="CSS/styleFleet.css" rel="stylesheet" type="text/css">
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     
 
     
-    <!-- Firebase -->
+
+    
     <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-auth.js"></script>
@@ -30,7 +32,8 @@
         firebase.initializeApp(config);
     </script>
     <script src="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.css" />
+    
+    
     
 </head>
 <body>
@@ -43,21 +46,17 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a id="btnMap" href="#" style="padding-top:25px">MAP</a></li>
-                        <li><a id="btnRead" href="#" style="padding-top:25px">Read JSON</a></li>
-		                <li><a id="btnWrite" href="#" style="padding-top:25px">Write JSON</a></li>
-                        <li><a id="signup" href="#" style="padding-top:25px">Sign up</a></li>
-                        <li><a id="btnLogin" href="#" style="padding-top:25px">Log in</a></li>
+                        <li><a id="btnBus" href="#" style="padding-top:25px">Bus Managment</a></li>
+                        <li><a id="btnDriver" href="#" style="padding-top:25px">Driver</a></li>
+		                <li><a id="btnSchedule" href="#" style="padding-top:25px">Route Schedule</a></li>
+                        <li><a id="btnTime" href="#" style="padding-top:25px">Schedele Time</a></li>
+                        <li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
     <div id="main"></div>
-    <div id="map" class="hide"></div>
-    <div id="firebaseui-auth-container"></div>
-    <div id="Login"></div>
-    <div id="list"></div>
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid">
             <div class="collapse navbar-collapse">
@@ -81,6 +80,30 @@
     <script language="JavaScript"
         type="text/javascript"
         src="JS/app.js"></script>
+    
+    <script language="JavaScript"
+        type="text/javascript"
+        src="JS/scripts.js"></script>
+    
+    
+    
+
+    
+    
+
+    
+    <!--JavaScripts placed at the end of the page for faster loading -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHNVxKQAn4wn4sqz_1i5yKIBenoiyWU5I&&libraries=visualization"></script>
+    <!--JQuery-->
+    <script src="jquery/jquery-2.2.4.min.js"></script>
+    
+    <!-- Boostrap js-->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- Our JS-->
+    <script language="JavaScript"
+        type="text/javascript"
+        src="JS/appFleet.js"></script>
     
     <script language="JavaScript"
         type="text/javascript"
