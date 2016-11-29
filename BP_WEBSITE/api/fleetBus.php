@@ -29,7 +29,9 @@ header("Access-Control-Allow-Origin: *");
             document.getElementById('Login').classList.remove('hide');
             document.getElementById('list').classList.remove('hide');
   
+            /*
             var ref = firebase.database().ref("Login");
+
             var busList = document.getElementById('busList');
             
             ref.once("value")
@@ -44,8 +46,30 @@ header("Access-Control-Allow-Origin: *");
                busList.value += '\n'+ User_name;
 	           var User_type_id= snapshot.child("Login1").child("User_type_id").val();
 	           busList.value += '\n'+ User_type_id;
+                document.write(busList.value);
             });
         });
+
+        */
+
+
+
+
+            
+            var query = firebase.database().ref("Bus").orderByKey();
+            query.once("value")
+                .then(function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        // key will be "ada" the first time and "alan" the second time
+                        var key = childSnapshot.key;
+                        // childData will be the actual contents of the child
+                        var childData = childSnapshot.val();
+                        console.log(childData);
+
+
+                    });
+                });
+
         </script>
         
             

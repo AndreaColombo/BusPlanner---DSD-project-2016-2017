@@ -49,29 +49,25 @@ ref.once("value")
   });
   */
     
-    function getData(){
+
+
     var query = firebase.database().ref("Bus").orderByKey();
     query.once("value")
-  .then(function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
-      // key will be "ada" the first time and "alan" the second time
-      var key = childSnapshot.key;
-      // childData will be the actual contents of the child
-      var childData = childSnapshot.val();
-    //console.log(childData);
-        return childData;
-        
-        
-   
-  });
-        
-        
-});
-}
-   
-    var busList = getData();
-    console.log(busList);
-   
+            .then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    // key will be "ada" the first time and "alan" the second time
+                    var key = childSnapshot.key;
+                    // childData will be the actual contents of the child
+                    var childData = childSnapshot.val();
+                    console.log(childData);
+
+
+                });
+            });
+
+
+
+
   
  </script>
   </head>
