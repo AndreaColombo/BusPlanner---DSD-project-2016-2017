@@ -1,29 +1,16 @@
 /**loading modal -- spinner*/
-$body = $("body");
+var email;
+var password;
+var logout;
 
-$(document).on({
-    ajaxStart: function() {
-        $body.addClass("loading");    },
-    ajaxStop: function() { $body.removeClass("loading"); }
-});
-
-$( document ).ready(function() {
+$(document).ready(function() {
     
     // Load home main 
-    $.ajax({
-        type:'GET',
-        url: "api/home.php",
-        crossDomain: true,
-    }).success(function(result){
-        $("#main").html(result);
-    });
+    var result = home();
+    $("#main").html(result);
     window.location.hash = "home";
     
     // Get elements from DOM
-    /*
-    const txtEmail = document.getElementById('txtEmail');
-    const txtPassword = document.getElementById('txtPassword');
-    */
     const btnLogin = document.getElementById('btnLogin');
     const btnLogo1 = document.getElementById('btnLogo1');
     const btnLogo2 = document.getElementById('btnLogo2');
@@ -34,8 +21,8 @@ $( document ).ready(function() {
     const btnWrite = document.getElementById('btnWrite');
     
     // Create references
-    const dbRefObject = firebase.database().ref().child('Login');
-    const dbRefList = dbRefObject.child('Login1');
+    const dbRefLogin = firebase.database().ref().child('Login');
+    const dbRefList = dbRefLogin.child('Login1');
     
     document.getElementById('signup').addEventListener('click', e => {
         $("#main").html(' ');
@@ -72,13 +59,8 @@ $( document ).ready(function() {
         document.getElementById('map').classList.add('hide');
         document.getElementById('Login').classList.add('hide');
         document.getElementById('list').classList.add('hide');
-        $.ajax({
-            type:'GET',
-            url: "api/login.php",
-            crossDomain: true,
-        }).success(function(result){
-            $("#main").html(result);
-        });
+        var result = login();
+        $('#main').html(result);
         window.location.hash = "login";
         e.preventDefault();
     });
@@ -88,13 +70,8 @@ $( document ).ready(function() {
         document.getElementById('map').classList.add('hide');
         document.getElementById('Login').classList.add('hide');
         document.getElementById('list').classList.add('hide');
-        $.ajax({
-            type:'GET',
-            url: "api/home.php",
-            crossDomain: true,
-        }).success(function(result){
-            $("#main").html(result);
-        });
+        var result = home();
+        $("#main").html(result);
         window.location.hash = "home";
         e.preventDefault();
     });
@@ -104,13 +81,8 @@ $( document ).ready(function() {
         document.getElementById('map').classList.add('hide');
         document.getElementById('Login').classList.add('hide');
         document.getElementById('list').classList.add('hide');
-        $.ajax({
-            type:'GET',
-            url: "api/home.php",
-            crossDomain: true,
-        }).success(function(result){
-            $("#main").html(result);
-        });
+        var result = home();
+        $("#main").html(result);
         window.location.hash = "home";
         e.preventDefault();
     });
@@ -197,28 +169,26 @@ query.once("value")
         e.preventDefault();
     });
     
-    function getEmail(txtEmail) {
-        const email = txtEmail.value;
-    }
-    
-    function getPassword(txtPassword) {
-        const pass = txtPassword.value;
-    }
-    
     // Add login event
     $( "body" ).on( "click", "#btnLogin2",function(e){
         document.getElementById('firebaseui-auth-container').classList.add('hide');
         document.getElementById('map').classList.add('hide');
         document.getElementById('Login').classList.add('hide');
         document.getElementById('list').classList.add('hide');
-        // Get email and psw 
-        const email = txtEmail.value;
-        const pass = txtPassword.value;
-        const auth = firebase.auth();
-        
-        // Sign in
-        const promise = auth.signInWithEmailAndPassword(email, pass);
-        promise.catch(e => console.log(e.message));
+
+        var found = false;
+        dbRefLogin.once('value')
+            .then(function(snapshot) {
+                snapshot.forEach(function(d) {
+                    if(email == d.child('User_name').val() && pass == d.child('Password').val()) {
+                        found = true;
+                        console.log('You are registered.');
+                    } 
+                });
+            if(found == false) {
+                console.log('You are not registered. Please click the SignUp button to register.');
+            }
+        });
     });
 
     // Add signup event
@@ -227,16 +197,31 @@ query.once("value")
         document.getElementById('map').classList.add('hide');
         document.getElementById('Login').classList.add('hide');
         document.getElementById('list').classList.add('hide');
-        //Get email and psw
-        const email = txtEmail.value;
-        const pass = txtPassword.value;
-        const auth = firebase.auth();
-        
-        //Sign in
-        const promise = auth.createUserWithEmailAndPassword(email, pass);
-        promise.catch(e => console.log(e.message));
+
+        var found = false;
+        var count = 0;
+        dbRefLogin.once('value')
+            .then(function(snapshot) {
+                snapshot.forEach(function(d) {
+                    count++;
+                    if(email == d.child('User_name').val() && pass == d.child('Password').val()) {
+                        console.log('You are already registered.');
+                        found = true;
+                    } 
+                });
+            if(found == false) {
+                count++;
+                
+                dbRefLogin.push().set({
+                    Login_id: count,
+                    Password: pass,
+                    User_name: email,
+                    User_type_id: '1'
+                });
+            }
+        });
     });
-    
+    /*
     // Add logout event
     $( "body" ).on( "click", "#btnLogout",function(e){
         document.getElementById('firebaseui-auth-container').classList.add('hide');
@@ -246,18 +231,19 @@ query.once("value")
        firebase.auth().signOut(); 
     });
     
+    
     // Add a realtime listener: lets me know every single time the authentication state changes
     firebase.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser) {
             console.log(firebaseUser);
-            $('btnLogout').classList.remove('hide');
+            logout.classList.remove('hide');
         } else {
             console.log('not logged in');
-            $('btnLogout').classList.add('hide');
+            logout.classList.add('hide');
         }
     });
     
-    /*
+
     // Read from database
     btnRead.addEventListener('click', e => {
         document.getElementById('firebaseui-auth-container').classList.add('hide');
@@ -286,7 +272,7 @@ query.once("value")
         document.getElementById('Login').classList.remove('hide');
         document.getElementById('list').classList.remove('hide');
         
-        dbRefObject.on('value', snap => {
+        dbRefLogin.on('value', snap => {
             preObject.innerText = JSON.stringify(snap.val(), null, 3);
         });
         
@@ -325,10 +311,15 @@ query.once("value")
             User_type_id: '1'
         });
         
-        dbRefObject.on('value', snap => {
+        dbRefLogin.on('value', snap => {
             preObject.innerText = JSON.stringify(snap.val(), null, 3);
         });
         window.location.hash = "write";
         e.preventDefault();
     });
 });
+
+    function getEmailAndPassword(txtEmail, txtPassword) {
+        email = txtEmail.value;
+        pass = txtPassword.value;
+    }
