@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function home() {
     var r='';
     r+='<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">';
@@ -66,7 +65,9 @@ function login() {
     r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
     r+='</div>';
     r+='</div>';
-=======
+    return r;
+}
+
 function bus(data) {
     var r = "";
     r+='<div class = "intestation" id="intestation">';
@@ -83,19 +84,14 @@ function bus(data) {
 
     r+='<div>';
     r+='<div class="row">';
-
     r+='<div class="col-md-6 col-sm-6 col-xs-6" id="busList">';
     data.forEach(function (d) {
         r += '<div><h4>' + d.child('Bus_id').val() + '</h4></div>';
     });
-        r+='</div>';
-
-
-
-            r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-            r+='</div>';
-            r+='</div>';
-            r+='</div>';
->>>>>>> origin/master
+    r+='</div>';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+    r+='</div>';
+    r+='</div>';
+    r+='</div>';
     return r;
 }
