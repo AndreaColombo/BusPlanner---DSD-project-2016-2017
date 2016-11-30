@@ -129,11 +129,10 @@ $( document ).ready(function() {
                             $('#header').html(changeHeader);
                             $('#main').html(changeMain);
                         }
-                        console.log('You are registered.');
                     } 
                 });
             if(found == false) {
-                console.log('You are not registered. Please click the SignUp button to register.');
+                
             }
         });
     });
