@@ -10,6 +10,10 @@ $(document).on({
 $( document ).ready(function() {
     
     // Load home main 
+    var result = home();
+    $("#main").html(result);
+    window.location.hash = "home";
+    /*
     $.ajax({
         type:'GET',
         url: "api/homeFleet.php",
@@ -18,12 +22,51 @@ $( document ).ready(function() {
         $("#main").html(result);
     });
     window.location.hash = "homeFleet";
-    
+    */
     // Get elements from DOM
     const btnBus = document.getElementById('btnBus');
     const btnLogo1 = document.getElementById('btnLogo1');
     const btnLogo2 = document.getElementById('btnLogo2');
     
+    // Create references
+    const dbRefLogin = firebase.database().ref().child('Login');
+    const dbRefObject = firebase.database().ref().child('Bus');
+    const dbRefList = dbRefObject.child('Bus1');
+    
+    // Add login event
+    $("body").on("click", "#btnLogin", function (e){
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+
+        var found = false;
+        dbRefLogin.once('value')
+            .then(function(snapshot) {
+                snapshot.forEach(function(d) {
+                    if(email == d.child('User_name').val() && pass == d.child('Password').val()) {
+                        found = true;
+                        
+                        // Fleet manager's home
+                        if(d.child('User_type_id').val() == 1) {
+                            var changeHeader = headerFleet();
+                            var changeMain = mainFleet();
+                            $('#header').html(changeHeader);
+                            $('#main').html(changeMain);
+                        } 
+                        /*
+                        // Bus driver's home
+                        else {
+                            $('#header').html();
+                            $('#main').html();
+                        }
+                        */
+                        console.log('You are registered.');
+                    } 
+                });
+            if(found == false) {
+                console.log('You are not registered. Please click the SignUp button to register.');
+            }
+        });
+    });
 
     //the loading of the page for manage the bus
     $("body").on("click", "#btnBus", function (e){
@@ -54,9 +97,7 @@ $( document ).ready(function() {
             })
     }
     */
-    // Create references
-    const dbRefObject = firebase.database().ref().child('Bus');
-    const dbRefList = dbRefObject.child('Bus1');
+    
     
     
 /*
@@ -127,3 +168,8 @@ $( document ).ready(function() {
     
 
 });
+
+function getEmailAndPassword(txtEmail, txtPassword) {
+        email = txtEmail.value;
+        pass = txtPassword.value;
+}

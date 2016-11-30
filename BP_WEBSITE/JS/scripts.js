@@ -52,9 +52,8 @@ function login() {
     r+='<input type="password" id="txtPassword" class="form-control" placeholder="Password">';
     r+='</div>';
     r+='<div class="text-center">';
-    r+='<button type="button" onclick="getEmailAndPassword(txtEmail, txtPassword)" class="btn btn-primary"  id="btnLogin2" style="min-width:20%; margin-right:3%;">Log in</button>';
-    r+='<button type="button" onclick="getEmailAndPassword(txtEmail, txtPassword)" class="btn btn-success" id="btnSignUp" style="min-width:20%; margin-left:3%;">SignUp</button>';
-    r+='<button type="button" class="btn btn-default hide" id="btnLogout" style="min-width:20%">Log out</button>';
+    r+='<button type="button" onclick="getEmailAndPassword(txtEmail, txtPassword)" class="btn btn-primary"  id="btnLogin2" style="min-width:20%">Log in</button>';
+    //r+='<button type="button" onclick="getEmailAndPassword(txtEmail, txtPassword)" class="btn btn-success" id="btnSignUp" style="min-width:20%; margin-left:3%;">SignUp</button>';
     r+='</div>   ';
     r+='<h4 class="text-center">Did you forget your password? <a href="#">Click here</a></h4> ';
     r+='</div>';

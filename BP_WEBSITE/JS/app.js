@@ -182,6 +182,16 @@ query.once("value")
                 snapshot.forEach(function(d) {
                     if(email == d.child('User_name').val() && pass == d.child('Password').val()) {
                         found = true;
+                        
+                        // Fleet manager's home
+                        if(d.child('User_type_id').val() == 1) {
+                            $('#main').html();
+                        } 
+                        // Bus driver's home
+                        else {
+                            $('#main').html();
+                        }
+                        
                         console.log('You are registered.');
                     } 
                 });
@@ -190,7 +200,7 @@ query.once("value")
             }
         });
     });
-
+/*
     // Add signup event
     $( "body" ).on( "click", "#btnSignUp",function(e){
         document.getElementById('firebaseui-auth-container').classList.add('hide');
@@ -221,7 +231,7 @@ query.once("value")
             }
         });
     });
-    /*
+    
     // Add logout event
     $( "body" ).on( "click", "#btnLogout",function(e){
         document.getElementById('firebaseui-auth-container').classList.add('hide');
