@@ -263,8 +263,20 @@ function getEmailAndPassword(txtEmail, txtPassword) {
 
 
 
-//get data from a form
-function getData(){
-    var inputBusId = document.getElementById("busId");
-    console.log("dovrei vedere ciò" + inputBusId.value);
+//get data from a form, b is the dynamic index of the bus
+function getData(num){
+
+
+    var inputBusId = document.getElementById("busId"+num);
+    var inputCapacity = document.getElementById("busCapacity"+num);
+    var inputType = document.getElementById("busType"+num);
+    var inputDriver = document.getElementById("busDriver"+num);
+
+    
+
+
+    console.log("dovrei vedere " + inputBusId.value);
+    console.log("dovrei vedere " + inputCapacity.value);
+    console.log("dovrei vedere " + inputType.value);
+    console.log("dovrei vedere " + inputDriver.value);
 }

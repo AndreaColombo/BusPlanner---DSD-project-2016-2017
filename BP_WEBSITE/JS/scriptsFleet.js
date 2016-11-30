@@ -269,7 +269,7 @@ function getBus(data) {
     r+='<div class="col-md-6 col-sm-6 col-xs-6" id="busList">';
     data.forEach(function (d) {
         r += '<div><h5>' +"Bus Id: "+ d.child('Bus_id').val() +
-                ' <a data-toggle="modal" data-target="#modalView'+d.child('Bus_id').val()+'">Info</a>     '+'<a data-toggle="modal" data-target="#modalModify">Modify</a>     ' + '<a>Delete</a>';
+                ' <a data-toggle="modal" data-target="#modalView'+d.child('Bus_id').val()+'">Info</a>     '+'<a data-toggle="modal" data-target="#modalModify'+d.child('Bus_id').val()+'">Modify</a>     ' + '<a>Delete</a>';
             '</h5></div>';
         <!-- start modalView -->
         r += '<div id="modalView'+d.child('Bus_id').val()+'" class="modal fade" role="dialog">';
@@ -299,9 +299,9 @@ function getBus(data) {
         <!-- end modalView -->
 
         <!-- start modalModify -->
-        r += '<div id="modalModify" class="modal fade" role="dialog">';
+        r += '<div id="modalModify'+d.child('Bus_id').val()+'" class="modal fade" role="dialog">';
         r += '<div class="modal-dialog">';
-
+        var busIdent = d.child('Bus_id').val();
         <!-- Modal content-->
         r +='<div class="modal-content">' ;
         r += '<div class="modal-header">';
@@ -312,22 +312,24 @@ function getBus(data) {
         r +='<form>'+
             '<div class="form-group">'+
             '<label for="id">Bus Id:</label>'+
-            '<input type="text" class="form-control" id="busId" value="'+ d.child("Bus_id").val() +'">'+
+            '<input type="text" class="form-control" id="busId'+d.child('Bus_id').val()+'" value="'+ d.child("Bus_id").val() +'">'+
             '</div>'+
             '<div class="form-group">'+
             '<label for="capacity">Capacity:</label>'+
-            '<input type="text" class="form-control" id="busCapacity" value="'+ d.child("Bus_capacity").val() +'">'+
+            '<input type="text" class="form-control" id="busCapacity'+d.child('Bus_id').val()+'" value="'+ d.child("Bus_capacity").val() +'">'+
             '</div>'+
             '<div class="form-group">'+
             '<label for="type">Type:</label>'+
-            '<input type="text" class="form-control" id="busType" value="'+ d.child("Bus_type").val() +'">'+
+            '<input type="text" class="form-control" id="busType'+d.child('Bus_id').val()+'" value="'+ d.child("Bus_type").val() +'">'+
             '</div>'+
             '<div class="form-group">'+
             '<label for="driver">Driver:</label>'+
-            '<input type="text" class="form-control" id="busDriver" value="'+ d.child("Driver_id").val() +'">'+
+            '<input type="text" class="form-control" id="busDriver'+d.child('Bus_id').val()+'" value="'+ d.child("Driver_id").val() +'">'+
             '</div>'+
-            '<button type="button" onclick="getData()" id="submitModBus" class="btn btn-default">Submit</button>'+
+                //i have to put in get data the dynamic index
+            '<button type="button" onclick="getData('+d.child('Bus_id').val() +')" id="submitModBus'+d.child('Bus_id').val()+'" class="btn btn-default">Submit</button>'+
             '</form>';
+
 
         r +='</div>';
         r +='<div class="modal-footer">';
