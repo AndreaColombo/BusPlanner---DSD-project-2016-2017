@@ -228,7 +228,7 @@ function mainDriver() {
     return r;
 }
 
-function bus(data) {
+function getBus(data) {
     var r = "";
     r+='<div class = "intestation" id="intestation">';
     r+='<div class = "row" >';
@@ -237,7 +237,92 @@ function bus(data) {
     r+='<h4 id = "minimalDescription">Here you can add, remove, or modify our buses </h4>';
     r+='</div>';
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<img src = "../Images/modifyBuses.jpg" class = "intestationImages"  >';
+    r+='<img src = "Images/modifyBuses.jpg" class = "intestationImages"  >';
+    r+='</div>';
+    r+='</div>';
+    r+='</div>';
+
+    r+='<div>';
+    r+='<div class="row">';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6" id="busList">';
+    data.forEach(function (d) {
+        r += '<div><h5>' +"Bus Id: "+ d.child('Bus_id').val() +
+                ' <a data-toggle="modal" data-target="#modalView">Info</a>     '+'<a data-toggle="modal" data-target="#modalModify">Modify</a>     ' + '<a>Delete</a>';
+            '</h5></div>';
+        <!-- start modalView -->
+        r += '<div id="modalView" class="modal fade" role="dialog">';
+        r += '<div class="modal-dialog">';
+
+        <!-- Modal content-->
+        r +='<div class="modal-content">' ;
+        r += '<div class="modal-header">';
+        r +='<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        r +='<h4 class="modal-title">Bus '+ d.child('Bus_id').val()+ ' Information</h4>';
+        r +='</div>';
+        r +='<div class="modal-body">';
+        r +='<p>Bus capacity: '+d.child('Bus_capacity').val() +'<br>' +
+            'Bus Type:'+ d.child('Bus_type').val()+'<br>' +
+            'Driver Id: '+ d.child('Driver_id').val()+'<br>' +
+            'Latitude: '+ d.child('Latitude').val()+'<br>' +
+            'Longitude: '+ d.child('Longitude').val()+'<br>' +
+            '</p>';
+        r +='</div>';
+        r +='<div class="modal-footer">';
+        r +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r +='</div>';
+        r +='</div>';
+
+        r +='</div>';
+        r +='</div>';
+        <!-- end modalView -->
+
+        <!-- start modalModify -->
+        r += '<div id="modalView" class="modal fade" role="dialog">';
+        r += '<div class="modal-dialog">';
+
+        <!-- Modal content-->
+        r +='<div class="modal-content">' ;
+        r += '<div class="modal-header">';
+        r +='<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        r +='<h4 class="modal-title">Bus '+ d.child('Bus_id').val()+ ' Information</h4>';
+        r +='</div>';
+        r +='<div class="modal-body">';
+        r +='<p>Bus capacity: '+d.child('Bus_capacity').val() +'<br>' +
+            'Bus Type:'+ d.child('Bus_type').val()+'<br>' +
+            'Driver Id: '+ d.child('Driver_id').val()+'<br>' +
+            'Latitude: '+ d.child('Latitude').val()+'<br>' +
+            'Longitude: '+ d.child('Longitude').val()+'<br>' +
+            '</p>';
+        r +='</div>';
+        r +='<div class="modal-footer">';
+        r +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r +='</div>';
+        r +='</div>';
+
+        r +='</div>';
+        r +='</div>';
+        <!-- end modalModify -->
+    });
+    r+='</div>';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+    r+='</div>';
+    r+='</div>';
+    r+='</div>';
+    return r;
+}
+
+
+
+function getDriver(data) {
+    var r = "";
+    r+='<div class = "intestation" id="intestation">';
+    r+='<div class = "row" >';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6" >';
+    r+='<h3 id = "titleIntestation" >Driver Management</h3>';
+    r+='<h4 id = "minimalDescription">Here you can see and modify the drivers of our company </h4>';
+    r+='</div>';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+    r+='<img src = "Images/modifyBuses.jpg" class = "intestationImages"  >';
     r+='</div>';
     r+='</div>';
     r+='</div>';

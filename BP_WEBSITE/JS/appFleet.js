@@ -145,7 +145,24 @@ $( document ).ready(function() {
         query.once("value")
             .then(function (snapshot) {
                 //bus is the function in script.js
-                var result = bus(snapshot);
+                var result = getBus(snapshot);
+                $("#main").html(result);
+            });
+
+        window.location.hash = "fleetBus";
+        e.preventDefault();
+    });
+
+
+
+
+    $("body").on("click", "#btnDriver", function (e){
+
+        var query = firebase.database().ref().child("Bus");
+        query.once("value")
+            .then(function (snapshot) {
+                //bus is the function in script.js
+                var result = getDriver(snapshot);
                 $("#main").html(result);
             });
 
