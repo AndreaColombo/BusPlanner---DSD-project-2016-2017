@@ -37,6 +37,28 @@ function home() {
     r+='<div class="text-center">';
     r+='<button type="button" onclick="getEmailAndPassword(txtEmail, txtPassword)" class="btn btn-primary"  id="btnLogin" style="min-width:20%">Log in</button>';
     //r+='<button type="button" onclick="getEmailAndPassword(txtEmail, txtPassword)" class="btn btn-success" id="btnSignUp" style="min-width:20%; margin-left:3%;">SignUp</button>';
+    
+        <!-- start modalView -->
+        r += '<div id="#loginModal" class="modal fade" role="dialog">';
+        r += '<div class="modal-dialog">';
+
+        <!-- Modal content-->
+        r +='<div class="modal-content">' ;
+        r +='<div class="modal-header">';
+        r +='<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        r +='<h2 class="modal-title">LOGIN ERROR</h2>';
+        r +='</div>';
+        r +='<div class="modal-body">';
+        r +='<p>Wrong credentials.</p>';
+        r +='</div>';
+        r +='<div class="modal-footer">';
+        r +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r +='</div>';
+        r +='</div>';
+        r +='</div>';
+        r +='</div>';
+        <!-- end modalView -->
+    
     r+='</div>   ';
     r+='<h4 class="text-center">Did you forget your password? <a href="#">Click here</a></h4> ';
     r+='</div>';

@@ -1,12 +1,3 @@
-/**loading modal -- spinner*/
-$body = $("body");
-
-$(document).on({
-    ajaxStart: function() {
-        $body.addClass("loading");    },
-    ajaxStop: function() { $body.removeClass("loading"); }
-});
-
 $( document ).ready(function() {
     
     // Load home main 
@@ -59,7 +50,7 @@ $( document ).ready(function() {
         e.preventDefault(); 
     });
     
-    $('body').on('click', '#btnLogin1Fleet', function(e) {
+    $('body').on('click', '#btnLogo1Fleet', function(e) {
         document.getElementById('map').classList.add('hide');
         document.getElementById('list').classList.add('hide');
         var result = homeFleet();
@@ -70,7 +61,7 @@ $( document ).ready(function() {
         e.preventDefault(); 
     });
     
-    $('body').on('click', '#btnLogin2Fleet', function(e) {
+    $('body').on('click', '#btnLogo2Fleet', function(e) {
         document.getElementById('map').classList.add('hide');
         document.getElementById('list').classList.add('hide');
         var result = homeFleet();
@@ -81,7 +72,7 @@ $( document ).ready(function() {
         e.preventDefault(); 
     });
     
-    $('body').on('click', '#btnLogin1Driver', function(e) {
+    $('body').on('click', '#btnLogo1Driver', function(e) {
         document.getElementById('map').classList.add('hide');
         document.getElementById('list').classList.add('hide');
         var result = homeDriver();
@@ -92,7 +83,7 @@ $( document ).ready(function() {
         e.preventDefault(); 
     });
     
-    $('body').on('click', '#btnLogin1Driver', function(e) {
+    $('body').on('click', '#btnLogo1Driver', function(e) {
         document.getElementById('map').classList.add('hide');
         document.getElementById('list').classList.add('hide');
         var result = homeDriver();
@@ -100,6 +91,17 @@ $( document ).ready(function() {
         $('#header').html(result2);
         $("#main").html(result);
         window.location.hash = "homeDriver";
+        e.preventDefault(); 
+    });
+    
+    $('body').on('click', '#btnLogout', function(e) {
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+        var result = home();
+        var result2 = header();
+        $('#header').html(result2);
+        $("#main").html(result);
+        window.location.hash = "home";
         e.preventDefault(); 
     });
     
@@ -121,6 +123,7 @@ $( document ).ready(function() {
                             var changeMain = mainFleet();
                             $('#header').html(changeHeader);
                             $('#main').html(changeMain);
+                            window.location.hash = "homeFleet";
                         } 
                         // Bus driver's home
                         else {
@@ -128,11 +131,12 @@ $( document ).ready(function() {
                             var changeMain = mainDriver();
                             $('#header').html(changeHeader);
                             $('#main').html(changeMain);
+                            window.location.hash = "homeDriver";
                         }
                     } 
                 });
             if(found == false) {
-                
+                $('#\\#loginModal').modal('show');
             }
         });
     });
@@ -151,9 +155,6 @@ $( document ).ready(function() {
         window.location.hash = "fleetBus";
         e.preventDefault();
     });
-
-
-
 
     $("body").on("click", "#btnDriver", function (e){
 

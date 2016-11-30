@@ -57,3 +57,7 @@
 #intestation{
     border-bottom: 1px solid lightBlue;
 }
+
+.hide {
+    display:none;
+}
