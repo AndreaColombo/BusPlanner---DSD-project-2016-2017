@@ -11,6 +11,8 @@ $( document ).ready(function() {
     
     // Load home main 
     var result = home();
+    var result2 = header();
+    $('#header').html(result2);
     $("#main").html(result);
     window.location.hash = "home";
     /*
@@ -33,6 +35,74 @@ $( document ).ready(function() {
     const dbRefObject = firebase.database().ref().child('Bus');
     const dbRefList = dbRefObject.child('Bus1');
     
+    // Add home event
+    btnLogo1.addEventListener('click', e => {
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+        var result = home();
+        var result2 = header();
+        $('#header').html(result2);
+        $("#main").html(result);
+        window.location.hash = "home";
+        e.preventDefault(); 
+    });
+    
+    // Add home event
+    btnLogo2.addEventListener('click', e => {
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+        var result = home();
+        var result2 = header();
+        $('#header').html(result2);
+        $("#main").html(result);
+        window.location.hash = "home";
+        e.preventDefault(); 
+    });
+    
+    $('body').on('click', '#btnLogin1Fleet', function(e) {
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+        var result = homeFleet();
+        var result2 = headerFleet();
+        $('#header').html(result2);
+        $("#main").html(result);
+        window.location.hash = "homeFleet";
+        e.preventDefault(); 
+    });
+    
+    $('body').on('click', '#btnLogin2Fleet', function(e) {
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+        var result = homeFleet();
+        var result2 = headerFleet();
+        $('#header').html(result2);
+        $("#main").html(result);
+        window.location.hash = "homeFleet";
+        e.preventDefault(); 
+    });
+    
+    $('body').on('click', '#btnLogin1Driver', function(e) {
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+        var result = homeDriver();
+        var result2 = headerDriver();
+        $('#header').html(result2);
+        $("#main").html(result);
+        window.location.hash = "homeDriver";
+        e.preventDefault(); 
+    });
+    
+    $('body').on('click', '#btnLogin1Driver', function(e) {
+        document.getElementById('map').classList.add('hide');
+        document.getElementById('list').classList.add('hide');
+        var result = homeDriver();
+        var result2 = headerDriver();
+        $('#header').html(result2);
+        $("#main").html(result);
+        window.location.hash = "homeDriver";
+        e.preventDefault(); 
+    });
+    
     // Add login event
     $("body").on("click", "#btnLogin", function (e){
         document.getElementById('map').classList.add('hide');
@@ -52,13 +122,13 @@ $( document ).ready(function() {
                             $('#header').html(changeHeader);
                             $('#main').html(changeMain);
                         } 
-                        /*
                         // Bus driver's home
                         else {
-                            $('#header').html();
-                            $('#main').html();
+                            var changeHeader = headerDriver();
+                            var changeMain = mainDriver();
+                            $('#header').html(changeHeader);
+                            $('#main').html(changeMain);
                         }
-                        */
                         console.log('You are registered.');
                     } 
                 });

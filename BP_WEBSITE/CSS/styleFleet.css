@@ -1,9 +1,7 @@
 #fleetSection{
     background-color: aliceblue;
     height: 200px;
-    width: 50%
-    
-    
+    width: 50% 
 }
 
 #imageHomeFleet{
@@ -16,18 +14,14 @@
     background: rgba(216, 213, 213, 0.8);
     border-style: solid;
     border-width: 1px;
-    border-color: black;
-    
+    border-color: black; 
 }
 
 
 
 #jumboStyle{
-
-    
     border: 1px solid black;
     height: 200px;
-    
 }
 
 

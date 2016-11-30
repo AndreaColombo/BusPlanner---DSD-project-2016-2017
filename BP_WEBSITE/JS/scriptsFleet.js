@@ -1,3 +1,23 @@
+function header() {
+    var r = '';
+    r+='<nav class="navbar navbar-default">';
+    r+='<div class="container-fluid" style="min-height:70px">';
+    r+='<div class="navbar-header">';
+    r+='<a class="navbar-brand" href="#" id="btnLogo1"><img alt="Brand" style="max-height:40px" src="Images/BusLogo.gif"></a>';
+    r+='<a class="navbar-brand" style="padding-top:25px" href="#" id="btnLogo2">BusPlanner</a>';
+    r+='</div>';
+    r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
+    r+='<ul class="nav navbar-nav navbar-right">';
+    r+='<li><a id="btnMap" href="#" style="padding-top:25px">MAP</a></li>';
+    r+='<li><a id="btnRead" href="#" style="padding-top:25px">Read JSON</a></li>';
+    r+='<li><a id="btnWrite" href="#" style="padding-top:25px">Write JSON</a></li>';
+    r+='</ul>';
+    r+='</div>';
+    r+='</div>';
+    r+='</nav>';
+    return r;
+}
+
 function home() {
     var r = '';
     r+='<div class="background-image" id="backgroundimage"></div>';
@@ -35,8 +55,8 @@ function headerFleet() {
     r+='<nav class="navbar navbar-default">';
             r+='<div class="container-fluid" style="min-height:70px">';
                 r+='<div class="navbar-header">';
-                    r+='<a class="navbar-brand" href="indexFleet.html" id="btnLogo1"><img alt="Brand" style="max-height:40px" src="Images/BusLogo.gif"></a>';
-                    r+='<a class="navbar-brand" style="padding-top:25px" href="indexFleet.html" id="btnLogo2">BusPlanner</a>';
+                    r+='<a class="navbar-brand" href="indexFleet.html" id="btnLogo1Fleet"><img alt="Brand" style="max-height:40px" src="Images/BusLogo.gif"></a>';
+                    r+='<a class="navbar-brand" style="padding-top:25px" href="indexFleet.html" id="btnLogo2Fleet">BusPlanner</a>';
                 r+='</div>';
                 r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
                     r+='<ul class="nav navbar-nav navbar-right">';
@@ -44,6 +64,27 @@ function headerFleet() {
                         r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Driver</a></li>';
 		                r+='<li><a id="btnSchedule" href="#" style="padding-top:25px">Route Schedule</a></li>';
                         r+='<li><a id="btnTime" href="#" style="padding-top:25px">Schedele Time</a></li>';
+                        r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
+                   r+='</ul>';
+                r+='</div>';
+            r+='</div>';
+        r+='</nav>';
+    return r;
+}
+
+function headerDriver() {
+    var r = '';
+    r+='<nav class="navbar navbar-default">';
+            r+='<div class="container-fluid" style="min-height:70px">';
+                r+='<div class="navbar-header">';
+                    r+='<a class="navbar-brand" href="#" id="btnLogo1Driver"><img alt="Brand" style="max-height:40px" src="Images/BusLogo.gif"></a>';
+                    r+='<a class="navbar-brand" style="padding-top:25px" href="#" id="btnLogo2Driver">BusPlanner</a>';
+                r+='</div>';
+                r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
+                    r+='<ul class="nav navbar-nav navbar-right">';
+                        r+='<li><a id="btnBus" href="#" style="padding-top:25px">View user requests</a></li>';
+                        r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Manage user requests</a></li>';
+		                r+='<li><a id="btnSchedule" href="#" style="padding-top:25px">View schedule</a></li>';
                         r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
                    r+='</ul>';
                 r+='</div>';
@@ -130,6 +171,60 @@ function mainFleet() {
         r+='</div>';
     r+='</div>';
 
+    return r;
+}
+
+function mainDriver() {
+    var r = '';
+    
+    // View user requests
+    r+='<div class="row">';
+        r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+            r+='<div class="row">';
+                r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+                r+='<div class="col-md-11 col-sm-11 col-xs-11">';
+                r+='<a href="#">';
+                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/Homepage3.jpg)" align= "center">';
+                        r+='<h3 id="imageText">View user requests</h3>';
+                        r+='<h4 id="imageText">Here you can view the user requests on a map.</h4>';
+                    r+='</div>';
+                r+='</a>';
+                r+='</div>';
+            r+='</div>';
+        r+='</div>';
+    
+    // Manage user requests
+    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+            r+='<div class="row">';
+                r+='<div class="col-md-11 col-sm-11 col-xs-11">';
+                r+='<a href="#">';
+                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyBuses.jpg)" align= "center">';
+                        r+='<h3 id="imageText">Manage user requests</h3>';
+                        r+='<h4 id="imageText">Here you can manage the user requests.</h4>';
+                    r+='</div>';
+                r+='</a>';
+                r+='</div>';
+                r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+            r+='</div>';
+        r+='</div>';
+    r+='</div>';
+    
+    // View schedule
+    r+='<div>';
+        r+='<div class="row">';
+            r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
+            r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+    r+='<a href="#">';
+                r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyBuses.jpg)" align= "center">';
+                        r+='<h3 id="imageText">View schedule</h3>';
+                        r+='<h4 id="imageText">Here you can view your schedule.</h4>';
+                    r+='</div>';
+    r+='</a>';
+            r+='</div>';
+            r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>'; 
+        r+='</div>';
+    r+='</div>';
+    
     return r;
 }
 
