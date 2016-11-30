@@ -260,3 +260,11 @@ function getEmailAndPassword(txtEmail, txtPassword) {
         email = txtEmail.value;
         pass = txtPassword.value;
 }
+
+
+
+//get data from a form
+function getData(){
+    var inputBusId = document.getElementById("busId");
+    console.log("dovrei vedere ciò" + inputBusId.value);
+}
