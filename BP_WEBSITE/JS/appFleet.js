@@ -263,20 +263,44 @@ function getEmailAndPassword(txtEmail, txtPassword) {
 
 
 
-//get data from a form, b is the dynamic index of the bus
+//get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
 function getData(num){
 
 
-    var inputBusId = document.getElementById("busId"+num);
-    var inputCapacity = document.getElementById("busCapacity"+num);
-    var inputType = document.getElementById("busType"+num);
-    var inputDriver = document.getElementById("busDriver"+num);
+    const inputBusId = document.getElementById("busId"+num);
+    const inputCapacity = document.getElementById("busCapacity"+num);
+    const inputType = document.getElementById("busType"+num);
+    const inputDriver = document.getElementById("busDriver"+num);
+    const inputLatitude = document.getElementById("busLatitude"+num);
+    const inputLongitude = document.getElementById("busLongitude"+num);
 
-    
+    const dbRefBus = firebase.database().ref().child('Bus');
+    const dbRefBusN = dbRefBus.child('Bus'+ num);
 
 
-    console.log("dovrei vedere " + inputBusId.value);
-    console.log("dovrei vedere " + inputCapacity.value);
-    console.log("dovrei vedere " + inputType.value);
-    console.log("dovrei vedere " + inputDriver.value);
+
+
+
+    dbRefBusN.set({
+        Bus_capacity: inputCapacity.value.toString(),
+        Bus_id: inputBusId.value.toString(),
+        Bus_type: inputType.value.toString(),
+        Driver_id: inputDriver.value.toString(),
+        Latitude: inputLatitude.value.toString(),
+        Longitude: inputLongitude.value.toString()
+
+    });
+
+
+
+}
+
+
+function getMapBus(){
+    var mapCanvas = document.getElementById("mapBus");
+    var mapOptions = {
+        center: new google.maps.LatLng(51.5, -0.2),
+        zoom: 10
+    };
+    var map = new google.maps.Map(mapCanvas, mapOptions);
 }

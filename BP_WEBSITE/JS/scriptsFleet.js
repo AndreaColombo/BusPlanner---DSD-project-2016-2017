@@ -277,7 +277,7 @@ function getBus(data) {
 
         <!-- Modal content-->
         r +='<div class="modal-content">' ;
-        r += '<div class="modal-header">';
+        r +='<div class="modal-header">';
         r +='<button type="button" class="close" data-dismiss="modal">&times;</button>';
         r +='<h4 class="modal-title">Bus '+ d.child('Bus_id').val()+ ' Information</h4>';
         r +='</div>';
@@ -326,6 +326,14 @@ function getBus(data) {
             '<label for="driver">Driver:</label>'+
             '<input type="text" class="form-control" id="busDriver'+d.child('Bus_id').val()+'" value="'+ d.child("Driver_id").val() +'">'+
             '</div>'+
+            '<div class="form-group">'+
+            '<label for="latitude">Latitude:</label>'+
+            '<input type="text" class="form-control " id="busLatitude'+d.child('Bus_id').val()+'" value="'+ d.child("Latitude").val() +'" disabled>'+
+            '</div>'+
+            '<div class="form-group">'+
+            '<label for="longitude">Longitude:</label>'+
+            '<input type="text" class="form-control " id="busLongitude'+d.child('Bus_id').val()+'" value="'+ d.child("Longitude").val() +'" disabled>'+
+            '</div>'+
                 //i have to put in get data the dynamic index
             '<button type="button" onclick="getData('+d.child('Bus_id').val() +')" id="submitModBus'+d.child('Bus_id').val()+'" class="btn btn-default">Submit</button>'+
             '</form>';
@@ -342,7 +350,9 @@ function getBus(data) {
         <!-- end modalModify -->
     });
     r+='</div>';
-    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6">'+
+        '<div id="mapBus" style="width:500px;height:500px;background:yellow">';
+    r+= '<button type="button" onclick="getMapBus()" id="mapBus" class="btn btn-default">Submit</button></div>';
     r+='</div>';
     r+='</div>';
     r+='</div>';
