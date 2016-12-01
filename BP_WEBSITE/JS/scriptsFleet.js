@@ -205,8 +205,8 @@ function mainDriver() {
             r+='<div class="row">';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
                 r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                r+='<a href="#">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/Homepage3.jpg)" align= "center">';
+                r+='<a href="#" id="viewRequests">';
+                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/ViewRequests6.png)" align= "center">';
                         r+='<h3 id="imageText">View user requests</h3>';
                         r+='<h4 id="imageText">Here you can view the user requests on a map.</h4>';
                     r+='</div>';
@@ -219,8 +219,8 @@ function mainDriver() {
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div class="row">';
                 r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                r+='<a href="#">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyBuses.jpg)" align= "center">';
+                r+='<a href="#" id="manageRequests">';
+                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/ManageUserRequests2.png)" align= "center">';
                         r+='<h3 id="imageText">Manage user requests</h3>';
                         r+='<h4 id="imageText">Here you can manage the user requests.</h4>';
                     r+='</div>';
@@ -236,17 +236,52 @@ function mainDriver() {
         r+='<div class="row">';
             r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
             r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<a href="#">';
+            r+='<a href="#" id="viewSchedule">';
                 r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyBuses.jpg)" align= "center">';
                         r+='<h3 id="imageText">View schedule</h3>';
                         r+='<h4 id="imageText">Here you can view your schedule.</h4>';
                     r+='</div>';
-    r+='</a>';
+            r+='</a>';
             r+='</div>';
             r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>'; 
         r+='</div>';
     r+='</div>';
     
+    return r;
+}
+
+function viewUserRequests() {
+    var r = "";
+    r+='<div id="map1">';
+    r+='<button type="button" onclick="getMapDriver()" class="btn">Submit</button>';
+    r+='</div>';
+    return r;
+}
+
+function viewScheduleDriver(data) {
+    var r = "";
+    r+='<div class = "row">';
+    r+='<div class="col-md-5 col-sm-5 col-xs-5">';
+    r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+    r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container" style="height:500px">';
+    
+    r+='<h2 style="padding-left:5%">YOUR SCHEDULE</h2>';
+    r+='<ul style="padding-left:10%">';
+    
+    data.forEach(function (d) {
+        r+='<li>'+d.val()+'<br>';
+        r+='<p style="color:red">To take:</p>';
+        r+='</li>';
+    });
+
+    r+='</ul>';
+    r+='</div>';
+    r+='</div>';
+    
+    r+='<div class="col-md-7 col-sm-7 col-xs-7" id="map1">';
+    r+='<button type="button" onclick="getMapDriver()" class="btn">Submit</button>';
+    r+='</div>';
+    r+='</div>';
     return r;
 }
 

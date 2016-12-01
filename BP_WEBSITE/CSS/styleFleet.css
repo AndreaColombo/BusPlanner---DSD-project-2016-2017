@@ -1,3 +1,5 @@
+html, body { height: 100%; margin: 0; padding: 0; }
+
 #fleetSection{
     background-color: aliceblue;
     height: 200px;
@@ -17,19 +19,15 @@
     border-color: black; 
 }
 
-
 .intestationImages{
     height: 200px;
     width: 600px;
 }
 
-
 #jumboStyle{
     border: 1px solid black;
     height: 200px;
 }
-
-
 
 #imageText{
     color: white;
@@ -58,6 +56,20 @@
     border-bottom: 1px solid lightBlue;
 }
 
-.hide {
-    display:none;
+.verticalLine {
+    border-left: solid #000000;
+}
+
+#map1 {
+    height:500px;
+    width:700px;
+}
+
+div.scroll {
+    overflow: scroll;
+}
+
+.container {
+    border: 1px solid black;
+    border-radius: 7px;
 }

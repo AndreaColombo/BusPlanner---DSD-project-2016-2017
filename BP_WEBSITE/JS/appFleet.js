@@ -28,8 +28,7 @@ $( document ).ready(function() {
     
     // Add home event
     btnLogo1.addEventListener('click', e => {
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
+        //document.getElementById('map').classList.add('hide');
         var result = home();
         var result2 = header();
         $('#header').html(result2);
@@ -40,8 +39,7 @@ $( document ).ready(function() {
     
     // Add home event
     btnLogo2.addEventListener('click', e => {
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
+        //document.getElementById('map').classList.add('hide');
         var result = home();
         var result2 = header();
         $('#header').html(result2);
@@ -51,9 +49,8 @@ $( document ).ready(function() {
     });
     
     $('body').on('click', '#btnLogo1Fleet', function(e) {
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
-        var result = homeFleet();
+        //document.getElementById('map').classList.add('hide');
+        var result = mainFleet();
         var result2 = headerFleet();
         $('#header').html(result2);
         $("#main").html(result);
@@ -62,9 +59,8 @@ $( document ).ready(function() {
     });
     
     $('body').on('click', '#btnLogo2Fleet', function(e) {
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
-        var result = homeFleet();
+        //document.getElementById('map').classList.add('hide');
+        var result = mainFleet();
         var result2 = headerFleet();
         $('#header').html(result2);
         $("#main").html(result);
@@ -73,30 +69,25 @@ $( document ).ready(function() {
     });
     
     $('body').on('click', '#btnLogo1Driver', function(e) {
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
-        var result = homeDriver();
-        var result2 = headerDriver();
-        $('#header').html(result2);
+        //document.getElementById('map').classList.add('hide');
+        //document.getElementById('main').classList.remove('hide');
+        var result = mainDriver();
         $("#main").html(result);
         window.location.hash = "homeDriver";
         e.preventDefault(); 
     });
     
-    $('body').on('click', '#btnLogo1Driver', function(e) {
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
-        var result = homeDriver();
-        var result2 = headerDriver();
-        $('#header').html(result2);
+    $('body').on('click', '#btnLogo2Driver', function(e) {
+        //document.getElementById('map').classList.add('hide');
+        //document.getElementById('main').classList.remove('hide');
+        var result = mainDriver();
         $("#main").html(result);
         window.location.hash = "homeDriver";
         e.preventDefault(); 
     });
     
     $('body').on('click', '#btnLogout', function(e) {
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
+        //document.getElementById('map').classList.add('hide');
         var result = home();
         var result2 = header();
         $('#header').html(result2);
@@ -107,8 +98,7 @@ $( document ).ready(function() {
     
     // Add login event
     $("body").on("click", "#btnLogin", function (e){
-        document.getElementById('map').classList.add('hide');
-        document.getElementById('list').classList.add('hide');
+        //document.getElementById('map').classList.add('hide');
 
         var found = false;
         dbRefLogin.once('value')
@@ -139,6 +129,40 @@ $( document ).ready(function() {
                 $('#\\#loginModal').modal('show');
             }
         });
+    });
+    
+    $("body").on("click", "#viewRequests", function (e){
+        //document.getElementById('main').classList.add('hide');
+        //document.getElementById('map').classList.remove('hide');
+    
+        var result = viewUserRequests();
+        $('#main').html(result);
+        
+        window.location.hash = "view_user_requests";
+        e.preventDefault();
+    });
+    
+    $("body").on("click", "#manageRequests", function (e){
+        //document.getElementById('main').classList.remove('hide');
+        //document.getElementById('map').classList.add('hide');
+        
+        window.location.hash = "manage_user_requests";
+        e.preventDefault();
+    });
+    
+    $("body").on("click", "#viewSchedule", function (e){
+        //document.getElementById('main').classList.remove('hide');
+        //document.getElementById('map').classList.add('hide');
+        
+        var query = firebase.database().ref().child("RouteSchedule").child("RouteSchedule1").child("Stops");
+        query.once("value")
+            .then(function (snapshot) {
+                var result = viewScheduleDriver(snapshot);
+                $('#main').html(result);
+            });
+        
+        window.location.hash = "view_schedule";
+        e.preventDefault();
     });
 
     //the loading of the page for manage the bus
@@ -261,7 +285,75 @@ function getEmailAndPassword(txtEmail, txtPassword) {
         pass = txtPassword.value;
 }
 
-
+function getMapDriver() {
+    
+    var uluru = {lat: 64.01, lng: 19.05};
+        var map = new google.maps.Map(document.getElementById('map1'), {
+            center: {
+                lat: 64.01,
+                lng: 19.05
+            },
+            zoom: 14,
+            styles: [{
+                featureType: 'poi',
+                stylers: [{
+                visibility: 'on'
+                }] // Turn off points of interest.
+            }, {
+                featureType: 'transit.station',
+                stylers: [{
+                    visibility: 'on'
+                }] // Turn off bus stations, train stations, etc.
+            }],
+            disableDoubleClickZoom: false
+        });
+		 
+		//HERE THE INFO FROM DB 
+		var contentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+            'sandstone rock formation in the southern part of the '+
+            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+            'south west of the nearest large town, Alice Springs; 450&#160;km '+
+            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+            'Aboriginal people of the area. It has many springs, waterholes, '+
+            'rock caves and ancient paintings. Uluru is listed as a World '+
+            'Heritage Site.</p>'+
+            '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+            'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+            '(last visited June 22, 2009).</p>'+
+            '</div>'+
+            '</div>';
+   
+        var query = firebase.database().ref("UserRequest").orderByKey();
+        query.once("value")
+            .then(function(snapshot) {
+                for (var i = 1; i <= 2; ++i) {
+                    var lat = snapshot.child("UserRequest"+i+"/Latitude").val(); 
+                    var long = snapshot.child("UserRequest"+i+"/Longitude").val(); 
+                    var status = snapshot.child("UserRequest"+i+"/Status").val(); 
+                    var latLng = new google.maps.LatLng(lat,long);
+                    var infowindow = new google.maps.InfoWindow({
+                        content: status
+                    });
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+						title:status
+                    });
+                    marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                    });
+                }
+        //here to read from db THE MARK IS FOR EACH POINT
+        //TITLE SHOULD BE UNIQUE
+        });
+}
 
 //get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
 function getData(num){
