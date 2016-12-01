@@ -396,3 +396,19 @@ function getMapBus(){
     };
     var map = new google.maps.Map(mapCanvas, mapOptions);
 }
+
+
+function insertBus(){
+
+    const inputBusId = document.getElementById("addBusId");
+    const inputCapacity = document.getElementById("addBusCapacity");
+    const inputType = document.getElementById("addBusType");
+    const inputDriver = document.getElementById("addBusDriver");
+    const inputLatitude = document.getElementById("addBusLatitude");
+    const inputLongitude = document.getElementById("addBusLongitude");
+
+    const dbRefBus = firebase.database().ref().child('Bus');
+
+    //now i have to add the bus in the database with the data taken by getElement by id
+
+}

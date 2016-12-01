@@ -306,8 +306,8 @@ function getBus(data) {
     r+='<div class="row">';
         r+='<div class="col-md-6 col-sm-6 col-xs-6" id="busList">';
         data.forEach(function (d) {
-            r += '<div><h5>' +"Bus Id: "+ d.child('Bus_id').val() +
-                ' <a data-toggle="modal" data-target="#modalView'+d.child('Bus_id').val()+'">Info</a>     '+'<a data-toggle="modal" data-target="#modalModify'+d.child('Bus_id').val()+'">Modify</a>' + '<a>Delete</a></h5></div>';
+            r += '<div><h3>' +"Bus Id: "+ d.child('Bus_id').val() +
+                ' &emsp;<a data-toggle="modal" data-target="#modalView'+d.child('Bus_id').val()+'">Info</a>&emsp;'+'<a data-toggle="modal" data-target="#modalModify'+d.child('Bus_id').val()+'">Modify</a>&emsp;' + '<a>Delete</a></h3></div>';
             
             //<!-- start modalView -->
             r += '<div id="modalView'+d.child('Bus_id').val()+'" class="modal fade" role="dialog">';
@@ -387,6 +387,59 @@ function getBus(data) {
             r +='</div>';
             //<!-- end modalModify -->
         });
+        //adding bus button
+        r+='<div style="padding-left:100px ">';
+        r+='<button class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingBusModal" class="btn btn-lg btn-primary btn-circle">ADD BUS<i class="fa fa-plus"></i></button>';
+        //<!-- Modal add bus -->
+        r+='<div id="addingBusModal" class="modal fade" role="dialog">';
+        r+='<div class="modal-dialog">';
+
+        //  <!-- Modal content add bus-->
+        r+='<div class="modal-content">';
+        r+='<div class="modal-header">';
+        r+='<button type="button" class="close" data-dismiss="modal">&times;</button>',
+        r+='<h4 class="modal-title">Modal Header</h4>';
+        r+='</div>';
+        r+='<div class="modal-body">';
+    r +='<form>'+
+        '<div class="form-group">'+
+        '<label for="id">Bus Id:</label>'+
+        '<input type="text" class="form-control" id="addBusId" >'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label for="capacity">Capacity:</label>'+
+        '<input type="text" class="form-control" id="addBusCapacity" >'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label for="type">Type:</label>'+
+        '<input type="text" class="form-control" id="addBusType" >'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label for="driver">Driver:</label>'+
+        '<input type="text" class="form-control" id="addBusDriver" >'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label for="latitude">Latitude:</label>'+
+        '<input type="text" class="form-control " id="addBusLatitude" >'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<label for="longitude">Longitude:</label>'+
+        '<input type="text" class="form-control " id="addBusLongitude" >'+
+        '</div>'+
+        //i have to put in get data the dynamic index
+        '<button type="submit" onclick="insertBus()" id="submitModBus" class="btn btn-default">Submit</button>'+
+        '</form>';
+        r+='</div>';
+        r+='<div class="modal-footer">';
+        r+='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r+='</div>';
+        r+='</div>';
+
+        r+='</div>';
+        r+='</div>';
+        //end modal add bus
+
+        r+='</div>';
         r+='</div>';
         r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div id="mapBus" style="width:500px;height:500px;background:yellow">';
