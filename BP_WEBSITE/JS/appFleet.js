@@ -356,7 +356,7 @@ function getMapDriver() {
 }
 
 //get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
-function getData(num){
+function getBusData(num){
 
 
     const inputBusId = document.getElementById("busId"+num);
@@ -384,7 +384,6 @@ function getData(num){
     });
 
 
-
 }
 
 
@@ -409,6 +408,25 @@ function insertBus(){
 
     const dbRefBus = firebase.database().ref().child('Bus');
 
-    //now i have to add the bus in the database with the data taken by getElement by id
+    //save the new data in the databse
+
+    dbRefBus.push().set({
+        Bus_capacity: inputCapacity.value.toString(),
+        Bus_id: inputBusId.value.toString(),
+        Bus_type: inputType.value.toString(),
+        Driver_id: inputDriver.value.toString(),
+        Latitude: inputLatitude.value.toString(),
+        Longitude: inputLongitude.value.toString()
+
+    });
+
+}
+
+function deleteBus(num){
+
+    const dbRefBus = firebase.database().ref().child('Bus');
+    const dbRefBusN = dbRefBus.child('Bus'+ num);
+    //i have to test the remove command
+    dbRefBusN.remove();
 
 }

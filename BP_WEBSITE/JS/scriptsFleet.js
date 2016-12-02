@@ -85,7 +85,7 @@ function headerFleet() {
                         r+='<li><a id="btnBus" href="#" style="padding-top:25px">Bus Managment</a></li>';
                         r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Driver</a></li>';
 		                r+='<li><a id="btnSchedule" href="#" style="padding-top:25px">Route Schedule</a></li>';
-                        r+='<li><a id="btnTime" href="#" style="padding-top:25px">Schedele Time</a></li>';
+                        r+='<li><a id="btnTime" href="#" style="padding-top:25px">Schedule Time</a></li>';
                         r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
                    r+='</ul>';
                 r+='</div>';
@@ -307,7 +307,7 @@ function getBus(data) {
         r+='<div class="col-md-6 col-sm-6 col-xs-6" id="busList">';
         data.forEach(function (d) {
             r += '<div><h3>' +"Bus Id: "+ d.child('Bus_id').val() +
-                ' &emsp;<a data-toggle="modal" data-target="#modalView'+d.child('Bus_id').val()+'">Info</a>&emsp;'+'<a data-toggle="modal" data-target="#modalModify'+d.child('Bus_id').val()+'">Modify</a>&emsp;' + '<a>Delete</a></h3></div>';
+                ' &emsp;<a data-toggle="modal" data-target="#modalView'+d.child('Bus_id').val()+'">Info</a>&emsp;'+'<a data-toggle="modal" data-target="#modalModify'+d.child('Bus_id').val()+'">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete'+d.child('Bus_id').val()+'">Delete</a></h3></div>';
             
             //<!-- start modalView -->
             r += '<div id="modalView'+d.child('Bus_id').val()+'" class="modal fade" role="dialog">';
@@ -339,7 +339,7 @@ function getBus(data) {
             //<!-- start modalModify -->
             r += '<div id="modalModify'+d.child('Bus_id').val()+'" class="modal fade" role="dialog">';
                 r += '<div class="modal-dialog">';
-                    var busIdent = d.child('Bus_id').val();
+
                     //<!-- Modal content-->
                     r +='<div class="modal-content">' ;
                         r += '<div class="modal-header">';
@@ -373,7 +373,7 @@ function getBus(data) {
             '<input type="text" class="form-control " id="busLongitude'+d.child('Bus_id').val()+'" value="'+ d.child("Longitude").val() +'" disabled>'+
             '</div>'+
                 //i have to put in get data the dynamic index
-            '<button type="button" onclick="getData('+d.child('Bus_id').val() +')" id="submitModBus'+d.child('Bus_id').val()+'" class="btn btn-default">Submit</button>'+
+            '<button type="submit" onclick="getBusData('+d.child('Bus_id').val() +')" id="submitModBus'+d.child('Bus_id').val()+'" class="btn btn-default">Submit</button>'+
             '</form>';
 
 
@@ -386,6 +386,42 @@ function getBus(data) {
                 r +='</div>';
             r +='</div>';
             //<!-- end modalModify -->
+
+
+            //<!-- start deleteModify -->
+            r += '<div id="modalDelete'+d.child('Bus_id').val()+'" class="modal fade" role="dialog">';
+            r += '<div class="modal-dialog">';
+            var busIdent = d.child('Bus_id').val();
+            //<!-- Modal content-->
+            r +='<div class="modal-content">' ;
+            r += '<div class="modal-header">';
+            r +='<button type="button" class="close" data-dismiss="modal">&times;</button>';
+            r +='<h4 class="modal-title">Deleting the bus '+ d.child('Bus_id').val()+ '</h4>';
+            r +='</div>';
+            r +='<div class="modal-body">';
+            r +='<div>'+
+                '<p>Bus capacity: '+d.child('Bus_capacity').val() +'<br>' +
+                'Bus Type:'+ d.child('Bus_type').val()+'<br>' +
+                'Driver Id: '+ d.child('Driver_id').val()+'<br>' +
+                'Latitude: '+ d.child('Latitude').val()+'<br>' +
+                'Longitude: '+ d.child('Longitude').val()+'<br>' +
+                '</p>'+
+                //i have to put in get data the dynamic index
+                '<button type="submit" onclick="deleteBus('+d.child('Bus_id').val() +')" id="deleteBus'+d.child('Bus_id').val()+'" class="btn btn-default" data-dismiss="modal">Delete</button>'+
+                '</div>';
+
+
+            r +='</div>';
+            r +='<div class="modal-footer">';
+            r +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+            r +='</div>';
+            r +='</div>';
+
+            r +='</div>';
+            r +='</div>';
+            //<!-- end delete Modal -->
+
+
         });
         //adding bus button
         r+='<div style="padding-left:100px ">';
@@ -427,7 +463,7 @@ function getBus(data) {
         '<input type="text" class="form-control " id="addBusLongitude" >'+
         '</div>'+
         //i have to put in get data the dynamic index
-        '<button type="submit" onclick="insertBus()" id="submitModBus" class="btn btn-default">Submit</button>'+
+        '<button type="submit" onclick="insertBus()" id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>'+
         '</form>';
         r+='</div>';
         r+='<div class="modal-footer">';
