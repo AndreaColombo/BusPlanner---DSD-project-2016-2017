@@ -308,7 +308,7 @@ function getBus(data) {
         data.forEach(function (d) {
             r += '<div><h3>' +"Bus Id: "+ d.child('Bus_id').val() +
                 ' &emsp;<a data-toggle="modal" data-target="#modalView'+d.child('Bus_id').val()+'">Info</a>&emsp;'+'<a data-toggle="modal" data-target="#modalModify'+d.child('Bus_id').val()+'">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete'+d.child('Bus_id').val()+'">Delete</a></h3></div>';
-            
+
             //<!-- start modalView -->
             r += '<div id="modalView'+d.child('Bus_id').val()+'" class="modal fade" role="dialog">';
                 r += '<div class="modal-dialog">';
@@ -373,7 +373,7 @@ function getBus(data) {
             '<input type="text" class="form-control " id="busLongitude'+d.child('Bus_id').val()+'" value="'+ d.child("Longitude").val() +'" disabled>'+
             '</div>'+
                 //i have to put in get data the dynamic index
-            '<button type="submit" onclick="getBusData('+d.child('Bus_id').val() +')" id="submitModBus'+d.child('Bus_id').val()+'" class="btn btn-default">Submit</button>'+
+            '<button type="submit" onclick="modifyBusData('+d.child('Bus_id').val() +')" id="submitModBus'+d.child('Bus_id').val()+'" class="btn btn-default">Submit</button>'+
             '</form>';
 
 

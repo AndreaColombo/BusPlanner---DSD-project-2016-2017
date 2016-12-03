@@ -356,7 +356,7 @@ function getMapDriver() {
 }
 
 //get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
-function getBusData(num){
+function modifyBusData(num){
 
 
     const inputBusId = document.getElementById("busId"+num);
@@ -406,11 +406,11 @@ function insertBus(){
     const inputLatitude = document.getElementById("addBusLatitude");
     const inputLongitude = document.getElementById("addBusLongitude");
 
-    const dbRefBus = firebase.database().ref().child('Bus');
+    const dbRefBus = firebase.database().ref();
 
     //save the new data in the databse
 
-    dbRefBus.push().set({
+    dbRefBus.child('Bus/'+'Bus'+ inputBusId.value.toString()).set({
         Bus_capacity: inputCapacity.value.toString(),
         Bus_id: inputBusId.value.toString(),
         Bus_type: inputType.value.toString(),
@@ -430,3 +430,4 @@ function deleteBus(num){
     dbRefBusN.remove();
 
 }
+
