@@ -430,4 +430,3 @@ function deleteBus(num){
     dbRefBusN.remove();
 
 }
-
