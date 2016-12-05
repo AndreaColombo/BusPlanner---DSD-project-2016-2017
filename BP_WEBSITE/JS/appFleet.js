@@ -182,7 +182,7 @@ $( document ).ready(function() {
 
     $("body").on("click", "#btnDriver", function (e){
 
-        var query = firebase.database().ref().child("Bus");
+        var query = firebase.database().ref().child("Driver");
         query.once("value")
             .then(function (snapshot) {
                 //bus is the function in script.js
@@ -428,5 +428,30 @@ function deleteBus(num){
     const dbRefBusN = dbRefBus.child('Bus'+ num);
     //i have to test the remove command
     dbRefBusN.remove();
+
+}
+
+
+function insertDriver(){
+
+    const inputDriverId = document.getElementById("addDriverId");
+    const inputName = document.getElementById("addDriverName");
+    const inputNumber = document.getElementById("addNumber");
+    const inputDescription = document.getElementById("addDescription");
+    const inputImage = document.getElementById("addImage");
+
+
+    const dbRefBus = firebase.database().ref();
+
+    //save the new data in the databse
+
+    dbRefBus.child('Driver/'+'Driver'+ inputBusId.value.toString()).set({
+        Driver_id: inputDriverId.value.toString(),
+        Driver_name: inputName.value.toString(),
+        Mobile_number: inputNumber.value.toString(),
+        Description: inputDescription.value.toString(),
+        Image: inputImage.value.toString()
+
+    });
 
 }

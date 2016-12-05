@@ -139,7 +139,7 @@ function mainFleet() {
                     r+='<div class="jumbotron" id="jumboStyle" align= "center">';
                         r+='<h3 id="imageText">Modify Drivers</h3>';
                         r+='<h4 id="imageText">Here we can see and modify all the drivers of our company </h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "buttonHomeFleet"><span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
+                        r+='<button type="button" class="btn btn-primary" id= "btnDriver"><span class="glyphicon glyphicon-scissors"></span>Modify Driver</button>';
                     r+='</div>';
                 r+='</div>';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
@@ -306,6 +306,9 @@ function getBus(data) {
 
     r += '<div class="row" id="realTimeData">';
     r += '<div class="col-md-6 col-sm-6 col-xs-6" id="busList">';
+    r += '<div class="row">' +
+         '<div class=" col-md-2 col-sm-2 col-xs-2"></div>' +
+         '<div class=" col-md-9 col-sm-9 col-xs-9">';    //to close row and col 10
 
     data.forEach(function (d) {
 
@@ -394,7 +397,6 @@ function getBus(data) {
         //<!-- start deleteModify -->
         r += '<div id="modalDelete' + d.child('Bus_id').val() + '" class="modal fade" role="dialog">';
         r += '<div class="modal-dialog">';
-        var busIdent = d.child('Bus_id').val();
         //<!-- Modal content-->
         r += '<div class="modal-content">';
         r += '<div class="modal-header">';
@@ -437,7 +439,7 @@ function getBus(data) {
     r += '<div class="modal-content">';
     r += '<div class="modal-header">';
     r += '<button type="button" class="close" data-dismiss="modal">&times;</button>',
-        r += '<h4 class="modal-title">Modal Header</h4>';
+        r += '<h4 class="modal-title">Add Bus</h4>';
     r += '</div>';
     r += '<div class="modal-body">';
     r += '<form>' +
@@ -466,7 +468,7 @@ function getBus(data) {
         '<input type="text" class="form-control " id="addBusLongitude" >' +
         '</div>' +
         //i have to put in get data the dynamic index
-        '<button type="submit" onclick="insertBus()" id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
+        '<button type="submit" onclick="insertBus()" id="submitModDriver" class="btn btn-default" data-dismiss="modal">Submit</button>' +
         '</form>';
     r += '</div>';
     r += '<div class="modal-footer">';
@@ -480,6 +482,9 @@ function getBus(data) {
 
     r += '</div>';
     r += '</div>';
+    r += '</div>'; //closing col 10
+    r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
+         '</div>'; //closing row
     r += '<div class="col-md-6 col-sm-6 col-xs-6">';
     r += '<div id="mapBus" style="width:500px;height:500px;background:yellow">';
     r += '<button type="button" onclick="getMapBus()" id="mapBus" class="btn btn-default">Submit</button>';
@@ -507,16 +512,101 @@ function getDriver(data) {
     r+='</div>';
     r+='</div>';
 
-    r+='<div>';
-    r+='<div class="row">';
-    r+='<div class="col-md-6 col-sm-6 col-xs-6" id="busList">';
-    data.forEach(function (d) {
-        r += '<div><h4>' + d.child('Bus_id').val() + '</h4></div>';
+
+
+
+    data.forEach( function(d){
+        r += '<div class="row" id="realTimeData"style=" margin: 10px">';
+        r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+        r += '<div class="col-md-3 col-sm-3 col-xs-3">' +
+             '<img src="Images/'+d.child('Image').val() +'" id="imageDriver">' +
+             '</div>' +
+             '<div class="col-md-7 col-sm-7 col-xs-7">' +
+                '<h3>'+ d.child('Driver_name').val()+'</h3>' +
+                '<p style="font-size: medium">'+d.child('Description').val() +'</p>';
+                r += '<h4>'+
+        ' &emsp;<a data-toggle="modal" data-target="#modalView' + d.child('Driver_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Driver_id').val() + '">Delete</a></h4></div>';
+        r += '</div>';
+        //<!-- start modalView -->
+        r += '<div id="modalView' + d.child('Driver_id').val() + '" class="modal fade" role="dialog">';
+        r += '<div class="modal-dialog">';
+
+        //<!-- Modal content-->
+        r += '<div class="modal-content">';
+        r += '<div class="modal-header">';
+        r += '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        r += '<h4 class="modal-title">' + d.child('Driver_name').val() + ' Information</h4>';
+        r += '</div>';
+        r += '<div class="modal-body">';
+        r += '<p>Driver ID: ' + d.child('Driver_id').val() + '<br>' +
+            'Driver Name: ' + d.child('Driver_name').val() + '<br>' +
+            'Mobile Number: ' + d.child('Mobile_number').val() + '<br>' +
+            'Date of birth: ' + d.child('Date_birth').val() + '<br>' +
+            '</p>';
+        r += '</div>';
+        r += '<div class="modal-footer">';
+        r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r += '</div>';
+        r += '</div>';
+
+        r += '</div>';
+        r += '</div>';
+        //<!-- end modalView -->'+
+             '</div>' +
+             '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
+             '</div>';
+
     });
-    r+='</div>';
-    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='</div>';
-    r+='</div>';
-    r+='</div>';
+
+    //button for add new driver
+    r+= '<div class="row">' +
+        '<div class="col-md-4 col-sm-4 col-xs-4"></div>' +
+        '<div class="col-md-4 col-sm-4 col-xs-4">';
+    r+='<button class="btn btn-info btn-lg" data-toggle="modal"  data-target="#addingDriver" class="btn btn-lg btn-primary btn-circle" style="margin: 60px" >NEW DRIVER<i class="fa fa-plus"></i></button>' +
+        '</div><div class="col-md-4 col-sm-4 col-xs-4"></div></div>';   //closing row
+    //<!-- Modal add driver -->
+    r += '<div id="addingDriver" class="modal fade" role="dialog">';
+    r += '<div class="modal-dialog">';
+    //  <!-- Modal content add driver-->
+    r += '<div class="modal-content">';
+    r += '<div class="modal-header">';
+    r += '<button type="button" class="close" data-dismiss="modal">&times;</button>',
+        r += '<h4 class="modal-title">Add Driver</h4>';
+    r += '</div>';
+    r += '<div class="modal-body">';
+    r += '<form>' +
+        '<div class="form-group">' +
+        '<label for="id">Driver ID:</label>' +
+        '<input type="text" class="form-control" id="addDriverId" >' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="capacity">Name:</label>' +
+        '<input type="text" class="form-control" id="addDriverName" >' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="type">Mobile Number:</label>' +
+        '<input type="text" class="form-control" id="addNumber" >' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="driver">Description:</label>' +
+        '<input type="text" class="form-control" id="addDescription" >' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="latitude">Image:</label>' +
+        '<input type="text" class="form-control " id="addImage" >' +
+        '</div>' +
+        //i have to put in get data the dynamic index
+        '<button type="submit" onclick="insertDriver()" id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
+        '</form>';
+    r += '</div>';
+    r += '<div class="modal-footer">';
+    r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    r += '</div>';
+    r += '</div>';
+
+    r += '</div>';
+    r += '</div>';
+    //end modal add bus
+
     return r;
 }
