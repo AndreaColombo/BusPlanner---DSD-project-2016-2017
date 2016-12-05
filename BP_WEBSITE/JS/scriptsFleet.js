@@ -259,7 +259,8 @@ function viewUserRequests() {
 }
 
 function manageUserRequests() {
-    
+    var r='';
+    return r;
 }
 
 function viewScheduleDriver(data) {

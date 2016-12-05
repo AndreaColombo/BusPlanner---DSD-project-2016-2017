@@ -145,7 +145,8 @@ $( document ).ready(function() {
     $("body").on("click", "#manageRequests", function (e){
         //document.getElementById('main').classList.remove('hide');
         //document.getElementById('map').classList.add('hide');
-        
+        var result = manageUserRequests();
+        $('#main').html(result);
         window.location.hash = "manage_user_requests";
         e.preventDefault();
     });
