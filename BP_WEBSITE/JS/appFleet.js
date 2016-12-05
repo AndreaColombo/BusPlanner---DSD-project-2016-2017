@@ -456,3 +456,45 @@ function insertDriver(){
     });
 
 }
+
+
+//get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
+function modifyDriverData(num){
+
+
+    const inputDriverId = document.getElementById("driverId"+num);
+    const inputName = document.getElementById("driverName"+num);
+    const inputDate = document.getElementById("driverDateBirth"+num);
+    const inputNumber = document.getElementById("driverNumber"+num);
+    const inputDescription = document.getElementById("driverDescription"+num);
+    const inputImange = document.getElementById("driverImage"+num);
+
+    const dbRefBus = firebase.database().ref().child('Bus');
+    const dbRefBusN = dbRefBus.child('Driver'+ num);
+
+
+
+
+
+    dbRefBusN.set({
+        Driver_id: inputDriverId.value.toString(),
+        Driver_name: inputName.value.toString(),
+        Date_birth: inputDate.value.toString(),
+        Mobile_number: inputNumber.value.toString(),
+        Description: inputDescription.value.toString(),
+        Image: inputImange.value.toString()
+
+    });
+
+
+}
+
+
+function deleteDriver(num){
+
+    const dbRefBus = firebase.database().ref().child('Driver');
+    const dbRefBusN = dbRefBus.child('Driver'+ num);
+    //i have to test the remove command
+    dbRefBusN.remove();
+
+}

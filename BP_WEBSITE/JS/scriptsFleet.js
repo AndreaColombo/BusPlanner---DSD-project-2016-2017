@@ -525,7 +525,7 @@ function getDriver(data) {
              '<div class="col-md-7 col-sm-7 col-xs-7">' +
                 '<h3>'+ d.child('Driver_name').val()+'</h3>' +
                 '<p style="font-size: medium">'+d.child('Description').val() +'</p>';
-                r += '<h4>'+
+                r += '<h4 align="center">'+
         ' &emsp;<a data-toggle="modal" data-target="#modalView' + d.child('Driver_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Driver_id').val() + '">Delete</a></h4></div>';
         r += '</div>';
         //<!-- start modalView -->
@@ -553,6 +553,90 @@ function getDriver(data) {
         r += '</div>';
         r += '</div>';
         //<!-- end modalView -->'+
+
+        //<!-- start modalModify -->
+        r += '<div id="modalModify' + d.child('Driver_id').val() + '" class="modal fade" role="dialog">';
+        r += '<div class="modal-dialog">';
+
+        //<!-- Modal content-->
+        r += '<div class="modal-content">';
+        r += '<div class="modal-header">';
+        r += '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        r += '<h4 class="modal-title">Insert the value of the Driver ' + d.child('Driver_name').val() + ' to modify</h4>';
+        r += '</div>';
+        r += '<div class="modal-body">';
+        r += '<form>' +
+            '<div class="form-group">' +
+            '<label for="id">Driver Id:</label>' +
+            '<input type="text" class="form-control" id="driverId' + d.child('Driver_id').val() + '" value="' + d.child("Driver_id").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="capacity">Name:</label>' +
+            '<input type="text" class="form-control" id="driverName' + d.child('Driver_id').val() + '" value="' + d.child("Driver_name").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="type">Date of birth:</label>' +
+            '<input type="text" class="form-control" id="driverDateBirth' + d.child('Driver_id').val() + '" value="' + d.child("Date_birth").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="driver">Mobile number:</label>' +
+            '<input type="text" class="form-control" id="driverNumber' + d.child('Driver_id').val() + '" value="' + d.child("Mobile_number").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="latitude">Description:</label>' +
+            '<input type="text" class="form-control " id="driverDescription' + d.child('Driver_id').val() + '" value="' + d.child("Description").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="longitude">Image:</label>' +
+            '<input type="text" class="form-control " id="driverImage' + d.child('Driver_id').val() + '" value="' + d.child("Image").val() + '">' +
+            '</div>' +
+            //i have to put in get data the dynamic index
+            '<button type="submit" onclick="modifyDriverData(' + d.child('Driver_id').val() + ')" id="submitModBus' + d.child('Driver_id').val() + '" class="btn btn-default">Submit</button>' +
+            '</form>';
+
+
+        r += '</div>';
+        r += '<div class="modal-footer">';
+        r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r += '</div>';
+        r += '</div>';
+
+        r += '</div>';
+        r += '</div>';
+        //<!-- end modalModify -->
+
+        //<!-- start deleteModify -->
+        r += '<div id="modalDelete' + d.child('Driver_id').val() + '" class="modal fade" role="dialog">';
+        r += '<div class="modal-dialog">';
+        //<!-- Modal content-->
+        r += '<div class="modal-content">';
+        r += '<div class="modal-header">';
+        r += '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        r += '<h4 class="modal-title">Deleting ' + d.child('Driver_name').val() + ' from the driver list</h4>';
+        r += '</div>';
+        r += '<div class="modal-body">';
+        r += '<div>' +
+            '<p>Driver ID: ' + d.child('Driver_id').val() + '<br>' +
+            'Driver Name: ' + d.child('Driver_name').val() + '<br>' +
+            'Mobile Number: ' + d.child('Mobile_number').val() + '<br>' +
+            'Date of birth: ' + d.child('Date_birth').val() + '<br>' +
+            '</p>' +
+            //i have to put in get data the dynamic index
+            '<button type="submit" onclick="deleteDriver(' + d.child('Driver_id').val() + ')" id="deleteDriver' + d.child('Driver_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
+            '</div>';
+
+
+        r += '</div>';
+        r += '<div class="modal-footer">';
+        r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r += '</div>';
+        r += '</div>';
+
+        r += '</div>';
+        r += '</div>';
+        //<!-- end delete Modal -->
+
+
              '</div>' +
              '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
              '</div>';
