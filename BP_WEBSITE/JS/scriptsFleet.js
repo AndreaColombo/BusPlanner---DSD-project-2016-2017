@@ -84,7 +84,7 @@ function headerFleet() {
                     r+='<ul class="nav navbar-nav navbar-right">';
                         r+='<li><a id="btnBus" href="#" style="padding-top:25px">Bus Managment</a></li>';
                         r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Driver</a></li>';
-		                r+='<li><a id="btnSchedule" href="#" style="padding-top:25px">Route Schedule</a></li>';
+		                r+='<li><a id="btnRoute" href="#" style="padding-top:25px">Route Schedule</a></li>';
                         r+='<li><a id="btnTime" href="#" style="padding-top:25px">Schedule Time</a></li>';
                         r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
                    r+='</ul>';
@@ -106,7 +106,7 @@ function headerDriver() {
                     r+='<ul class="nav navbar-nav navbar-right">';
                         r+='<li><a id="btnBus" href="#" style="padding-top:25px">View user requests</a></li>';
                         r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Manage user requests</a></li>';
-		                r+='<li><a id="btnSchedule" href="#" style="padding-top:25px">View schedule</a></li>';
+		                r+='<li><a id="btnRoute" href="#" style="padding-top:25px">View route</a></li>';
                         r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
                    r+='</ul>';
                 r+='</div>';
@@ -156,7 +156,7 @@ function mainFleet() {
                     r+='<div class="jumbotron" id="jumboStyle" align= "center">';
                         r+='<h3 id="imageText">Modify Routes</h3>';
                         r+='<h4 id="imageText">Here you can add, remove or modify the routes that the buses will cover </h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "btnRoute"><span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
+                        r+='<button type="button" class="btn btn-primary" id= "btnRoute"><span class="glyphicon glyphicon-scissors"></span>Modify Route</button>';
                     r+='</div>';
                 r+='</div>';
             r+='</div>';
@@ -708,10 +708,14 @@ function getRoute(data){
     r+='<h4 id = "minimalDescription">Here you can see and modify the route covered by the buses </h4>';
     r+='</div>';
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<img src = "Images/modifyRoute.jpg" class = "intestationImages"  >';
+    r+='<img src = "Images/modifyRoute.jpg" align="right" class = "intestationImages"  >';
     r+='</div>';
     r+='</div>';
     r+='</div>';
+    r+='<div id="mapRoute"></div>';
+    r+='<button onclick="initeMapRoute()" style="margin: 50px">BUTTON</button>'
+
+    return r;
 
 
 }
