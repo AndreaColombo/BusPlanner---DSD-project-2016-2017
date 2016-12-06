@@ -194,6 +194,22 @@ $( document ).ready(function() {
         window.location.hash = "fleetBus";
         e.preventDefault();
     });
+
+
+    // loading the route page
+    $("body").on("click", "#btnRoute", function (e){
+
+        var query = firebase.database().ref().child("Route");
+        query.once("value")
+            .then(function (snapshot) {
+                //bus is the function in script.js
+                var result = getRoute(snapshot);
+                $("#main").html(result);
+            });
+
+        window.location.hash = "fleetBus";
+        e.preventDefault();
+    });
     
     /*
     function getBusFromDatabase() {
@@ -498,3 +514,4 @@ function deleteDriver(num){
     dbRefBusN.remove();
 
 }
+

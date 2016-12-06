@@ -156,7 +156,7 @@ function mainFleet() {
                     r+='<div class="jumbotron" id="jumboStyle" align= "center">';
                         r+='<h3 id="imageText">Modify Routes</h3>';
                         r+='<h4 id="imageText">Here you can add, remove or modify the routes that the buses will cover </h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "buttonHomeFleet"><span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
+                        r+='<button type="button" class="btn btn-primary" id= "btnRoute"><span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
                     r+='</div>';
                 r+='</div>';
             r+='</div>';
@@ -167,8 +167,8 @@ function mainFleet() {
             r+='<div class="row">';
                 r+='<div class="col-md-11 col-sm-11 col-xs-11">';
                     r+='<div class="jumbotron" id="jumboStyle" align= "center">';
-                        r+='<h3  id="imageText">Modify Drivers</h3>';
-                        r+='<h4 id="imageText">Here we can see and modify all the drivers of our company </h4>';
+                        r+='<h3  id="imageText">Modify Schedule</h3>';
+                        r+='<h4 id="imageText">Here you can see and modify all the schedule time of our company</h4>';
                         r+='<button type="button" class="btn btn-primary" id= "buttonHomeFleet"><span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
                     r+='</div>';
                 r+='</div>';
@@ -306,7 +306,7 @@ function getBus(data) {
     r += '</div>';
 
     r += '<div class="row" id="realTimeData">';
-    r += '<div class="col-md-6 col-sm-6 col-xs-6" id="busList">';
+    r += '<div class="col-md-5 col-sm-5 col-xs-5" id="busList" style="margin-top: 60px">';
     r += '<div class="row">' +
          '<div class=" col-md-2 col-sm-2 col-xs-2"></div>' +
          '<div class=" col-md-9 col-sm-9 col-xs-9">';    //to close row and col 10
@@ -486,8 +486,8 @@ function getBus(data) {
     r += '</div>'; //closing col 10
     r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
          '</div>'; //closing row
-    r += '<div class="col-md-6 col-sm-6 col-xs-6">';
-    r += '<div id="mapBus" style="width:500px;height:500px;background:yellow">';
+    r += '<div class="col-md-7 col-sm-7 col-xs-7">';
+    r += '<div id="mapBus" style="width:730px;height:500px;background:transparent; margin: 40px; margin-bottom: 60px; margin-top: 20px">';
     r += '<button type="button" onclick="getMapBus()" id="mapBus" class="btn btn-default">Submit</button>';
     r += '</div>';
     r += '</div>';
@@ -520,7 +520,7 @@ function getDriver(data) {
         r += '<div class="row" id="realTimeData"style=" margin: 10px">';
         r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>';
         r += '<div class="col-md-3 col-sm-3 col-xs-3">' +
-             '<img src="Images/'+d.child('Image').val() +'" id="imageDriver">' +
+             '<img src="Images/'+d.child('Image').val() +'" class="img-circle" id="imageDriver">' +
              '</div>' +
              '<div class="col-md-7 col-sm-7 col-xs-7">' +
                 '<h3>'+ d.child('Driver_name').val()+'</h3>' +
@@ -694,4 +694,24 @@ function getDriver(data) {
     //end modal add bus
 
     return r;
+}
+
+
+
+function getRoute(data){
+
+    var r = "";
+    r+='<div class = "intestation" id="intestation">';
+    r+='<div class = "row" >';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6" >';
+    r+='<h3 id = "titleIntestation" >Route Management</h3>';
+    r+='<h4 id = "minimalDescription">Here you can see and modify the route covered by the buses </h4>';
+    r+='</div>';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+    r+='<img src = "Images/modifyRoute.jpg" class = "intestationImages"  >';
+    r+='</div>';
+    r+='</div>';
+    r+='</div>';
+
+
 }
