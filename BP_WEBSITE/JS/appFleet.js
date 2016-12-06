@@ -516,7 +516,7 @@ function deleteDriver(num){
 }
 
 
-function initeMapRoute(){
+function initeMapRoute(data){
     var map = new google.maps.Map(document.getElementById('mapRoute'), {
         zoom: 3,
         center: {lat: -28.024, lng: 140.887}
@@ -524,6 +524,24 @@ function initeMapRoute(){
 
     // Create an array of alphabetical characters used to label the markers.
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+
+    const dbRefStepLat = data.child("Latitude");
+
+
+    //insert the steps in the variable location
+    var locations = [];
+    var cont = 0;
+
+
+    
+
+    //data.forEach( function(d)
+    dbRefStepLat.forEach( function(d){
+
+        locations.push({ lat: parseInt(d.value.toString()), lng: parseInt(dbRefStepLong.child(cont).value.toString()) });
+        cont += 1;
+    });
 
     // Add some markers to the map.
     // Note: The code uses the JavaScript Array.prototype.map() method to
@@ -539,8 +557,13 @@ function initeMapRoute(){
     // Add a marker clusterer to manage the markers.
     var markerCluster = new MarkerClusterer(map, markers,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
 }
+
+
+/*
 var locations = [
+
     {lat: -31.563910, lng: 147.154312},
     {lat: -33.718234, lng: 150.363181},
     {lat: -33.727111, lng: 150.371124},
@@ -565,4 +588,5 @@ var locations = [
     {lat: -42.735258, lng: 147.438000},
     {lat: -43.999792, lng: 170.463352}
 ]
+*/
 

@@ -713,7 +713,7 @@ function getRoute(data){
     r+='</div>';
     r+='</div>';
     r+='<div id="mapRoute"></div>';
-    r+='<button onclick="initeMapRoute()" style="margin: 50px">BUTTON</button>'
+    r+='<button onclick="initeMapRoute('+ data.child("RouteSchedule1") +')" style="margin: 50px">BUTTON</button>'
 
     return r;
 
