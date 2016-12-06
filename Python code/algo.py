@@ -15,9 +15,9 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 user = auth.sign_in_with_email_and_password("albidode@aol.com", "Vasteras2016")
 db = firebase.database()
-lana_data = db.child("UserRequest").child("UserRequest1").get(user['idToken']).val()
-print("lana_data: ", lana_data["User_id"])
-papa = int(lana_data["User_id"])
+#lana_data = db.child("UserRequest").child("UserRequest1").get(user['idToken']).val()
+#print("lana_data: ", lana_data["User_id"])
+#papa = int(lana_data["User_id"])
 
 def trip_generator(line_name, drop_in, drop_out):
   results = []
@@ -119,8 +119,9 @@ def main():
 
   routes = 'ABCDE' #actualy it is a b c d e so 5 routes
   #TREAT THESE NUMBERS AS THE RANDON NUMBER OF USER REQUESTS
-  drop_in  = random.randrange(1, 25)
 
+
+  drop_in = random.randrange(1, 25)
   drop_out = random.randrange(1, 10)+12
 
   trips = trip_generator(routes, drop_in, drop_out)
@@ -141,17 +142,26 @@ def main():
   k4 = k3.replace("D", "Route 4")
   k5 = k4.replace("E", "Route 5")
   print(k5)
-  #data = {"Bus7":{"Bus_capacity":"7","Bus_id":"7","Bus_type":"bus","Driver_id":"7","Latitude":"56","Longitude":"60"}
-  #db.child("Bus").push(data)
-
-
-  data = {
-      "Bus7":{"Bus_capacity":"7","Bus_id":"7","Bus_type":"bus","Driver_id":"7","Latitude":"56","Longitude":"60"}
-  }
-
-  # works
-
-  db.child("Bus").set(data)
 
 if __name__ == '__main__':
-   main()
+    main()
+
+kot=0
+while 0< 10:
+ long = random.randrange(1, 25)
+ lat = random.randrange(1, 25)
+ n = random.randint(0,25)
+
+
+ data2 = {
+     "UserRequest"+str(n)+"": {"Latitude":n, "Longitude": n, "Route_id": "", "Starting_schedule": "",
+     "Status": "","Timestamp": "", "User_id": n}
+    }
+
+ db.child("UserRequest").set(data2)
+kot = kot + 1
+data3 = {
+    "UserSchedule1":{"Bus_id":"","Driver_id":"","Route_id":"","Status":"","User_id":"","User_schedule_id":"1"}
+    }
+db.child("UserSchedule").set(data3)
+
