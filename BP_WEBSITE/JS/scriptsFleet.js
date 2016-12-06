@@ -665,19 +665,19 @@ function getDriver(data) {
         '<input type="text" class="form-control" id="addDriverId" >' +
         '</div>' +
         '<div class="form-group">' +
-        '<label for="capacity">Name:</label>' +
+        '<label for="name">Name:</label>' +
         '<input type="text" class="form-control" id="addDriverName" >' +
         '</div>' +
         '<div class="form-group">' +
-        '<label for="type">Mobile Number:</label>' +
+        '<label for="number">Mobile Number:</label>' +
         '<input type="text" class="form-control" id="addNumber" >' +
         '</div>' +
         '<div class="form-group">' +
-        '<label for="driver">Description:</label>' +
+        '<label for="description">Description:</label>' +
         '<input type="text" class="form-control" id="addDescription" >' +
         '</div>' +
         '<div class="form-group">' +
-        '<label for="latitude">Image:</label>' +
+        '<label for="image">Image:</label>' +
         '<input type="text" class="form-control " id="addImage" >' +
         '</div>' +
         //i have to put in get data the dynamic index

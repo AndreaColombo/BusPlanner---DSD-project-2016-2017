@@ -458,11 +458,11 @@ function insertDriver(){
     const inputImage = document.getElementById("addImage");
 
 
-    const dbRefBus = firebase.database().ref();
+    const dbRef = firebase.database().ref();
 
     //save the new data in the databse
 
-    dbRefBus.child('Driver/'+'Driver'+ inputBusId.value.toString()).set({
+    dbRef.child('Driver/'+'Driver'+ inputDriverId.value.toString()).set({
         Driver_id: inputDriverId.value.toString(),
         Driver_name: inputName.value.toString(),
         Mobile_number: inputNumber.value.toString(),
@@ -485,7 +485,7 @@ function modifyDriverData(num){
     const inputDescription = document.getElementById("driverDescription"+num);
     const inputImange = document.getElementById("driverImage"+num);
 
-    const dbRefBus = firebase.database().ref().child('Bus');
+    const dbRefBus = firebase.database().ref().child('Driver');
     const dbRefBusN = dbRefBus.child('Driver'+ num);
 
 
