@@ -516,32 +516,53 @@ function deleteDriver(num){
 }
 
 
-function initeMapRoute(data){
+function initeMapRoute(){
     var map = new google.maps.Map(document.getElementById('mapRoute'), {
         zoom: 3,
         center: {lat: -28.024, lng: 140.887}
     });
 
-    // Create an array of alphabetical characters used to label the markers.
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-
-    const dbRefStepLat = data.child("Latitude");
-
-
-    //insert the steps in the variable location
-    var locations = [];
     var cont = 0;
+
+    console.log("ciao0");
+    var query = firebase.database().ref("RouteSchedule");
+    query.once("value")
+        .then(function(snapshot) {
+            dbRefStepLong = snapshot.child("RouteSchedule1").child("Longitude");
+            snapshot.child("RouteSchedule1").child("Latitude").forEach(function(d){
+                //console.log("Latitude: "+ d.val() +" Longitude: "+dbRefStepLong.child(cont.toString()).val());
+                var locations = [];
+                locations.push({ lat: parseFloat(d.val()), lng: parseFloat(dbRefStepLong.child(cont).val()) });
+                cont += 1;
+                console.log(locations);
+
+                // Add some markers to the map.
+                // Note: The code uses the JavaScript Array.prototype.map() method to
+                // create an array of markers based on a given "locations" array.
+                // The map() method here has nothing to do with the Google Maps API.
+                var markers = locations.map(function(location, i) {
+                    return new google.maps.Marker({
+                        position: location,
+                        label:cont.toString()
+                    });
+                });
+
+                // Add a marker clusterer to manage the markers.
+                var markerCluster = new MarkerClusterer(map, markers,
+                    {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+            });
+
+            //console.log(locations);
+        });
+
+
+
+
 
 
     
 
-    //data.forEach( function(d)
-    dbRefStepLat.forEach( function(d){
-
-        locations.push({ lat: parseInt(d.value.toString()), lng: parseInt(dbRefStepLong.child(cont).value.toString()) });
-        cont += 1;
-    });
 
     // Add some markers to the map.
     // Note: The code uses the JavaScript Array.prototype.map() method to
