@@ -516,10 +516,10 @@ function deleteDriver(num){
 }
 
 
-function initeMapRoute(){
+function initeMapRoute(num){
     var map = new google.maps.Map(document.getElementById('mapRoute'), {
-        zoom: 3,
-        center: {lat: -28.024, lng: 140.887}
+        zoom: 12,
+        center: {lat: -26.324, lng: 28.000}
     });
 
     var cont = 0;
@@ -528,8 +528,8 @@ function initeMapRoute(){
     var query = firebase.database().ref("RouteSchedule");
     query.once("value")
         .then(function(snapshot) {
-            dbRefStepLong = snapshot.child("RouteSchedule1").child("Longitude");
-            snapshot.child("RouteSchedule1").child("Latitude").forEach(function(d){
+            dbRefStepLong = snapshot.child("RouteSchedule"+ num).child("Longitude");
+            snapshot.child("RouteSchedule"+ num).child("Latitude").forEach(function(d){
                 //console.log("Latitude: "+ d.val() +" Longitude: "+dbRefStepLong.child(cont.toString()).val());
                 var locations = [];
                 locations.push({ lat: parseFloat(d.val()), lng: parseFloat(dbRefStepLong.child(cont).val()) });
@@ -547,6 +547,16 @@ function initeMapRoute(){
                     });
                 });
 
+                
+
+                markers.addListener('click', function() {
+                    // 3 seconds after the center of the map has changed, pan back to the
+                    // marker.
+                    window.setTimeout(function() {
+                        map.panTo(marker.getPosition());
+                    }, 3000);
+                });
+
                 // Add a marker clusterer to manage the markers.
                 var markerCluster = new MarkerClusterer(map, markers,
                     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
@@ -556,28 +566,6 @@ function initeMapRoute(){
             //console.log(locations);
         });
 
-
-
-
-
-
-    
-
-
-    // Add some markers to the map.
-    // Note: The code uses the JavaScript Array.prototype.map() method to
-    // create an array of markers based on a given "locations" array.
-    // The map() method here has nothing to do with the Google Maps API.
-    var markers = locations.map(function(location, i) {
-        return new google.maps.Marker({
-            position: location,
-            label: labels[i % labels.length]
-        });
-    });
-
-    // Add a marker clusterer to manage the markers.
-    var markerCluster = new MarkerClusterer(map, markers,
-        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
 }
 

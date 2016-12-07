@@ -712,8 +712,21 @@ function getRoute(data){
     r+='</div>';
     r+='</div>';
     r+='</div>';
-    r+='<div id="mapRoute"></div>';
-    r+='<button onclick="initeMapRoute()" style="margin: 50px">BUTTON</button>'
+    //r+='<div id="mapRoute"></div>';
+    //r+='<button onclick="initeMapRoute('+ num +')" style="margin: 50px">BUTTON</button>';
+
+    r+="<div align='center'><h3 style='color: #2aabd2'>Click on the route name to see all the steps on the map</h3></div><div class='row'>"+
+        "<div align='center' style='margin-top: 40px' class='col-md-4 col-sm-4 col-xs-4' >" ;
+
+    data.forEach( function(d){
+        r+= "<div style='margin-left: 25px' class='well'><a style='font-size: large' onclick='initeMapRoute("+ d.child('Route_id').val() +")'>"+ d.child('Route_name').val() +"<br></a></div>";
+
+
+    });
+    r+="</div><div align='center' style='margin-top: 20px; margin-bottom: 40px' class='col-md-8 col-sm-8 col-xs-8'>" +
+        "<div id='mapRoute'></div>" +
+        "</div>" +
+        "</div>";
 
     return r;
 
