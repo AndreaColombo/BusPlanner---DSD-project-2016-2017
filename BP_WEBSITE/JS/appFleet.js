@@ -6,16 +6,7 @@ $( document ).ready(function() {
     $('#header').html(result2);
     $("#main").html(result);
     window.location.hash = "home";
-    /*
-    $.ajax({
-        type:'GET',
-        url: "api/homeFleet.php",
-        crossDomain: true,
-    }).success(function(result){
-        $("#main").html(result);
-    });
-    window.location.hash = "homeFleet";
-    */
+
     // Get elements from DOM
     const btnBus = document.getElementById('btnBus');
     const btnLogo1 = document.getElementById('btnLogo1');
@@ -145,8 +136,14 @@ $( document ).ready(function() {
     $("body").on("click", "#manageRequests", function (e){
         //document.getElementById('main').classList.remove('hide');
         //document.getElementById('map').classList.add('hide');
-        var result = manageUserRequests();
-        $('#main').html(result);
+        
+        var query = firebase.database().ref().child("UserRequest");
+        query.once("value")
+            .then(function (snapshot) {
+                var result = manageUserRequests(snapshot);
+                $('#main').html(result);
+            });
+        
         window.location.hash = "manage_user_requests";
         e.preventDefault();
     });
@@ -300,6 +297,15 @@ $( document ).ready(function() {
 function getEmailAndPassword(txtEmail, txtPassword) {
         email = txtEmail.value;
         pass = txtPassword.value;
+}
+
+function selected(count) {
+    var btn = document.getElementById('userRequest'+count+'');
+    if(btn.classList.contains('active')) {
+        btn.classList.remove('active');
+    } else {
+        btn.classList.add('active');
+    }
 }
 
 function getMapDriver() {

@@ -258,8 +258,25 @@ function viewUserRequests() {
     return r;
 }
 
-function manageUserRequests() {
+function manageUserRequests(data) {
+    var count = 1;
     var r='';
+    r+='<div class = "row">';
+    r+='<div class="col-md-5 col-sm-5 col-xs-5 scroll" style="height:500px">';
+    r+='<div class="list-group" style="margin-left:20px">';
+    data.forEach(function (d) {
+        r+='<a href="#" id="userRequest'+count+'" onclick="selected('+count+')" class="list-group-item">';
+        r+='<h4 class="list-group-item-heading">USER REQUEST '+count+'</h4>';
+        r+='<p class="list-group-item-text">'+d.child('Stop').val()+'</p>';
+        r+='</a>';
+        count++;
+    });
+    r+='</div>';
+    r+='</div>';
+    r+='<div class="col-md-7 col-sm-7 col-xs-7" id="map1">';
+    r+='<button type="button" onclick="getMapDriver()" class="btn">Submit</button>';
+    r+='</div>';
+    r+='</div>';
     return r;
 }
 

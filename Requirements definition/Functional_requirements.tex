@@ -5,24 +5,23 @@
 	\begin{itemize}
 		\item Login.
 		\item Get bus location.
-		\item Add/Remove/Modify fleet bus to the route.
+		\item Add/Remove/Modify bus.
+		\item Assign drivers to buses.
 		\item Add/Remove/Modify route.
-		\item Add/Remove/Modify schedule time.
-		\item Map the user requests.
+		\item Add/Remove/Modify driver.
+		\item View the user requests on a map.
 		\item View previous user requests.
 	\end{itemize}
 \item \textbf{Bus driver}, who performs the following activities:
 \begin{itemize}
-	\item Login
-	\item Handle user request
-	\item View user request
-	\item View schedule	
+	\item Login.
+	\item View schedule with user requests.
 \end{itemize}
-\item \textbf{Passenger}, who generates the user requests for a bus.
+\item \textbf{Passenger}, who generates the user requests for a bus, specifying at which stop he/she wants to get on and off the bus.
 \end{itemize}
 \newpage
 \subsection{User stories and related requirements}
-User stories are short and simple sentences that contain the features customers expect to find into the system. The customer\textquotesingle s requirements are not equally important; for this reason high, average or low priority is attributed to each of them.
+User stories are short and simple sentences that contain the features customers expect to find into the system. The customer's requirements are not equally important; for this reason high, average or low priority is attributed to each of them.
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{2.2cm} | m{6cm} | m{1.5cm} | m{2.5cm} |}
@@ -31,25 +30,23 @@ User stories are short and simple sentences that contain the features customers 
 		\hline
 		UserStory1 & As fleet manager I want to be able to login (or logout) into the system with my account at any time. & High & \hyperlink{Login_fm}{Login}.\\
 		\hline
-		UserStory2 & As fleet manager I want to be able to add or remove a bus from a route. & High & \hyperlink{Add_bus_to_route_fm}{Add bus to route}. \hyperlink{Remove_bus_from_route_fm}{Remove bus from route}.\\
+		UserStory2 & As fleet manager I want to be able to add, modify or remove a bus. & High & \hyperlink{AddBus}{Add bus}. \hyperlink{ModifyBus}{Modify bus}. \hyperlink{RemoveBus}{Remove bus}.\\
 		\hline
-		UserStory3 & As fleet manager I want to be able to add or remove a schedule time. & High & \hyperlink{Add_schedule_time_fm}{Add schedule time}. \hyperlink{Modify_schedule_time_fm}{Modify schedule time}.\\
+		UserStory3 & As fleet manager I want to be able to add, modify or remove a driver. & High & \hyperlink{AddDriver}{Add driver}. \hyperlink{ModifyDriver}{Modify driver}. \hyperlink{DeleteDriver}{Remove driver}.\\
 		\hline
-		UserStory4 & As fleet manager I want to be able to map user requests. & High & \hyperlink{Mapping_user_requests_fm}{Mapping user request}.\\
+		UserStory4 & As fleet manager I want to be able to see user requests on a map. & High & \hyperlink{Mapping_user_requests_fm}{Mapping user requests}.\\
 		\hline
-		UserStory5 & As fleet manager I want to be able to add or modify a route. & High & \hyperlink{Add_route_fm}{Add route}. \hyperlink{Modify_route_fm}{Modify route}. \hyperlink{Delete_route_fm}{Delete route}.\\
+		UserStory5 & As fleet manager I want to be able to view previous user requests. & High & \hyperlink{PreviousUserRequestsFm}{Previous user requests}.\\
 		\hline
 		UserStory6 & As fleet manager I want to be able to get the position of all the buses. & High & \hyperlink{Get_bus_location_fm}{Get bus location}.\\
 		\hline
 		UserStory7 & As fleet manager I want to be able to get the utilization of the selected bus. & Average & \hyperlink{View_bus_utilization_fm}{View bus utilization}.\\
 		\hline
-		UserStory8 & As a bus driver I want to be able to login (or logout) into the system with my account at any time. & High & \hyperlink{Login_bd}{Login}.\\
+		UserStory8 & As fleet manager I want to be able to add, modify or remove a route. & High & \hyperlink{AddRoute}{Add route}. \hyperlink{ModifyRoute}{Modify route}. \hyperlink{DeleteRoute}{Remove route}.\\
 		\hline
-		UserStory9 & As a bus driver I want to be able to see the schedule of the route I have to cover. & High & \hyperlink{View_schedule_bd}{View schedule}.\\
+		UserStory9 & As a bus driver I want to be able to login (or logout) into the system with my account at any time. & High & \hyperlink{Login_bd}{Login}.\\
 		\hline
-		UserStory10 & As a bus driver I want to be able to view the user requests from the passengers. & Average & \hyperlink{View_user_requests_bd}{View user requests}.\\
-		\hline
-		UserStory11 & As a bus driver i want to be able to manage the user request. & High & \hyperlink{Manage_user_requests_bd}{Manage user requests}\\
+		UserStory10 & As a bus driver I want to be able to see the schedule of the route I have to cover, with the user requests I need to satisfy. & High & \hyperlink{View_schedule_bd}{View schedule}.\\
 		\hline
 	\end{tabular}
 \end{table}
@@ -70,18 +67,17 @@ The following functional requirements describe the system’s behavior with resp
 		\hline
 		\textbf{Actor} & Passenger\\
 		\hline
-		\textbf{Entry conditions} & Passenger is already known with the available buses on that route and all the necessary information.\\
+		\textbf{Entry conditions} & No entry conditions.\\
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
+			\item Open web page.
+			\item Select a starting bus stop.
+			\item Select an ending bus stop.
 			\item Check bus availability.
-			\item See bus details for location.
-			\item See bus schedule. 
-			\item Make seat selection.
-			\item Send location with timestamps.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & Gets confirmation.\\
+		\textbf{Exit Conditions} & Passenger gets confirmation.\\
 		\hline
 		\textbf{Exceptions} & No bus/seat available.\\
 		\hline
@@ -100,35 +96,35 @@ The routes are five and we cannot change them. The only thing that can change is
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 		\hline
-		\textbf{Name} & Login [\hyperlink{Login_fm_seq}{Sequence diagram}]\\
+		\textbf{Name} & Login [\hyperlink{FmLoginSeq}{Sequence diagram}]\\
 		\hline
 		\textbf{Actor} & Fleet manager\\
 		\hline
-		\textbf{Entry conditions} & The form is filled with credentials.\\
+		\textbf{Entry conditions} & No entry condition.\\
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
 			\item Web page opened. 
-			\item Enter the credentials.
-			\item Enter button pressed.
+			\item Enter credentials.
+			\item "Login" button pressed.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & Session variables.\\
+		\textbf{Exit Conditions} & Homepage is shown.\\
 		\hline
-		\textbf{Exceptions} & Wrong credentials. Step is repeated.\\
+		\textbf{Exceptions} & Wrong credentials.\\
 		\hline
 	\end{tabular}
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13cm]{Login_fm}
+	\includegraphics[height=13cm]{FmLogin}
 \end{figure}
-\item \hypertarget{Add_bus_to_route_fm} Add bus to route:
+\item \hypertarget{AddBus} Add bus:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 		\hline
-		\textbf{Name} & Add bus to route [\hyperlink{Add_bus_to_route_fm_seq}{Sequence diagram}]\\
+		\textbf{Name} & Add bus [\hyperlink{FmAddBusSeq}{Sequence diagram}]\\
 		\hline
 		\textbf{Actor} & Fleet manager\\
 		\hline
@@ -136,28 +132,27 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Respective web page opened. 
-			\item Respective form is filled with bus technical details. 
-			\item Desired route and fleet selected. 
+			\item Open buses page. 
+			\item Form is filled with bus technical details. 
 			\item Submit button pressed.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & Database confirmation.\\
+		\textbf{Exit Conditions} & Database confirmation and buses page shown.\\
 		\hline
-		\textbf{Exceptions} & Wrong informations are inserted.\\
+		\textbf{Exceptions} & Wrong information is entered.\\
 		\hline
 	\end{tabular}
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=12cm]{Add_bus_to_route_fm}
+	\includegraphics[height=13cm]{FmAddBus}
 \end{figure}
-\item \hypertarget{Remove_bus_from_route_fm} Remove bus from route:
+\item \hypertarget{ModifyBus} Modify bus:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 		\hline
-		\textbf{Name} & Remove bus from route [\hyperlink{Remove_bus_from_route_fm_seq}{Sequence diagram}]\\
+		\textbf{Name} & Modify bus [\hyperlink{FmModifyBusSeq}{Sequence diagram}]\\
 		\hline
 		\textbf{Actor} & Fleet manager\\
 		\hline
@@ -165,13 +160,42 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Respective web page is opened.  
-			\item Desired route and fleet selected. 
-			\item Information is shown on map. 
-			\item Bus is removed from the route.
+			\item Open buses page.
+			\item Bus is selected. 
+			\item Form with bus technical details is modified. 
+			\item Submit button pressed.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & The schedule is affected.\\
+		\textbf{Exit Conditions} & Database confirmation and buses page shown.\\
+		\hline
+		\textbf{Exceptions} & Wrong information is entered.\\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13cm]{FmModifyBus}
+\end{figure}
+\newpage
+\item \hypertarget{RemoveBus} Remove bus:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
+		\hline
+		\textbf{Name} & Remove bus [\hyperlink{RemoveBusSeq}{Sequence diagram}]\\
+		\hline
+		\textbf{Actor} & Fleet manager\\
+		\hline
+		\textbf{Entry conditions} & Fleet manager is logged in.\\
+		\hline
+		\textbf{Flow of Events} & 
+		\begin{enumerate}
+			\item Open buses page.
+			\item Bus is selected. 
+			\item "Delete" button pressed.
+		\end{enumerate}\\
+		\hline
+		\textbf{Exit Conditions} & Bus is removed and buses page is shown.\\
 		\hline
 		\textbf{Exceptions} & Bus not found.\\
 		\hline
@@ -179,14 +203,14 @@ The routes are five and we cannot change them. The only thing that can change is
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13cm]{Remove_bus_from_route_fm}
+	\includegraphics[height=13cm]{FmRemoveBus}
 \end{figure}
-\item \hypertarget{Add_schedule_time_fm} Add schedule time:
+\item \hypertarget{AddDriver} Add driver:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 		\hline
-		\textbf{Name} & Add schedule time [\hyperlink{Add_schedule_time_fm_seq}{Sequence diagram}]\\
+		\textbf{Name} & Add driver [\hyperlink{AddDriverSeq}{Sequence diagram}]\\
 		\hline
 		\textbf{Actor} & Fleet manager\\
 		\hline
@@ -194,28 +218,27 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Respective web page is opened. 
-			\item Desired route is selected. 
-			\item Information is shown on the map. 
-			\item Schedule form is filled.
+			\item Open drivers page. 
+			\item Form is filled with driver's technical details. 
+			\item Submit button pressed.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & The database is updated.\\
+		\textbf{Exit Conditions} & Database confirmation and drivers page shown.\\
 		\hline
-		\textbf{Exceptions} & The driver cannot see the schedule.\\
+		\textbf{Exceptions} & Wrong information is entered.\\
 		\hline
 	\end{tabular}
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13cm]{Add_schedule_time_fm}
+	\includegraphics[height=13cm]{FmAddDriver}
 \end{figure}
-\item \hypertarget{Modify_schedule_time_fm} Modify schedule time:
+\item \hypertarget{ModifyDriver} Modify driver:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 		\hline
-		\textbf{Name} & Modify schedule time [\hyperlink{Modify_schedule_time_fm_seq}{Sequence diagram}]\\
+		\textbf{Name} & Modify driver [\hyperlink{ModifyDriverSeq}{Sequence diagram}]\\
 		\hline
 		\textbf{Actor} & Fleet manager\\
 		\hline
@@ -223,28 +246,28 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Respective web page is opened. 
-			\item Desired schedule is selected. 
-			\item Information is shown. 
-			\item Schedule form is filled.
+			\item Open drivers page.
+			\item Driver is selected. 
+			\item Form with driver's technical details is modified. 
+			\item Submit button pressed.
 		\end{enumerate}\\
-		\hline
-		\textbf{Exit Conditions} & The database is updated.\\
-		\hline
-		\textbf{Exceptions} & The driver cannot see the schedule.\\
-		\hline
+	\hline
+\textbf{Exit Conditions} & Database confirmation and drivers page shown.\\
+\hline
+\textbf{Exceptions} & Wrong information is entered.\\
+\hline
 	\end{tabular}
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13cm]{Modify_schedule_time_fm}
+	\includegraphics[height=13cm]{FmModifyDriver}
 \end{figure}
-\item \hypertarget{Mapping_user_requests_fm} Mapping user requests:
+\item \hypertarget{DeleteDriver} Remove driver:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 		\hline
-		\textbf{Name} & Mapping user requests [\hyperlink{Mapping_user_requests_fm_seq}{Sequence diagram}]\\
+		\textbf{Name} & Remove driver [\hyperlink{RemoveDriverSeq}{Sequence diagram}]\\
 		\hline
 		\textbf{Actor} & Fleet manager\\
 		\hline
@@ -252,12 +275,40 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Respective web page is opened. 
+			\item Open drivers page.
+			\item Driver is selected. 
+			\item "Delete" button pressed.
+		\end{enumerate}\\
+	\hline
+\textbf{Exit Conditions} & Driver is removed and drivers page is shown.\\
+\hline
+\textbf{Exceptions} & Driver not found.\\
+\hline
+	\end{tabular}
+\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13cm]{FmRemoveDriver}
+\end{figure}
+\item \hypertarget{Mapping_user_requests_fm} View user requests on a map:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
+		\hline
+		\textbf{Name} & View user requests on a map [\hyperlink{ViewUserRequestsSeq}{Sequence diagram}]\\
+		\hline
+		\textbf{Actor} & Fleet manager\\
+		\hline
+		\textbf{Entry conditions} & Fleet manager is logged in.\\
+		\hline
+		\textbf{Flow of Events} & 
+		\begin{enumerate}
+			\item Open user requests page. 
 			\item Read from database. 
 			\item Information is shown.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & The database is updated.\\
+		\textbf{Exit Conditions} & The fleet manager is able to see the user requests.\\
 		\hline
 		\textbf{Exceptions} & Data is not available.\\
 		\hline
@@ -265,9 +316,10 @@ The routes are five and we cannot change them. The only thing that can change is
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13cm]{Mapping_user_requests_fm}
+	\includegraphics[width=14cm]{FmViewUserRequests}
 \end{figure}
-\item \hypertarget{View_previous_user_requests_fm} View previous user requests:
+\newpage
+\item \hypertarget{PreviousUserRequestsFm} View previous user requests:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
@@ -280,13 +332,12 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Respective web page is opened. 
-			\item Previous user requests are selected. 
+			\item Previous user requests page is opened. 
 			\item Read data from the database.
 			\item Information is shown. 
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & Getting previous users requests.\\
+		\textbf{Exit Conditions} & Fleet manager is able to see the previous users requests.\\
 		\hline
 		\textbf{Exceptions} & Data is not available.\\
 		\hline
@@ -294,99 +345,15 @@ The routes are five and we cannot change them. The only thing that can change is
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13cm]{View_previous_user_requests_fm}
+	\includegraphics[width=14cm]{FmViewPreviousUserRequests}
 \end{figure}
 \newpage
-\item \hypertarget{Add_route_fm} Add route:
-\begin{table}[H]
-	\centering
-	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
-		\hline
-		\textbf{Name} & Add route [\hyperlink{Add_route_fm_seq}{Sequence diagram}]\\
-		\hline
-		\textbf{Actor} & Fleet manager\\
-		\hline
-		\textbf{Entry conditions} & Fleet manager is logged in.\\
-		\hline
-		\textbf{Flow of Events} & 
-		\begin{enumerate}
-			\item Respective web page is opened. 
-			\item Desired route information is filled.  
-			\item Submit button is pressed.
-		\end{enumerate}\\
-		\hline
-		\textbf{Exit Conditions} & The database is updated.\\
-		\hline
-		\textbf{Exceptions} & The database is not updated.\\
-		\hline
-	\end{tabular}
-\end{table}
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=13cm]{Add_route_fm}
-\end{figure}
-\item \hypertarget{Modify_route_fm} Modify route:
-\begin{table}[H]
-	\centering
-	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
-		\hline
-		\textbf{Name} & Modify route [\hyperlink{Modify_route_fm_seq}{Sequence diagram}]\\
-		\hline
-		\textbf{Actor} & Fleet manager\\
-		\hline
-		\textbf{Entry conditions} & Fleet manager is logged in.\\
-		\hline
-		\textbf{Flow of Events} & 
-		\begin{enumerate}
-			\item Respective web page is opened. 
-			\item Desired route information is modified.  
-			\item Submit button is pressed.
-		\end{enumerate}\\
-		\hline
-		\textbf{Exit Conditions} & The database is updated.\\
-		\hline
-		\textbf{Exceptions} & The database is not updated.\\
-		\hline
-	\end{tabular}
-\end{table}
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=13cm]{Modify_route_fm}
-\end{figure}
-\item \hypertarget{Delete_route_fm} Delete route:
-\begin{table}[H]
-	\centering
-	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
-		\hline
-		\textbf{Name} & Delete route [\hyperlink{Delete_route_fm_seq}{Sequence diagram}]\\
-		\hline
-		\textbf{Actor} & Fleet manager\\
-		\hline
-		\textbf{Entry conditions} & Fleet manager is logged in.\\
-		\hline
-		\textbf{Flow of Events} & 
-		\begin{enumerate}
-			\item Respective web page is opened. 
-			\item Desired route information is deleted.  
-			\item Submit button is pressed.
-		\end{enumerate}\\
-		\hline
-		\textbf{Exit Conditions} & The database is updated.\\
-		\hline
-		\textbf{Exceptions} & The database is not updated.\\
-		\hline
-	\end{tabular}
-\end{table}
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=13.5cm]{Delete_route_fm}
-\end{figure}
 \item \hypertarget{Get_bus_location_fm} Get bus location:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 		\hline
-		\textbf{Name} & Get bus location [\hyperlink{Get_bus_location_fm_seq}{Sequence diagram}]\\
+		\textbf{Name} & Get bus location [\hyperlink{GetBusLocationSeq}{Sequence diagram}]\\
 		\hline
 		\textbf{Actor} & Fleet manager\\
 		\hline
@@ -396,10 +363,10 @@ The routes are five and we cannot change them. The only thing that can change is
 		\begin{enumerate}
 			\item Respective web page is opened. 
 			\item Desired bus is selected. 
-			\item Information is shown in the map.
+			\item Information is shown on the map.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & Getting the bus\textquotesingle s current position in map.\\
+		\textbf{Exit Conditions} & Getting the bus' current position in a map.\\
 		\hline
 		\textbf{Exceptions} & Data not available.\\
 		\hline
@@ -407,8 +374,9 @@ The routes are five and we cannot change them. The only thing that can change is
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13.5cm]{Get_bus_location_fm}
+	\includegraphics[width=14cm]{FmGetBusLocation}
 \end{figure}
+\newpage
 \item \hypertarget{View_bus_utilization_fm} View bus utilization:
 \begin{table}[H]
 	\centering
@@ -427,7 +395,7 @@ The routes are five and we cannot change them. The only thing that can change is
 			\item Information is shown.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & Getting the utilization of buses.\\
+		\textbf{Exit Conditions} & The fleet manager is able to view the utilization of the selected bus.\\
 		\hline
 		\textbf{Exceptions} & Data not available.\\
 		\hline
@@ -435,7 +403,93 @@ The routes are five and we cannot change them. The only thing that can change is
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13.5cm]{View_bus_utilization_fm}
+	\includegraphics[width=14cm]{FmViewBusUtilization}
+\end{figure}
+\newpage
+\item \hypertarget{AddRoute} Add route:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
+		\hline
+		\textbf{Name} & Add route [\hyperlink{AddRouteSeq}{Sequence diagram}]\\
+		\hline
+		\textbf{Actor} & Fleet manager\\
+		\hline
+		\textbf{Entry conditions} & Fleet manager is logged in.\\
+		\hline
+		\textbf{Flow of Events} & 
+		\begin{enumerate}
+			\item Open routes page. 
+			\item Form is filled with route's technical details. 
+			\item Submit button pressed.
+		\end{enumerate}\\
+	\hline
+\textbf{Exit Conditions} & Database confirmation and routes page shown.\\
+\hline
+\textbf{Exceptions} & Wrong information is entered.\\
+\hline
+	\end{tabular}
+\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13cm]{FmAddRoute}
+\end{figure}
+\item \hypertarget{ModifyRoute} Modify route:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
+		\hline
+		\textbf{Name} & Modify route [\hyperlink{ModifyRouteSeq}{Sequence diagram}]\\
+		\hline
+		\textbf{Actor} & Fleet manager\\
+		\hline
+		\textbf{Entry conditions} & Fleet manager is logged in.\\
+		\hline
+		\textbf{Flow of Events} & 
+		\begin{enumerate}
+			\item Open routes page.
+			\item Route is selected. 
+			\item Form with route's technical details is modified. 
+			\item Submit button pressed.
+		\end{enumerate}\\
+	\hline
+\textbf{Exit Conditions} & Database confirmation and routes page shown.\\
+\hline
+\textbf{Exceptions} & Wrong information is entered.\\
+\hline
+	\end{tabular}
+\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13cm]{FmModifyRoute}
+\end{figure}
+\item \hypertarget{DeleteRoute} Remove route:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
+		\hline
+		\textbf{Name} & Remove route [\hyperlink{DeleteRouteSeq}{Sequence diagram}]\\
+		\hline
+		\textbf{Actor} & Fleet manager\\
+		\hline
+		\textbf{Entry conditions} & Fleet manager is logged in.\\
+		\hline
+		\textbf{Flow of Events} & 
+		\begin{enumerate}
+			\item Open routes page.
+			\item Route is selected. 
+			\item "Delete" button pressed.
+		\end{enumerate}\\
+	\hline
+\textbf{Exit Conditions} & Route is removed and routes page is shown.\\
+\hline
+\textbf{Exceptions} & Route not found.\\
+\hline
+	\end{tabular}
+\end{table}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=13.5cm]{FmDeleteRoute}
 \end{figure}
 \end{itemize}
 \subsubsection{Bus driver}
@@ -449,31 +503,31 @@ The routes are five and we cannot change them. The only thing that can change is
 			\hline
 			\textbf{Actor} & Bus driver\\
 			\hline
-			\textbf{Entry conditions} & Form is filled with credentials.\\
+			\textbf{Entry conditions} & No entry condition.\\
 			\hline
 			\textbf{Flow of Events} & 
 			\begin{enumerate}
-				\item Web page is opened. 
-				\item Form is filled. 
-				\item Enter button pressed.
+				\item Web page opened. 
+				\item Enter credentials.
+				\item "Login" button pressed.
 			\end{enumerate}\\
-			\hline
-			\textbf{Exit Conditions} & Session variables.\\
-			\hline
-			\textbf{Exceptions} & Wrong credentials. Step is repeated.\\
-			\hline
+		\hline
+	\textbf{Exit Conditions} & Homepage is shown.\\
+\hline
+\textbf{Exceptions} & Wrong credentials.\\
+\hline
 		\end{tabular}
 	\end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13cm]{Login_bd}
+	\includegraphics[height=13cm]{BdLogin}
 \end{figure}
 	\item \hypertarget{View_schedule_bd} View schedule:
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
 			\hline
-			\textbf{Name} & View schedule [\hyperlink{View_schedule_bd_seq}{Sequence diagram}]\\
+			\textbf{Name} & View schedule with user requests [\hyperlink{View_schedule_bd_seq}{Sequence diagram}]\\
 			\hline
 			\textbf{Actor} & Bus driver\\
 			\hline
@@ -483,39 +537,10 @@ The routes are five and we cannot change them. The only thing that can change is
 			\begin{enumerate}
 				\item Respective web page is opened. 
 				\item Read data from database. 
-				\item Information is shown in the screen.
-			\end{enumerate}\\
-			\hline
-			\textbf{Exit Conditions} & Getting the schedule.\\
-			\hline
-			\textbf{Exceptions} & Data not available.\\
-			\hline
-		\end{tabular}
-	\end{table}
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=13.5cm]{View_schedule_bd}
-\end{figure}
-\newpage
-	\item \hypertarget{View_user_requests_bd} View user requests:
-	\begin{table}[H]
-		\centering
-		\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
-			\hline
-			\textbf{Name} & View user requests [\hyperlink{View_user_requests_bd_seq}{Sequence diagram}]\\
-			\hline
-			\textbf{Actor} & Bus driver\\
-			\hline
-			\textbf{Entry conditions} & Bus driver is logged in.\\
-			\hline
-			\textbf{Flow of Events} & 
-			\begin{enumerate}
-				\item Respective web page is opened. 
-				\item Read data from the database.
 				\item Information is shown on the screen.
 			\end{enumerate}\\
 			\hline
-			\textbf{Exit Conditions} & Getting the user\textquotesingle s requests.\\
+			\textbf{Exit Conditions} & Bus driver is able to view his/her schedule with all the user requests he/she needs to satisfy.\\
 			\hline
 			\textbf{Exceptions} & Data not available.\\
 			\hline
@@ -523,155 +548,110 @@ The routes are five and we cannot change them. The only thing that can change is
 	\end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=13cm]{View_user_requests_bd}
-\end{figure}
-	\item \hypertarget{Manage_user_requests_bd} Manage user requests:
-	\begin{table}[H]
-		\centering
-		\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
-			\hline
-			\textbf{Name} & Manage user requests [\hyperlink{Manage_user_requests_bd_seq}{Sequence diagram}]\\
-			\hline
-			\textbf{Actor} & Bus driver\\
-			\hline
-			\textbf{Entry conditions} & Bus driver is logged in.\\
-			\hline
-			\textbf{Flow of Events} & 
-			\begin{enumerate}
-				\item Respective web page is opened. 
-				\item Desired user selected. 
-				\item Desired request is managed. 
-				\item Submit button is pressed.
-			\end{enumerate}\\
-			\hline
-			\textbf{Exit Conditions} & Database is updated.\\
-			\hline
-			\textbf{Exceptions} & Database is not updated.\\
-			\hline
-		\end{tabular}
-	\end{table}
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=13cm]{Manage_user_requests_bd}
+	\includegraphics[width=14cm]{BdViewSchedule}
 \end{figure}
 \end{itemize}
 \newpage
 \subsubsection{Sequence diagrams}
 \begin{itemize}
-	\item \hypertarget{Generate_request} Generate request:
+	\item \hypertarget{Generate_request} Passenger generates a request:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[height=19cm]{Generate_request}
+		\includegraphics[width=14cm]{UserGenerateRequest}
 	\end{figure}
-	\item \hypertarget{Login_fm_seq} Fleet manager login:
+\newpage
+	\item \hypertarget{FmLoginSeq} Fleet manager login:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=13cm]{Login_fm_seq}
+		\includegraphics[width=14cm]{FmLoginSeq}
 	\end{figure}
 \newpage
-	\item \hypertarget{Add_bus_to_route_fm_seq} Add bus to route:
+	\item \hypertarget{FmAddBusSeq} Add bus:
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=13cm]{Add_bus_to_route_fm_seq}
+		\includegraphics[width=14cm]{FmAddBusSeq}
 	\end{figure}
 \newpage
-\item \hypertarget{Remove_bus_from_route_fm_seq} Remove bus from route:
+\item \hypertarget{FmModifyBusSeq} Modify bus:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Remove_bus_from_route_fm_seq}
+	\includegraphics[width=14cm]{FmModifyBusSeq}
 \end{figure}
 \newpage
-\item \hypertarget{Add_schedule_time_fm_seq} Add schedule time:
+\item \hypertarget{RemoveBusSeq} Remove bus:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Add_schedule_time_fm_seq}
+	\includegraphics[width=14cm]{FmRemoveBusSeq}
 \end{figure}
 \newpage
-\item \hypertarget{Modify_schedule_time_fm_seq} Modify schedule time:
+\item \hypertarget{AddDriverSeq} Add driver:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Modify_schedule_time_fm_seq}
+	\includegraphics[width=14cm]{FmAddDriverSeq}
 \end{figure}
 \newpage
-\item \hypertarget{Mapping_user_requests_fm_seq} Mapping user requests:
+\item \hypertarget{ModifyDriverSeq} Modify driver:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Mapping_user_requests_fm_seq}
+	\includegraphics[width=14cm]{FmModifyDriverSeq}
+\end{figure}
+\newpage
+\item \hypertarget{RemoveDriverSeq} Remove driver:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{FmRemoveDriverSeq}
+\end{figure}
+\newpage
+\item \hypertarget{ViewUserRequestsSeq} View user requests on a map:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{FmViewUserRequestsSeq}
 \end{figure}
 \item \hypertarget{View_previous_user_requests_fm_seq} View previous user requests:
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=12cm]{View_previous_user_requests_fm_seq}
-\end{figure}
-\item \hypertarget{Add_route_fm_seq} Add route:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=13cm]{Add_route_fm_seq}
+	\includegraphics[width=14cm]{FmViewPreviousUserRequestsSeq}
 \end{figure}
 \newpage
-\item \hypertarget{Modify_route_fm_seq} Modify route:
+\item \hypertarget{GetBusLocationSeq} Get bus location:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Modify_route_fm_seq}
-\end{figure}
-\newpage
-\item \hypertarget{Delete_route_fm_seq} Delete route:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=13cm]{Delete_route_fm_seq}
-\end{figure}
-\newpage
-\item \hypertarget{Get_bus_location_fm_seq} Get bus location:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=13cm]{Get_bus_location_fm_seq}
+	\includegraphics[width=14cm]{FmGetBusLocationSeq}
 \end{figure}
 \newpage
 \item \hypertarget{View_bus_utilization_fm_seq} View bus utilization:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{View_bus_utilization_fm_seq}
+	\includegraphics[width=14cm]{FmViewBusUtilizationSeq}
 \end{figure}
 \newpage
-\item \hypertarget{Add_notification_for_drivers_fm_seq} Add notification for drivers:
+\item \hypertarget{AddRouteSeq} Add route:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Add_notification_for_drivers_fm_seq}
+	\includegraphics[width=14cm]{FmAddRouteSeq}
 \end{figure}
 \newpage
-\item \hypertarget{Control_vehicle_status_fm_seq} Control vehicle status:
+\item \hypertarget{ModifyRouteSeq} Modify route:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Control_vehicle_status_fm_seq}
+	\includegraphics[width=14cm]{FmModifyRouteSeq}
 \end{figure}
 \newpage
-\item \hypertarget{Update_fleet_information_fm_seq} Update fleet information:
+\item \hypertarget{DeleteRouteSeq} Delete route:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Update_fleet_information_fm_seq}
+	\includegraphics[width=14cm]{FmDeleteRouteSeq}
 \end{figure}
 \newpage
 \item \hypertarget{Login_bd_seq} Bus driver login:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{Login_bd_seq}
+	\includegraphics[width=14cm]{BdLoginSeq}
 \end{figure}
 \newpage
 \item \hypertarget{View_schedule_bd_seq} View schedule:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=13cm]{View_schedule_bd_seq}
-\end{figure}
-\newpage
-\item \hypertarget{View_user_requests_bd_seq} View user requests:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=13cm]{View_user_requests_bd_seq}
-\end{figure}
-\newpage
-\item \hypertarget{Manage_user_requests_bd_seq} Manage user requests:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=13cm]{Manage_user_requests_bd_seq}
+	\includegraphics[width=14cm]{BdViewScheduleSeq}
 \end{figure}
 \end{itemize}
