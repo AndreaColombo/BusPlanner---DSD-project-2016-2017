@@ -1,4 +1,0 @@
-<?php
-$database = firebase.database();
-
->

@@ -7,7 +7,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
         <link href="CSS/style.css" rel="stylesheet" type="text/css">
-        <link href="CSS/styleFleet.css" rel="stylesheet" type="text/css">
         
         <!-- Bootstrap -->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -29,29 +28,30 @@
             };
             firebase.initializeApp(config);
         </script>
+        <script src="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/1.0/firebase-ui-auth.css" />
     </head>
     
     <body>
         <div id="header"></div>
-    <div id="main"></div>
-    <div id="footer" style="padding-top:10px">
-    <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
+        <div id="main"></div>
+        <div id="footer" style="padding-top:10px">
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#">Contact us</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         </div>
-    </nav>
-    </div>
     <!--JavaScripts placed at the end of the page for faster loading -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHNVxKQAn4wn4sqz_1i5yKIBenoiyWU5I&&libraries=visualization"></script>
+    
     <!--JQuery-->
     <script src="jquery/jquery-2.2.4.min.js"></script>
-
-
 
     <!-- Google markers js-->
     <script src="js-marker-clusterer-gh-pages/src/markerclusterer.js"></script>
@@ -62,10 +62,10 @@
     <!-- Our JS-->
     <script language="JavaScript"
         type="text/javascript"
-        src="JS/appFleet.js"></script>
+        src="JS/app.js"></script>
     
     <script language="JavaScript"
         type="text/javascript"
-        src="JS/scriptsFleet.js"></script>
+        src="JS/scripts.js"></script>
     </body>
 </html>

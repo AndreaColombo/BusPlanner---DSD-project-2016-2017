@@ -38,3 +38,91 @@ html, body { height: 100%; margin: 0; padding: 0; }
 .hide {
     display:none;
 }
+
+#fleetSection{
+    background-color: aliceblue;
+    height: 200px;
+    width: 50% 
+}
+
+#imageHomeFleet{
+    height: 200px;
+    width: 100%;
+}
+
+.jumbotron{
+    border-radius: 8px;
+    background: rgba(216, 213, 213, 0.8);
+    border-style: solid;
+    border-width: 1px;
+    border-color: black; 
+}
+
+.intestationImages{
+    height: 200px;
+    width: 600px;
+    max-width:100%;
+    max-height:100%;
+    opacity: 0.7;
+}
+
+#jumboStyle{
+    border: 1px solid black;
+    height: 200px;
+}
+
+#imageText{
+    color: white;
+}
+
+#minimalDescription {
+    text-align: center;
+    margin-top: 30px;
+    padding: 0;
+    font-size: 25px;
+}
+
+#titleIntestation {
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+}
+
+#intestation{
+    border-bottom: 1px solid lightBlue;
+}
+
+.verticalLine {
+    border-left: solid #000000;
+}
+
+#map1 {
+    height:500px;
+    width:700px;
+}
+
+div.scroll {
+    overflow: scroll;
+}
+
+.container {
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+#userRequests {
+    border: 1px solid black;
+    border-radius: 7px;
+    margin-bottom: 5px;
+}
+
+#imageDriver{
+    height:200px;
+    width:200px;
+}
+
+
+#mapRoute{
+    height: 700px;
+    width: 800px;
+}
