@@ -108,10 +108,14 @@ $( document ).ready(function() {
                         } 
                         // Bus driver's home
                         else {
-                            var changeHeader = headerDriver();
-                            var changeMain = mainDriver();
-                            $('#header').html(changeHeader);
-                            $('#main').html(changeMain);
+                            var query = firebase.database().ref().child("RouteSchedule").child("RouteSchedule1").child("Stops");
+                            query.once("value")
+                                .then(function (snapshot) {
+                                    var changeHeader = headerDriver();
+                                    $('#header').html(changeHeader);
+                                    var result = mainDriver(snapshot);
+                                    $('#main').html(result);
+                                });
                             window.location.hash = "homeDriver";
                         }
                     } 
@@ -120,47 +124,6 @@ $( document ).ready(function() {
                 $('#\\#loginModal').modal('show');
             }
         });
-    });
-    
-    $("body").on("click", "#viewRequests", function (e){
-        //document.getElementById('main').classList.add('hide');
-        //document.getElementById('map').classList.remove('hide');
-    
-        var result = viewUserRequests();
-        $('#main').html(result);
-        
-        window.location.hash = "view_user_requests";
-        e.preventDefault();
-    });
-    
-    $("body").on("click", "#manageRequests", function (e){
-        //document.getElementById('main').classList.remove('hide');
-        //document.getElementById('map').classList.add('hide');
-        
-        var query = firebase.database().ref().child("UserRequest");
-        query.once("value")
-            .then(function (snapshot) {
-                var result = manageUserRequests(snapshot);
-                $('#main').html(result);
-            });
-        
-        window.location.hash = "manage_user_requests";
-        e.preventDefault();
-    });
-    
-    $("body").on("click", "#viewSchedule", function (e){
-        //document.getElementById('main').classList.remove('hide');
-        //document.getElementById('map').classList.add('hide');
-        
-        var query = firebase.database().ref().child("RouteSchedule").child("RouteSchedule1").child("Stops");
-        query.once("value")
-            .then(function (snapshot) {
-                var result = viewScheduleDriver(snapshot);
-                $('#main').html(result);
-            });
-        
-        window.location.hash = "view_schedule";
-        e.preventDefault();
     });
 
     //the loading of the page for manage the bus

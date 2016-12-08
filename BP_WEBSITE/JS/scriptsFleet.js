@@ -104,9 +104,6 @@ function headerDriver() {
                 r+='</div>';
                 r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
                     r+='<ul class="nav navbar-nav navbar-right">';
-                        r+='<li><a id="btnBus" href="#" style="padding-top:25px">View user requests</a></li>';
-                        r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Manage user requests</a></li>';
-		                r+='<li><a id="btnRoute" href="#" style="padding-top:25px">View route</a></li>';
                         r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
                    r+='</ul>';
                 r+='</div>';
@@ -196,91 +193,7 @@ function mainFleet() {
     return r;
 }
 
-function mainDriver() {
-    var r = '';
-    
-    // View user requests
-    r+='<div class="row">';
-        r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-            r+='<div class="row">';
-                r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-                r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                r+='<a href="#" id="viewRequests">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/ViewRequests6.png)" align= "center">';
-                        r+='<h3 id="imageText">View user requests</h3>';
-                        r+='<h4 id="imageText">Here you can view the user requests on a map.</h4>';
-                    r+='</div>';
-                r+='</a>';
-                r+='</div>';
-            r+='</div>';
-        r+='</div>';
-    
-    // Manage user requests
-    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-            r+='<div class="row">';
-                r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                r+='<a href="#" id="manageRequests">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/ManageUserRequests2.png)" align= "center">';
-                        r+='<h3 id="imageText">Manage user requests</h3>';
-                        r+='<h4 id="imageText">Here you can manage the user requests.</h4>';
-                    r+='</div>';
-                r+='</a>';
-                r+='</div>';
-                r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-            r+='</div>';
-        r+='</div>';
-    r+='</div>';
-    
-    // View schedule
-    r+='<div>';
-        r+='<div class="row">';
-            r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
-            r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-            r+='<a href="#" id="viewSchedule">';
-                r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyBuses.jpg)" align= "center">';
-                        r+='<h3 id="imageText">View schedule</h3>';
-                        r+='<h4 id="imageText">Here you can view your schedule.</h4>';
-                    r+='</div>';
-            r+='</a>';
-            r+='</div>';
-            r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>'; 
-        r+='</div>';
-    r+='</div>';
-    
-    return r;
-}
-
-function viewUserRequests() {
-    var r = "";
-    r+='<div id="map1">';
-    r+='<button type="button" onclick="getMapDriver()" class="btn">Submit</button>';
-    r+='</div>';
-    return r;
-}
-
-function manageUserRequests(data) {
-    var count = 1;
-    var r='';
-    r+='<div class = "row">';
-    r+='<div class="col-md-5 col-sm-5 col-xs-5 scroll" style="height:500px">';
-    r+='<div class="list-group" style="margin-left:20px">';
-    data.forEach(function (d) {
-        r+='<a href="#" id="userRequest'+count+'" onclick="selected('+count+')" class="list-group-item">';
-        r+='<h4 class="list-group-item-heading">USER REQUEST '+count+'</h4>';
-        r+='<p class="list-group-item-text">'+d.child('Stop').val()+'</p>';
-        r+='</a>';
-        count++;
-    });
-    r+='</div>';
-    r+='</div>';
-    r+='<div class="col-md-7 col-sm-7 col-xs-7" id="map1">';
-    r+='<button type="button" onclick="getMapDriver()" class="btn">Submit</button>';
-    r+='</div>';
-    r+='</div>';
-    return r;
-}
-
-function viewScheduleDriver(data) {
+function mainDriver(data) {
     var r = "";
     r+='<div class = "row">';
     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
@@ -293,6 +206,7 @@ function viewScheduleDriver(data) {
     data.forEach(function (d) {
         r+='<li>'+d.val()+'<br>';
         r+='<p style="color:red">To take:</p>';
+        r+='<p style="color:red">To leave:</p>';
         r+='</li>';
     });
 
