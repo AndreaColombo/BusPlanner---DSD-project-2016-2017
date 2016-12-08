@@ -1,0 +1,401 @@
+"Route2": {
+            "Route_id": "2",
+            "Route_name": "Klipspruit West via M1",
+	        "BusStops": {
+				"BusStop1": {
+					"Stop_id": "1",
+						"Osm_id": "1",
+						"Name": "Newtown - Bree Taxi Rank",
+						"Point": {
+							"Longitude": "28.037777",
+							"Latitude": "-26.200509"
+						}
+				},
+				"BusStop2": {
+					"Stop_id": "2",
+					"Osm_id": "2",
+					"Name": "Newtown - Viking/Sasol Garage",
+					"Point": {
+						"Longitude": "27.943938",
+						"Latitude": "-26.277541"
+					}
+				},
+				"BusStop3": {
+					"Stop_id": "3",
+					"Osm_id": "3",
+					"Name": "Devland - Hyper Cash&C",
+					"Point": {
+						"Longitude": "27.943938,
+						"Latitude": "-26.280946"
+					}
+				},
+				"BusStop4": {
+					"Stop_id": "4",
+					"Osm_id": "4",
+					"Name": "Devland - BP Devland",
+					"Point": {
+						"Longitude": "27.929015",
+						"Latitude": "-26.285083"
+					}
+				},
+				"BusStop5": {
+					"Stop_id": "5",
+					"Osm_id": "5",
+					"Name": "Eldos EXT 2 - UnionAve EXT 2BST1",
+					"Point": {
+						"Longitude": "27.926030",
+						"Latitude": "-26.286367"
+					}
+				},
+				"BusStop6": {
+					"Stop_id": "6",
+					"Osm_id": "6",
+					"Name": "Eldos EXT 2 - UnionAve EXT 2BST2",
+					"Point": {
+						"Longitude": "27.922322",
+						"Latitude": "-26.284597"
+					}
+				},
+				"BusStop7": {
+					"Stop_id": "7",
+					"Osm_id": "7",
+					"Name": "Eldos EXT 2 - Mapela/Spar",
+					"Point": {
+						"Longitude": "27.921483",
+						"Latitude": "-26.287184"
+					}
+				},
+				"BusStop8": {
+					"Stop_id": "8",
+					"Osm_id": "8",
+					"Name": "Eldos EXT 2 - Belaleberg AVE",
+					"Point": {
+						"Longitude": "27.920568",
+						"Latitude": "-26.287116"
+					}
+				},
+				"BusStop9": {
+					"Stop_id": "9",
+					"Osm_id": "9",
+					"Name": "Eldos EXT 2 - Mahonie CRES",
+					"Point": {
+						"Longitude": "27.919332",
+						"Latitude": "-26.287071"
+					}
+				},
+				"BusStop10": {
+					"Stop_id": "10",
+					"Osm_id": "10",
+					"Name": ""Eldos EXT 2 - Milnerton STP",
+					"Point": {
+						"Longitude": "27.914868",
+						"Latitude": "-26.286746"
+					}
+				},
+				"BusStop11": {
+					"Stop_id": "11",
+					"Osm_id": "11",
+					"Name": "Eldos EXT 2 - Balfour AVE",
+					"Point": {
+						"Longitude": "27.914856",
+						"Latitude": "-26.284596"
+					}
+				},
+				"BusStop12": {
+					"Stop_id": "12",
+					"Osm_id": "12",
+					"Name": "Eldos EXT 2 - BrandVlei STP",
+					"Point": {
+						"Longitude": "27.914884",
+						"Latitude": "-26.283610"
+					}
+				},
+				"BusStop13": {
+					"Stop_id": "13",
+					"Osm_id": "13",
+					"Name": "Eldos EXT 2 - UnionAve BST3",
+					"Point": {
+						"Longitude": "27.914865",
+						"Latitude": "-26.283071"
+					}
+				},
+				"BusStop14": {
+					"Stop_id": "14",
+					"Osm_id": "14",
+					"Name": "Eldos EXT 2 - Surgery",
+					"Point": {
+						"Longitude": "27.906967",
+						"Latitude": "-26.281718"
+					}
+				},
+				"BusStop15": {
+					"Stop_id": "15",
+					"Osm_id": "15",
+					"Name": "Eldos EXT 2 - Cavendish STP",
+					"Point": {
+						"Longitude": "27.905849",
+						"Latitude": "-26.281514"
+					}
+				},
+				"BusStop16": {
+					"Stop_id": "16",
+					"Osm_id": "16",
+					"Name": "Eldos EXT 4 - Crystal Mall",
+					"Point": {
+						"Longitude": "27.905414",
+						"Latitude": "-26.283209"
+					}
+				},
+				"BusStop17": {
+					"Stop_id": "17",
+					"Osm_id": "17",
+					"Name": "Eldos EXT 4 - John Pop RD,
+					"Point": {
+						"Longitude": "27.902568",
+						"Latitude": "-26.282587"
+					}
+				},
+				"BusStop18": {
+					"Stop_id": "18",
+					"Osm_id": "18",
+					"Name": "Eldos EXT 4 - Cell Tower",
+					"Point": {
+						"Longitude": "27.901053",
+						"Latitude": "-26.282088"
+					}
+				},
+				"BusStop19": {
+					"Stop_id": "19",
+					"Osm_id": "19",
+					"Name": "Eldos EXT 4 - D Jacobs ST",
+					"Point": {
+						"Longitude": 27.900409",
+						"Latitude": "-26.281600"
+					}
+				},
+				"BusStop20": {
+					"Stop_id": "20",
+					"Osm_id": "20",
+					"Name": "Eldos EXT 4 - Buckingham AVE",
+					"Point": {
+						"Longitude": "27.898535",
+						"Latitude": "-26.281341"
+					}
+				},
+				"BusStop21": {
+					"Stop_id": "21",
+					"Osm_id": "21",
+					"Name": "Eldos EXT 7 - Missouri High",
+					"Point": {
+						"Longitude": "27.899392",
+						"Latitude": "-26.284143"
+					}
+				},
+				"BusStop22": {
+					"Stop_id": "22",
+					"Osm_id": "22",
+					"Name": "Eldos EXT 7 - EXT 7 Flats",
+					"Point": {
+						"Longitude": "27.897284",
+						"Latitude": "-26.284646"
+					}
+				},
+				"BusStop23": {
+					"Stop_id": "23",
+					"Osm_id": "23",
+					"Name": "Eldos EXT 7 - Evangelical Church",
+					"Point": {
+						"Longitude": "27.897016",
+						"Latitude": "-26.281303"
+					}
+				},
+				"BusStop24": {
+					"Stop_id": "24",
+					"Osm_id": "24",
+					"Name": "Eldos EXT 7 - 7th STP",
+					"Point": {
+						"Longitude": "27.897523",
+						"Latitude": "-26.280049"
+					}
+				},
+				"BusStop25": {
+					"Stop_id": "25",
+					"Osm_id": "25",
+					"Name": "Eldos EXT 7 - Old Post Office",
+					"Point": {
+						"Longitude": "27.891968",
+						"Latitude": "-26.279166"
+					}
+				},
+				"BusStop26": {
+					"Stop_id": "26",
+					"Osm_id": "26",
+					"Name": "Kliptown - Kliptown SQR",
+					"Point": {
+						"Longitude": "27.890803",
+						"Latitude": "-26.279043"
+					}
+				},
+				"BusStop27": {
+					"Stop_id": "27",
+					"Osm_id": "27",
+					"Name": "Kliptown - PnP Kliptown",
+					"Point": {
+						"Longitude": "27.888212",
+						"Latitude": "-26.278411"
+					}
+				},
+				"BusStop28": {
+					"Stop_id": "28",
+					"Osm_id": "28",
+					"Name": "Kliptown - Soweto Hotel",
+					"Point": {
+						"Longitude": "27.887175",
+						"Latitude": "-26.27826"
+					}
+				},
+				"BusStop29": {
+					"Stop_id": "29",
+					"Osm_id": "29",
+					"Name": "Kliptown - Bux Superstore",
+					"Point": {
+						"Longitude": "27.887013",
+						"Latitude": "-26.279812"
+					}
+				},
+				"BusStop30": {
+					"Stop_id": "30",
+					"Osm_id": "30",
+					"Kliptown - Bridge RD",
+					"Point": {
+						"Longitude": "27.886757",
+						"Latitude": "-26.281695"
+					}
+				},
+				"BusStop31": {
+					"Stop_id": "31",
+					"Osm_id": "31",
+					"Name": "Kliptown - Coal Yard STP,
+					"Point": {
+						"Longitude": "27.885240",
+						"Latitude": "-26.281648"
+					}
+				},
+				"BusStop32": {
+					"Stop_id": "32",
+					"Osm_id": "32",
+					"Klipspruit West - Mandela STP",
+					"Point": {
+						"Longitude": "27.879347",
+						"Latitude": "-26.283103"
+					}
+				},
+				"BusStop33": {
+					"Stop_id": "33",
+					"Osm_id": "33",
+					"Name": "Klipspruit West - Althea RD",
+					"Point": {
+						"Longitude": "27.880457",
+						"Latitude": "-26.284388"
+					}
+				},
+				"BusStop34": {
+					"Stop_id": "34",
+					"Osm_id": "34",
+					"Name": "Klipspruit West - ZamZam Market",
+					"Point": {
+						"Longitude": "27.881120",
+						"Latitude": "-26.285949"
+					}
+				},
+				"BusStop35": {
+					"Stop_id": "35",
+					"Osm_id": "35",
+					"Name": "Klipspruit West - Kliptown Clinic",
+					"Point": {
+						"Longitude": "27.880989",
+						"Latitude": "-26.289487"
+					}
+				},
+				"BusStop36": {
+					"Stop_id": "36",
+					"Osm_id": "36",
+					"Name": "Klipspruit West - Klipspruit Valley RD",
+					"Point": {
+						"Longitude": "27.880643",
+						"Latitude": "-26.291880"
+					}
+				},
+				"BusStop37": {
+					"Stop_id": "37",
+					"Osm_id": "37",
+					"Name": "Klipspruit West - St Etienne ST",
+					"Point": {
+						"Longitude": "27.875766",
+						"Latitude": "-26.294025"
+					}
+				},
+				"BusStop38": {
+					"Stop_id": "38",
+					"Osm_id": "38",
+					"Name": "Klipspruit West - Koec Centre",
+					"Point": {
+						"Longitude": "27.873811",
+						"Latitude": "-26.293759"
+					}
+				},
+				"BusStop39": {
+					"Stop_id": "39",
+					"Osm_id": "39",
+					"Name": "Klipspruit West - San Salvador ST",
+					"Point": {
+						"Longitude": "27.871515",
+						"Latitude": "-26.294844"
+					}
+				},
+				"BusStop40": {
+					"Stop_id": "40",
+					"Osm_id": "40",
+					"Name": "Klipspruit West - St Helena ST",
+					"Point": {
+						"Longitude": "27.872297",
+						"Latitude": "-26.296986"
+					}
+				},
+				"BusStop41": {
+					"Stop_id": "41",
+					"Osm_id": "41",
+					"Name": "Klipspruit West - Surgery",
+					"Point": {
+						"Longitude": "27.873413",
+						"Latitude": "-26.298220"
+					}
+				},
+				"BusStop42": {
+					"Stop_id": "42",
+					"Osm_id": "42",
+					"Name": "Klipspruit West - St Louis Church",
+					"Point": {
+						"Longitude": "27.875631",
+						"Latitude": "-26.298220"
+					}
+				},
+				"BusStop43": {
+					"Stop_id": "43",
+					"Osm_id": "43",
+					"Name": "Klipspruit West - Baptist Church",
+					"Point": {
+						"Longitude": "27.876425",
+						"Latitude": "-26.299109"
+					}
+				},
+				"BusStop44": {
+					"Stop_id": "44",
+					"Osm_id": "44",
+					"Name": "Klipspruit West - Foxys",
+					"Point": {
+						"Longitude": "27.877319",
+						"Latitude": "-26.295653"
+					}
+				},
+				

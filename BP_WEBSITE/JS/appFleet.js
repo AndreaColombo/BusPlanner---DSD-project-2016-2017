@@ -516,7 +516,7 @@ function initeMapRoute(num){
                     });
                 });
 
-                
+
 
                 markers.addListener('click', function() {
                     // 3 seconds after the center of the map has changed, pan back to the
