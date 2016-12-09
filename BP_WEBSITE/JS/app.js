@@ -199,7 +199,7 @@ $(document).ready(function() {
     // loading the route page
     $("body").on("click", "#btnRoute", function (e){
 
-        var query = firebase.database().ref().child("RouteSchedule");
+        var query = firebase.database().ref().child("Route");
         query.once("value")
             .then(function (snapshot) {
                 //bus is the function in script.js
@@ -674,12 +674,46 @@ function modifyBusData(num){
 
 
 function getMapBus(){
-    var mapCanvas = document.getElementById("mapBus");
-    var mapOptions = {
-        center: new google.maps.LatLng(51.5, -0.2),
-        zoom: 10
-    };
-    var map = new google.maps.Map(mapCanvas, mapOptions);
+
+    var map = new google.maps.Map(document.getElementById('mapBus'), {
+        zoom: 12,
+        center: {lat: -26.324, lng: 28.000}
+    });
+
+
+    var query = firebase.database().ref("Bus");
+    query.once("value")
+        .then(function(snapshot) {
+            //dbRefStepLong = snapshot.child("Route"+ num).child("Longitude");
+            snapshot.forEach(function(d){
+                //console.log("Latitude: "+ d.val() +" Longitude: "+dbRefStepLong.child(cont.toString()).val());
+                var locations = [];
+                locations.push({ lat: parseFloat(d.child("Latitude").val()), lng: parseFloat(d.child("Longitude").val()) });
+                console.log(locations);
+
+                // Add some markers to the map.
+                // Note: The code uses the JavaScript Array.prototype.map() method to
+                // create an array of markers based on a given "locations" array.
+                // The map() method here has nothing to do with the Google Maps API.
+                var markers = locations.map(function(location, i) {
+                    return new google.maps.Marker({
+                        position: location,
+                        label: d.child("Bus_id").val()
+                    });
+                });
+
+
+
+
+
+                // Add a marker clusterer to manage the markers.
+                var markerCluster = new MarkerClusterer(map, markers,
+                    {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+            });
+
+            //console.log(locations);
+        });
 }
 
 
@@ -791,18 +825,15 @@ function initeMapRoute(num){
         center: {lat: -26.324, lng: 28.000}
     });
 
-    var cont = 0;
 
-    console.log("ciao0");
-    var query = firebase.database().ref("RouteSchedule");
+    var query = firebase.database().ref("Route");
     query.once("value")
         .then(function(snapshot) {
-            dbRefStepLong = snapshot.child("RouteSchedule"+ num).child("Longitude");
-            snapshot.child("RouteSchedule"+ num).child("Latitude").forEach(function(d){
+            //dbRefStepLong = snapshot.child("Route"+ num).child("Longitude");
+            snapshot.child("Route"+ num).child("BusStops").forEach(function(d){
                 //console.log("Latitude: "+ d.val() +" Longitude: "+dbRefStepLong.child(cont.toString()).val());
                 var locations = [];
-                locations.push({ lat: parseFloat(d.val()), lng: parseFloat(dbRefStepLong.child(cont).val()) });
-                cont += 1;
+                locations.push({ lat: parseFloat(d.child("Point").child("Latitude").val()), lng: parseFloat(d.child("Point").child("Longitude").val()) });
                 console.log(locations);
 
                 // Add some markers to the map.
@@ -812,19 +843,13 @@ function initeMapRoute(num){
                 var markers = locations.map(function(location, i) {
                     return new google.maps.Marker({
                         position: location,
-                        label:cont.toString()
+                        label: d.child("Stop_id").val()
                     });
                 });
 
-                
 
-                markers.addListener('click', function() {
-                    // 3 seconds after the center of the map has changed, pan back to the
-                    // marker.
-                    window.setTimeout(function() {
-                        map.panTo(marker.getPosition());
-                    }, 3000);
-                });
+
+
 
                 // Add a marker clusterer to manage the markers.
                 var markerCluster = new MarkerClusterer(map, markers,

@@ -316,7 +316,7 @@ function getBus(data) {
 
     data.forEach(function (d) {
 
-            r += '<div><h3>' + "Bus Id: " + d.child('Bus_id').val() +
+            r += '<div style="margin-left: 10px" class="well"><h3>' + "Bus Id: " + d.child('Bus_id').val() +
             ' &emsp;<a data-toggle="modal" data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h3></div>';
 
         //<!-- start modalView -->
@@ -433,7 +433,7 @@ function getBus(data) {
 
     });
     //adding bus button
-    r += '<div style="padding-left:100px ">';
+    r += '<div align="center" style="margin-bottom: 60px">';
     r += '<button class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingBusModal" class="btn btn-lg btn-primary btn-circle">ADD BUS<i class="fa fa-plus"></i></button>';
     //<!-- Modal add bus -->
     r += '<div id="addingBusModal" class="modal fade" role="dialog">';
@@ -490,8 +490,8 @@ function getBus(data) {
     r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
          '</div>'; //closing row
     r += '<div class="col-md-7 col-sm-7 col-xs-7">';
-    r += '<div id="mapBus" style="width:730px;height:500px;background:transparent; margin: 40px; margin-bottom: 60px; margin-top: 20px">';
-    r += '<button type="button" onclick="getMapBus()" id="mapBus" class="btn btn-default">Submit</button>';
+    r += '<div id="mapBus" style="width:730px;height:500px;background:transparent; margin: 40px; margin-bottom: 60px; margin-top: 40px">';
+    r += '<button type="btn btn-primary" onclick="getMapBus()" id="mapBus" class="btn btn-default">Get Bus Location</button>';
     r += '</div>';
     r += '</div>';
     r += '</div>';
