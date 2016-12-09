@@ -22,7 +22,10 @@ class UserRequestSimulator(object):
 	# 	'ending_bus_stop': {'_id', 'osm_id', 'name', 'point': {'longitude', 'latitude'}},
 	# 	'departure_datetime'
 	# }
-	def generate_user_request(self, min_user_request_number, max_user_request_number):
+	def generate_user_request(self, n, m):
+		min_user_request_number = min(n,m)
+		max_user_request_number = max (n,m)
+		print (min_user_request_number, max_user_request_number)
 		firebasedb = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/', None)
 		user_request_number = random.randint(
 			min_user_request_number,
