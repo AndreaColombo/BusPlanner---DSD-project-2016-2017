@@ -490,8 +490,8 @@ function getBus(data) {
     r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
          '</div>'; //closing row
     r += '<div class="col-md-7 col-sm-7 col-xs-7">';
-    r += '<div id="mapBus" style="width:730px;height:500px;background:transparent; margin: 40px; margin-bottom: 60px; margin-top: 40px">';
-    r += '<button type="btn btn-primary" onclick="getMapBus()" id="mapBus" class="btn btn-default">Get Bus Location</button>';
+    r += '<div id="mapBus" align="center" style="width:730px;height:500px;background:transparent; margin-bottom: 60px; margin-top: 40px">';
+    r += '<button type="button" class="btn btn-secondary" onclick="getMapBus()" id="mapBus" class="btn btn-default">Get Bus Location</button>';
     r += '</div>';
     r += '</div>';
     r += '</div>';
