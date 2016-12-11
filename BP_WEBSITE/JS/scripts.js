@@ -192,7 +192,7 @@ function mainFleet() {
             r+='<div class="row">';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
                 r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyBuses.jpg)" align= "center">';
+                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modBuses.jpg)" align= "center">';
                         r+='<h3 id="imageText">Modify Buses</h3>';
                         r+='<h4 id="imageText">Here you can add, remove or modify our buses </h4>';
                         r+='<button type="button" class="btn btn-primary" id= "btnBus"> <span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
@@ -205,7 +205,7 @@ function mainFleet() {
         r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div class="row">';
                 r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron" id="jumboStyle" align= "center">';
+                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyDriver.jpg)" align= "center">';
                         r+='<h3 id="imageText">Modify Drivers</h3>';
                         r+='<h4 id="imageText">Here we can see and modify all the drivers of our company </h4>';
                         r+='<button type="button" class="btn btn-primary" id= "btnDriver"><span class="glyphicon glyphicon-scissors"></span>Modify Driver</button>';
@@ -222,7 +222,7 @@ function mainFleet() {
             r+='<div class="row">';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
                 r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron" id="jumboStyle" align= "center">';
+                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyRoute.jpg)" align= "center">';
                         r+='<h3 id="imageText">Modify Routes</h3>';
                         r+='<h4 id="imageText">Here you can add, remove or modify the routes that the buses will cover </h4>';
                         r+='<button type="button" class="btn btn-primary" id= "btnRoute"><span class="glyphicon glyphicon-scissors"></span>Modify Route</button>';
@@ -235,7 +235,7 @@ function mainFleet() {
         r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div class="row">';
                 r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron" id="jumboStyle" align= "center">';
+                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifySchedule.jpg)" align= "center">';
                         r+='<h3  id="imageText">Modify Schedule</h3>';
                         r+='<h4 id="imageText">Here you can see and modify all the schedule time of our company</h4>';
                         r+='<button type="button" class="btn btn-primary" id= "buttonHomeFleet"><span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
@@ -247,13 +247,13 @@ function mainFleet() {
     r+='</div>';
     
     //<!-- VIEW USER REQUEST-->>
-    r+='<div>';
+    r+='<div style="margin-bottom: 40px">';
         r+='<div class="row">';
             r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
             r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-                r+='<div class="jumbotron" id="jumboStyle" align= "center">';
+                r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyUser.jpg)" align= "center">';
                         r+='<h3 id="imageText">View User Request</h3>';
-                        r+='<h4 id="imageText">Here you can view and map the user request </h4>';
+                        r+='<h4 id="imageText">Here you can view all the user requests </h4>';
                         r+='<button type="button" class="btn btn-primary" id= "buttonHomeFleet"><span class="glyphicon glyphicon-scissors"></span>View User Request</button>';
                     r+='</div>';
             r+='</div>';
@@ -303,7 +303,7 @@ function getBus(data) {
     r += '<h4 id = "minimalDescription">Here you can add, remove, or modify our buses </h4>';
     r += '</div>';
     r += '<div class="col-md-6 col-sm-6 col-xs-6">';
-    r += '<img src = "Images/modifyBuses.jpg" class = "intestationImages"  >';
+    r += '<img src = "Images/modBuses.jpg" align="right" class = "intestationImages"  >';
     r += '</div>';
     r += '</div>';
     r += '</div>';
@@ -511,7 +511,7 @@ function getDriver(data) {
     r+='<h4 id = "minimalDescription">Here you can see and modify the drivers of our company </h4>';
     r+='</div>';
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<img src = "Images/modifyBuses.jpg" class = "intestationImages"  >';
+    r+='<img src = "Images/modifyDriver.jpg" class = "intestationImages"  >';
     r+='</div>';
     r+='</div>';
     r+='</div>';
