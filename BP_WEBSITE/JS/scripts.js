@@ -211,6 +211,7 @@ function headerFleet() {
                         r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Driver</a></li>';
 		                r+='<li><a id="btnRoute" href="#" style="padding-top:25px">Route Schedule</a></li>';
                         r+='<li><a id="btnTime" href="#" style="padding-top:25px">Schedule Time</a></li>';
+                        r+='<li><a id="btnRequest" href="#" style="padding-top:25px">User Request</a></li>';
                         r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
                    r+='</ul>';
                 r+='</div>';
@@ -307,7 +308,7 @@ function mainFleet() {
                 r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyUser.jpg)" align= "center">';
                         r+='<h3 id="imageText">View User Request</h3>';
                         r+='<h4 id="imageText">Here you can view all the user requests </h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "buttonHomeFleet"><span class="glyphicon glyphicon-scissors"></span>View User Request</button>';
+                        r+='<button type="button" class="btn btn-primary" id= "btnRequest"><span class="glyphicon glyphicon-scissors"></span>View User Request</button>';
                     r+='</div>';
             r+='</div>';
             r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
@@ -818,6 +819,84 @@ function getRoute(data){
 
     return r;
 
+
+}
+
+
+
+function getRequest(data){
+    var r = "";
+    r+='<div class = "intestation" id="intestation">';
+    r+='<div class = "row" >';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6" >';
+    r+='<h3 id = "titleIntestation" >View User Request</h3>';
+    r+='<h4 id = "minimalDescription">Here you can view all the user requests </h4>';
+    r+='</div>';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+    r+='<img src = "Images/modifyUser.jpg" align="right" class = "intestationImages"  >';
+    r+='</div>';
+    r+='</div>';
+    r+='</div>';
+
+    /*
+    r+='<ul class="list-group">';
+    var count = 1;
+    data.forEach(function (d) {
+        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
+        r+='</li>';
+        count++;
+    });
+    r+='</ul>';
+
+    */
+
+    r+="<div class='row'>" +
+        "   <div class='col-md-6 col-sm-6 col-xs-6'>";
+
+    r+="<div class='container'>" +
+        "<table class='table table-striped'>" +
+        "<thead>"+
+        "<tr>"+
+        "<th>User</th>"+
+        "<th>Route</th>"+
+        "<th>Date</th>" +
+        "<th>More Info</th>"+
+        "</tr>"+
+        "</thead>";
+    r+="<tbody>";
+
+    data.forEach(function (d) {
+       //initialize all the variables about each user requests
+       var name= d.child("user_name").val();
+       var route= d.child("route_id").val();
+        // date has this pattern 2016-12-09T23:52:13.589861
+       var date= d.child().val("departure_datetime");
+       var day = date.substring(0, 10);
+       var hour = date.substring(12, 20);
+       var start= d.child("starting_bus_stop").child("name").val();
+       var end= d.child("ending_bus_stop").child("name").val();
+
+       r+="<tr>" +
+           "<td>"+ name +"</td>" +
+           "<td>"+ route +"</td>" +
+           "<td>"+ day +" "+ hour +"</td>" +
+           //link to the modal that show more information
+           "<td>"+ +"</td>" +
+           "</tr>";
+
+
+    });
+
+    r+="</tbody></table></div>";
+
+    r+= "" +
+        "   </div>" +
+        "   <div class='col-md-6 col-sm-6 col-xs-6'>" +
+        "   </div>" +
+        "</div>";
+
+
+    return r;
 
 }
 

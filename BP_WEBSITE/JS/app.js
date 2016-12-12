@@ -212,6 +212,22 @@ $(document).ready(function() {
         window.location.hash = "fleetRoute";
         e.preventDefault();
     });
+
+
+    // loading the user request page
+    $("body").on("click", "#btnRequest", function (e){
+
+        var query = firebase.database().ref().child("UserRequest");
+        query.once("value")
+            .then(function (snapshot) {
+                //b is the function in script.js
+                var result = getRequest(snapshot);
+                $("#main").html(result);
+            });
+
+        window.location.hash = "fleetRequest";
+        e.preventDefault();
+    });
     
     /*
     document.getElementById('signup').addEventListener('click', e => {
