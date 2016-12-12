@@ -364,25 +364,39 @@ function getBus(data) {
     r += '<div class="col-md-5 col-sm-5 col-xs-5" id="busList" style="margin-top: 60px">';
     r += '<div class="row">' +
          '<div class=" col-md-2 col-sm-2 col-xs-2"></div>' +
-         '<div class=" col-md-9 col-sm-9 col-xs-9">';    //to close row and col 10
+         '<div class=" col-md-9 col-sm-9 col-xs-9 scroll container" style="height: 500px; margin-bottom: 70px" >';    //to close row and col 10
 
     /*
-    r+='<ul class="list-group">';
-    var count = 1;
-    data.forEach(function (d) {
-        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
-        count++;
-    });
+     r+='<div class = "row">';
+     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
+     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+     r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container" style="height:500px">';
 
-    r+='</ul>';
+     r+='<h2 style="padding-left:5%">YOUR SCHEDULE TODAY</h2>';
+     r+='<ul class="list-group">';
+     var count = 1;
+     data.forEach(function (d) {
+     r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
+     r+='</li>';
+     count++;
+     });
+
+     r+='</ul>';
+     r+='</div>';
+     r+='</div>';
     */
-
+    var cont = 0;
     r+= '<ul class ="list-group">';
     data.forEach(function (d) {
 
-            r += '<div style="margin-left: 10px" class="list-group-item"><h3>' + "Bus Id: " + d.child('Bus_id').val() +
-            ' &emsp;<a data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h3></div>';
-
+        if(cont++ == 0){
+            r += '<div class="list-group-item" align="center" style="margin-top: 10px"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+                ' &emsp;<a data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
+        }
+        else {
+            r += '<div class="list-group-item" align="center"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+                ' &emsp;<a data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
+        }
         //<!-- start modalView -->
         r += '<div id="modalView' + d.child('Bus_id').val() + '" class="modal fade" role="dialog">';
         r += '<div class="modal-dialog">';
@@ -499,8 +513,12 @@ function getBus(data) {
 
     r += '</ul>';
 
+
+
+    r += '</div>';
+
     //adding bus button
-    r += '<div align="center" style="margin-bottom: 60px">';
+    r += '<div align="center" style="margin-bottom: 25px">';
     r += '<button class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingBusModal" class="btn btn-lg btn-primary btn-circle">ADD BUS<i class="fa fa-plus"></i></button>';
     //<!-- Modal add bus -->
     r += '<div id="addingBusModal" class="modal fade" role="dialog">';
@@ -551,13 +569,14 @@ function getBus(data) {
     r += '</div>';
     //end modal add bus
 
-    r += '</div>';
+
+
     r += '</div>';
     r += '</div>'; //closing col 10
     r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
          '</div>'; //closing row
     r += '<div class="col-md-7 col-sm-7 col-xs-7">';
-    r += '<div id="mapBus" align="center" style="width:730px;height:500px;background:transparent; margin-bottom: 60px; margin-top: 40px">';
+    r += '<div id="mapBus" align="center" style="width:730px;height:500px;background:transparent; margin-bottom: 60px; margin-top: 60px">';
     r += '<button type="button" class="btn btn-secondary" onclick="getMapBus()" id="mapBus" class="btn btn-default">Get Bus Location</button>';
     r += '</div>';
     r += '</div>';
