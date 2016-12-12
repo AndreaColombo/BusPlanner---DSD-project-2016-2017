@@ -1,20 +1,12 @@
 from collections import defaultdict
 from pprint import pprint
+from firebase import firebase
 import random
 import pyrebase
+import requests
+import re
 from pulp import *
 
-#all database variables here as later it enter in loops
-config = {
-      "apiKey": "AIzaSyBQchZ2V6xpY-SgQ9Z20-wFsL4xDx-Rw3w",
-      "authDomain": "busplanner-f496d.firebaseapp.com",
-      "databaseURL": "https://busplanner-f496d.firebaseio.com",
-      "storageBucket": "busplanner-f496d.appspot.com",
-  }
-firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
-user = auth.sign_in_with_email_and_password("albidode@aol.com", "Vasteras2016")
-db = firebase.database()
 #lana_data = db.child("UserRequest").child("UserRequest1").get(user['idToken']).val()
 #print("lana_data: ", lana_data["User_id"])
 #papa = int(lana_data["User_id"])
@@ -38,11 +30,11 @@ def work_generator(number_works, trips):
 
   for _ in range(number_works):
     num_trips = random.randrange(1, len(tentative_hours) + 1)
-    num_seats = random.randrange(1, 2)
+    #num_seats = random.randrange(1, 2)
    #READ FROM DATABASE
-    if num_seats < 2:
+    #if num_seats < 2:
    #LOWER THAN CAPACITY READ FROM DB 8
-     hours = random.sample(tentative_hours, num_trips)
+    hours = random.sample(tentative_hours, num_trips)
     work = []
     for hour in sorted(hours):
       actual_route = random.choice(route_per_hour[hour])
@@ -121,17 +113,16 @@ def main():
   #TREAT THESE NUMBERS AS THE RANDON NUMBER OF USER REQUESTS
 
 
-  drop_in = random.randrange(1, 25)
-  drop_out = random.randrange(1, 10)+12
+  drop_in = random.randrange(1, 15)
+  drop_out = random.randrange(1, 8)
 
   trips = trip_generator(routes, drop_in, drop_out)
-  works = work_generator(10, trips)
+  works = work_generator(6, trips)
   solve_works, solve_rule_controler = solve(works, trips)
-  print("rule_controler: {}".format(solve_rule_controler))
+  #print("rule_controler: {}".format(solve_rule_controler))
   #print(solve_works)
   #here before inserting you need a parser to insert in the right database format
   #x = [s.replace('a', 'b') for s in x]
-
 
   k = ''.join(str(e) for e in solve_works)
   #k=str1.replace("]","new")
@@ -142,26 +133,30 @@ def main():
   k4 = k3.replace("D", "Route 4")
   k5 = k4.replace("E", "Route 5")
   print(k5)
+  print("------------")
+  #count=0
+  for Route in k5.split(')]'):
+   if(Route):
+
+    # test1 = Route[0],Route[1].strip().lstrip("("),Route[2].strip().lstrip("',)")
+    # test = re.sub('[^0-9]', '', test1)
+    # print(Route)
+    # print("###################")
+    sample = Route[9], Route[13]
+    # print(sample)
+
+    savedata(Route[9], Route[13])
+
+   else:
+       print(('2', '3'))
+
+def savedata(R9,R13):
+   db= firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
+
+   db.put('','/AlgDynamic', {'Schedule': {'Bus_id': R9, 'Route_id': R9, 'User_id': R13}})
+
 
 if __name__ == '__main__':
     main()
 
-kot=0
-while 0< 10:
- long = random.randrange(1, 25)
- lat = random.randrange(1, 25)
- n = random.randint(0,25)
-
-
- data2 = {
-     "UserRequest"+str(n)+"": {"Latitude":n, "Longitude": n, "Route_id": "", "Starting_schedule": "",
-     "Status": "","Timestamp": "", "User_id": n}
-    }
-
- db.child("UserRequest").set(data2)
-kot = kot + 1
-data3 = {
-    "UserSchedule1":{"Bus_id":"","Driver_id":"","Route_id":"","Status":"","User_id":"","User_schedule_id":"1"}
-    }
-db.child("UserSchedule").set(data3)
 
