@@ -66,8 +66,61 @@ function headerUser() {
 }
 
 function mainUser() {
-    var r='';
-    r+='<h3>Ciao</h3>';
+    var r = '';
+    r+='<div class="content" id="content">';
+    r+='<div class="row">';
+    r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
+    r+='<div class="col-md-6 col-sm-6 col-xs-6">';
+    r+='<div class="jumbotron" style="margin-top:9%" id="jumboUser">';
+    r+='<div class="row">';
+    r+='<h2 class="text-center" style="margin-bottom:5%; font-size:50px; color:white;">Reserve a seat</h2>';
+    r+='<div class="col-md-2 col-sm-2 col-xs-2"></div>';
+    r+='<div class="col-md-8 col-sm-8 col-xs-8"> ';
+    r+='<div class="form-group form-group-lg">';
+    
+    r+='<div style="margin-bottom:3%" class="input-group">';
+    r+='<span class="input-group-addon" id="basic-addon1">From:</span>';
+    r+='<input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1">';
+    r+='</div>';
+    r+='<div class="input-group">';
+    r+='<span class="input-group-addon" id="basic-addon1">To:&emsp;</span>';
+    r+='<input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1">';
+    r+='</div>';
+    
+    r+='</div>';
+    r+='<div class="text-center">';
+    r+='<button type="button" onclick="getStops(txtFrom, txtTo)" class="btn btn-warning btn-lg"  id="btnSeat" style="min-width:20%">Continue</button>';
+    
+        <!-- start modalView -->
+        r += '<div id="#loginModal" class="modal fade" role="dialog">';
+        r += '<div class="modal-dialog">';
+
+        <!-- Modal content-->
+        r +='<div class="modal-content">' ;
+        r +='<div class="modal-header">';
+        r +='<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        r +='<h2 class="modal-title">LOGIN ERROR</h2>';
+        r +='</div>';
+        r +='<div class="modal-body">';
+        r +='<p>Wrong credentials.</p>';
+        r +='</div>';
+        r +='<div class="modal-footer">';
+        r +='<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r +='</div>';
+        r +='</div>';
+        r +='</div>';
+        r +='</div>';
+        <!-- end modalView -->
+    
+    r+='</div>';
+    r+='</div>';
+    r+='<div class="col-md-2 col-sm-2 col-xs-2"></div>';
+    r+='</div>';
+    r+='</div>';
+    r+='</div>';
+    r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
+    r+='</div>';
+    r+='</div>';
     return r;
 }
 
@@ -272,14 +325,13 @@ function mainDriver(data) {
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
     r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container" style="height:500px">';
     
-    r+='<h2 style="padding-left:5%">YOUR SCHEDULE</h2>';
-    r+='<ul style="padding-left:10%">';
-    
+    r+='<h2 style="padding-left:5%">YOUR SCHEDULE TODAY</h2>';
+    r+='<ul class="list-group">';
+    var count = 1;
     data.forEach(function (d) {
-        r+='<li>'+d.val()+'<br>';
-        r+='<p style="color:red">To take:</p>';
-        r+='<p style="color:red">To leave:</p>';
+        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
         r+='</li>';
+        count++;
     });
 
     r+='</ul>';

@@ -2,6 +2,7 @@
 var email;
 var password;
 var logout;
+var driverMap;
 
 $(document).ready(function() {
     
@@ -148,8 +149,8 @@ $(document).ready(function() {
                         } 
                         // Bus driver's home
                         else {
-                            var query = firebase.database().ref().child("RouteSchedule").child("RouteSchedule1").child("Stops");
-                            query.once("value")
+                            var query = firebase.database().ref().child("Route").child("Route1").child("BusStops");
+                            query.orderByChild("Stop_id").once("value")
                                 .then(function (snapshot) {
                                     var changeHeader = headerDriver();
                                     $('#header').html(changeHeader);
@@ -573,13 +574,10 @@ function getEmailAndPassword(txtEmail, txtPassword) {
 
 function getMapDriver() {
     
-    var uluru = {lat: 64.01, lng: 19.05};
-        var map = new google.maps.Map(document.getElementById('map1'), {
-            center: {
-                lat: 64.01,
-                lng: 19.05
-            },
-            zoom: 14,
+    var uluru = {lat: -26.195246, lng: 28.034088};
+        driverMap = new google.maps.Map(document.getElementById('map1'), {
+            center: uluru,
+            zoom: 10,
             styles: [{
                 featureType: 'poi',
                 stylers: [{
@@ -615,7 +613,28 @@ function getMapDriver() {
             '(last visited June 22, 2009).</p>'+
             '</div>'+
             '</div>';
-   
+    
+    var route1 = firebase.database().ref('Route').child('Route1').child('BusStops');
+    route1.once("value").then(function(snapshot) {
+        snapshot.forEach(function(d) {
+            var lat = d.child('Point').child('Latitude').val();
+            var long = d.child('Point').child('Longitude').val();
+            var status = d.child('Name').val();
+            var latLng = new google.maps.LatLng(lat,long);
+            var infowindow = new google.maps.InfoWindow({
+                content: status
+            });
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: driverMap,
+                id: d.child('Stop_id').val()
+            });
+            marker.addListener('click', function() {
+                infowindow.open(driverMap, marker);
+            });
+        });
+    });
+   /*
         var query = firebase.database().ref("UserRequest").orderByKey();
         query.once("value")
             .then(function(snapshot) {
@@ -638,7 +657,36 @@ function getMapDriver() {
                 }
         //here to read from db THE MARK IS FOR EACH POINT
         //TITLE SHOULD BE UNIQUE
+        });*/
+}
+
+function changeMarker(id) {
+    
+    var myMarker = driverMap.store.markers.filter(function(m) { 
+        if(m.get("id") == id) {
+            return m;
+        }
+    });
+    myMarker.setIcon("http://www.clker.com/cliparts/j/4/u/5/C/k/marker-md.png");
+  /*
+    busStop.once("value").then(function(snapshot) {
+        var lat = snapshot.child('Point').child('Latitude').val();
+        var long = snapshot.child('Point').child('Longitude').val();
+        var status = snapshot.child('Name').val();
+        var latLng = new google.maps.LatLng(lat,long);
+        var infowindow = new google.maps.InfoWindow({
+            content: status
         });
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: driverMap,
+            icon: "http://www.clker.com/cliparts/j/4/u/5/C/k/marker-md.png"
+        });
+        marker.addListener('click', function() {
+            infowindow.open(driverMap, marker);
+        });
+    });
+    */
 }
 
 //get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()

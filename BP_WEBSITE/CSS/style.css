@@ -35,6 +35,10 @@ html, body { height: 100%; margin: 0; padding: 0; }
     background: rgba(216, 213, 213, 0.8);
 }
 
+#jumboUser {
+    background: rgb(153, 0, 0);
+}
+
 .hide {
     display:none;
 }
