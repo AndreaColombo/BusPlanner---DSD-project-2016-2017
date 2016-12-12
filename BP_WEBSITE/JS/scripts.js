@@ -366,10 +366,22 @@ function getBus(data) {
          '<div class=" col-md-2 col-sm-2 col-xs-2"></div>' +
          '<div class=" col-md-9 col-sm-9 col-xs-9">';    //to close row and col 10
 
+    /*
+    r+='<ul class="list-group">';
+    var count = 1;
+    data.forEach(function (d) {
+        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
+        count++;
+    });
+
+    r+='</ul>';
+    */
+
+    r+= '<ul class ="list-group">';
     data.forEach(function (d) {
 
-            r += '<div style="margin-left: 10px" class="well"><h3>' + "Bus Id: " + d.child('Bus_id').val() +
-            ' &emsp;<a data-toggle="modal" data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h3></div>';
+            r += '<div style="margin-left: 10px" class="list-group-item"><h3>' + "Bus Id: " + d.child('Bus_id').val() +
+            ' &emsp;<a data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h3></div>';
 
         //<!-- start modalView -->
         r += '<div id="modalView' + d.child('Bus_id').val() + '" class="modal fade" role="dialog">';
@@ -484,6 +496,9 @@ function getBus(data) {
   
 
     });
+
+    r += '</ul>';
+
     //adding bus button
     r += '<div align="center" style="margin-bottom: 60px">';
     r += '<button class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingBusModal" class="btn btn-lg btn-primary btn-circle">ADD BUS<i class="fa fa-plus"></i></button>';
