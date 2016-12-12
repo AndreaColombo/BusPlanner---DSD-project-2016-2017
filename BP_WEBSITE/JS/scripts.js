@@ -330,7 +330,6 @@ function mainDriver(data) {
     var count = 1;
     data.forEach(function (d) {
         r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
-        r+='</li>';
         count++;
     });
 

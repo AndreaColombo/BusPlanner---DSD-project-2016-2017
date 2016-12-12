@@ -3,6 +3,7 @@ var email;
 var password;
 var logout;
 var driverMap;
+var markerClusterer1;
 
 $(document).ready(function() {
     
@@ -591,30 +592,9 @@ function getMapDriver() {
             }],
             disableDoubleClickZoom: false
         });
-		 
-		//HERE THE INFO FROM DB 
-		var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-            'sandstone rock formation in the southern part of the '+
-            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-            'south west of the nearest large town, Alice Springs; 450&#160;km '+
-            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-            'Aboriginal people of the area. It has many springs, waterholes, '+
-            'rock caves and ancient paintings. Uluru is listed as a World '+
-            'Heritage Site.</p>'+
-            '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-            'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-            '(last visited June 22, 2009).</p>'+
-            '</div>'+
-            '</div>';
     
     var route1 = firebase.database().ref('Route').child('Route1').child('BusStops');
+    var allMarkers = [];
     route1.once("value").then(function(snapshot) {
         snapshot.forEach(function(d) {
             var lat = d.child('Point').child('Latitude').val();
@@ -627,12 +607,14 @@ function getMapDriver() {
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: driverMap,
-                id: d.child('Stop_id').val()
+                title: d.child('Stop_id').val()
             });
+            allMarkers.push(marker);
             marker.addListener('click', function() {
                 infowindow.open(driverMap, marker);
             });
         });
+        markerClusterer1 = new MarkerClusterer(driverMap, allMarkers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     });
    /*
         var query = firebase.database().ref("UserRequest").orderByKey();
@@ -661,32 +643,18 @@ function getMapDriver() {
 }
 
 function changeMarker(id) {
-    
-    var myMarker = driverMap.store.markers.filter(function(m) { 
-        if(m.get("id") == id) {
-            return m;
+    var markers = markerClusterer1.getMarkers();
+    var myMarker;
+    for(var i=0; i < markers.length; i++) {
+        if(markers[i].getTitle() == id) {
+            myMarker = markers[i];
         }
-    });
-    myMarker.setIcon("http://www.clker.com/cliparts/j/4/u/5/C/k/marker-md.png");
-  /*
-    busStop.once("value").then(function(snapshot) {
-        var lat = snapshot.child('Point').child('Latitude').val();
-        var long = snapshot.child('Point').child('Longitude').val();
-        var status = snapshot.child('Name').val();
-        var latLng = new google.maps.LatLng(lat,long);
-        var infowindow = new google.maps.InfoWindow({
-            content: status
-        });
-        var marker = new google.maps.Marker({
-            position: latLng,
-            map: driverMap,
-            icon: "http://www.clker.com/cliparts/j/4/u/5/C/k/marker-md.png"
-        });
-        marker.addListener('click', function() {
-            infowindow.open(driverMap, marker);
-        });
-    });
-    */
+    }
+    var icon = {
+        url: "http://www.clker.com/cliparts/j/4/u/5/C/k/marker-md.png", // url
+        scaledSize: new google.maps.Size(25, 45), // scaled size
+    };
+    myMarker.setIcon(icon);
 }
 
 //get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
