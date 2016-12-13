@@ -60,6 +60,7 @@ class UserRequestSimulator(object):
 		]
 		datetime_population = [val for val, cnt in weighted_datetimes for i in range(cnt)]
 		for i in range(0, user_request_number):
+			user_id = random.randint(1,34094)
 			id = i
 			route_id = random.randint(1,5)
 			route = '/Route/Route'+str(route_id)+'/BusStops'
@@ -76,6 +77,7 @@ class UserRequestSimulator(object):
 			additional_departure_time_interval = random.randint(0, 59)
 			departure_datetime = (random.choice(datetime_population) + timedelta(minutes=additional_departure_time_interval))
 			user_request = {
+				'user_name': user_id,
 				'id': id,
 				'route_id': route_id,
 				'starting_bus_stop': starting_bus_stop,
