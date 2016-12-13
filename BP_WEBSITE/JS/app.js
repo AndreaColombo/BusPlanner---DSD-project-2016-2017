@@ -217,15 +217,15 @@ $(document).ready(function() {
 
     // loading the user request page
     $("body").on("click", "#btnRequest", function (e){
-
+        
         var query = firebase.database().ref().child("UserRequest");
         query.once("value")
             .then(function (snapshot) {
-                //b is the function in script.js
+                //getRequest is the function in script.js
                 var result = getRequest(snapshot);
                 $("#main").html(result);
             });
-
+        console.log("i'm here");
         window.location.hash = "fleetRequest";
         e.preventDefault();
     });
@@ -850,6 +850,10 @@ function deleteDriver(num){
     const dbRefBusN = dbRefBus.child('Driver'+ num);
     //i have to test the remove command
     dbRefBusN.remove();
+
+}
+
+function getDiagram(){
 
 }
 

@@ -724,10 +724,9 @@ function getDriver(data) {
         r += '</div>';
         //<!-- end delete Modal -->
 
+        //could be an errot there
 
-             '</div>' +
-             '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
-             '</div>';
+
 
     });
 
@@ -824,6 +823,10 @@ function getRoute(data){
 
 
 function getRequest(data){
+
+
+
+   
     var r = "";
     r+='<div class = "intestation" id="intestation">';
     r+='<div class = "row" >';
@@ -837,24 +840,16 @@ function getRequest(data){
     r+='</div>';
     r+='</div>';
 
-    /*
-    r+='<ul class="list-group">';
-    var count = 1;
-    data.forEach(function (d) {
-        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
-        r+='</li>';
-        count++;
-    });
-    r+='</ul>';
 
-    */
+    r+="<div style='margin-top: 20px' class='row'>" +
+        "   <div class='col-md-6 col-sm-6 col-xs-6 '>" +
+        "<div class='row'><div class='col-md-1 col-sm-1 col-xs-1'></div>" +
+        "<div class='col-md-10 col-sm-10 col-xs-10 container'> " ;
 
-    r+="<div class='row'>" +
-        "   <div class='col-md-6 col-sm-6 col-xs-6'>";
 
-    r+="<div class='container'>" +
+    r+="" +
         "<table class='table table-striped'>" +
-        "<thead>"+
+        "<thead class='thead-inverse'>"+
         "<tr>"+
         "<th>User</th>"+
         "<th>Route</th>"+
@@ -869,7 +864,7 @@ function getRequest(data){
        var name= d.child("user_name").val();
        var route= d.child("route_id").val();
         // date has this pattern 2016-12-09T23:52:13.589861
-       var date= d.child().val("departure_datetime");
+       var date= d.child("departure_datetime").val().toString();
        var day = date.substring(0, 10);
        var hour = date.substring(12, 20);
        var start= d.child("starting_bus_stop").child("name").val();
@@ -878,21 +873,80 @@ function getRequest(data){
        r+="<tr>" +
            "<td>"+ name +"</td>" +
            "<td>"+ route +"</td>" +
-           "<td>"+ day +" "+ hour +"</td>" +
+           "<td>"+ day + " "+ hour +"</td>" +
            //link to the modal that show more information
-           "<td>"+ +"</td>" +
+           "<td><a data-toggle='modal'  data-target='#modalMoreRequestInfo"+ d.child('id').val()+ "'>Info</a></td>" +
            "</tr>";
+
+
+        //<!-- start modalView -->
+        r += "<div id='modalMoreRequestInfo"+ d.child('id').val()+ "' class='modal fade' role='dialog'>";
+        r += '<div class="modal-dialog">';
+
+        //<!-- Modal content-->
+        r += '<div class="modal-content">';
+        r += '<div class="modal-header">';
+        r += '<button type="button" class="close" data-dismiss="modal">&times;</button>';
+        r += '<h4 class="modal-title">User Request '+ d.child('id').val()+ ' details</h4>';
+        r += '</div>';
+        r += '<div class="modal-body">';
+        r += '<p>User: ' + name + '<br>' +
+            'Day: ' + day + '<br>' +
+            'Hour: ' + hour + '<br>' +
+            'Start bus stop: ' + start + '<br>' +
+            'End bus stop: ' + end + '<br>' +
+            '</p>';
+        r += '</div>';
+        r += '<div class="modal-footer">';
+        r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r += '</div>';
+        r += '</div>';
+
+        r += '</div>';
+        r += '</div>';
+        //<!-- end modalView -->'+
+
+
+
 
 
     });
 
-    r+="</tbody></table></div>";
+    r+="</tbody></table>";
 
-    r+= "" +
-        "   </div>" +
+
+    r+= "</div>" +
+        "<div class='col-md-1 col-sm-1 col-xs-1'></div></div>" +
+        "</div>" +
+        "   " +
         "   <div class='col-md-6 col-sm-6 col-xs-6'>" +
-        "   </div>" +
+        "   <div id='piechart' style='width: 900px; height: 500px;'></div></div>" +
         "</div>";
+
+    /*
+     google.charts.load('current', {'packages':['corechart']});
+     google.charts.setOnLoadCallback(drawChart);
+     function drawChart() {
+
+     var data = google.visualization.arrayToDataTable([
+     ['Task', 'Hours per Day'],
+     ['Work',     11],
+     ['Eat',      2],
+     ['Commute',  2],
+     ['Watch TV', 2],
+     ['Sleep',    7]
+     ]);
+
+     var options = {
+     title: 'My Daily Activities'
+     };
+
+     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+     chart.draw(data, options);
+     }
+     */
+
 
 
     return r;
