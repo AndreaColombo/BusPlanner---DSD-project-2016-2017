@@ -71,13 +71,17 @@ function mainUser() {
     r+='<div class="row">';
     r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<div class="jumbotron" style="margin-top:9%" id="jumboUser">';
+    r+='<div class="jumbotron" id="jumboUser">';
     r+='<div class="row">';
-    r+='<h2 class="text-center" style="margin-bottom:5%; font-size:50px; color:white;">Reserve a seat</h2>';
-    r+='<div class="col-md-2 col-sm-2 col-xs-2"></div>';
-    r+='<div class="col-md-8 col-sm-8 col-xs-8"> ';
+    r+='<h2 class="text-center" style="margin-bottom:5%; font-size:50px; color:#F89406;">Reserve a seat</h2>';
+    r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+    r+='<div class="col-md-10 col-sm-10 col-xs-10"> ';
     r+='<div class="form-group form-group-lg">';
     
+    r+='<div style="margin-bottom:3%" class="input-group">';
+    r+='<input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1">';
+    r+='<span class="input-group-addon" id="basic-addon1">@example.com</span>';
+    r+='</div>';
     r+='<div style="margin-bottom:3%" class="input-group">';
     r+='<span class="input-group-addon" id="basic-addon1">From:</span>';
     r+='<input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon1">';
@@ -114,7 +118,7 @@ function mainUser() {
     
     r+='</div>';
     r+='</div>';
-    r+='<div class="col-md-2 col-sm-2 col-xs-2"></div>';
+    r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
     r+='</div>';
     r+='</div>';
     r+='</div>';

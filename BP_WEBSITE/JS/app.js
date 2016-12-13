@@ -632,30 +632,32 @@ function getMapDriver() {
         });
         markerClusterer1 = new MarkerClusterer(driverMap, allMarkers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     });
-   /*
-        var query = firebase.database().ref("UserRequest").orderByKey();
-        query.once("value")
-            .then(function(snapshot) {
-                for (var i = 1; i <= 2; ++i) {
-                    var lat = snapshot.child("UserRequest"+i+"/Latitude").val(); 
-                    var long = snapshot.child("UserRequest"+i+"/Longitude").val(); 
-                    var status = snapshot.child("UserRequest"+i+"/Status").val(); 
-                    var latLng = new google.maps.LatLng(lat,long);
-                    var infowindow = new google.maps.InfoWindow({
-                        content: status
-                    });
-                    var marker = new google.maps.Marker({
-                        position: latLng,
-                        map: map,
-						title:status
-                    });
-                    marker.addListener('click', function() {
-                        infowindow.open(map, marker);
-                    });
-                }
-        //here to read from db THE MARK IS FOR EACH POINT
-        //TITLE SHOULD BE UNIQUE
-        });*/
+        
+    var userRequests = firebase.database().ref('UserRequest');
+    userRequests.once("value").then(function(snapshot) {
+        snapshot.forEach(function(d) {
+            var latUser = d.child('starting_bus_stop').child('Point').child('Latitude').val();
+            var longUser = d.child('starting_bus_stop').child('Point').child('Longitude').val();
+            var statusUser = d.child('starting_bus_stop').child('Name').val();
+            var latLngUser = new google.maps.LatLng(latUser,longUser);
+            var infowindowUser = new google.maps.InfoWindow({
+                content: statusUser
+            });
+            var iconUser = {
+                url: "https://cdn1.iconfinder.com/data/icons/map-objects/154/map-object-user-login-man-point-512.png", // url
+                scaledSize: new google.maps.Size(40, 45) // scaled size
+            };
+            var markerUser = new google.maps.Marker({
+                position: latLngUser,
+                map: driverMap,
+                title: d.child('id').val(),
+                icon: iconUser
+            });
+            markerUser.addListener('click', function() {
+                infowindowUser.open(driverMap, markerUser);
+            });
+        });
+    });
 }
 
 function changeMarker(id) {
@@ -668,7 +670,7 @@ function changeMarker(id) {
     }
     var icon = {
         url: "http://www.clker.com/cliparts/j/4/u/5/C/k/marker-md.png", // url
-        scaledSize: new google.maps.Size(25, 45), // scaled size
+        scaledSize: new google.maps.Size(22, 38) // scaled size
     };
     myMarker.setIcon(icon);
 }
