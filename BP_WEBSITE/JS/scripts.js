@@ -18,9 +18,10 @@ function home() {
             r+='<div class="col-md-6 col-sm-6 col-xs-6">';
                 r+='<div class="row">';
                     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-                    r+='<a href="#" id="btnUser" class="col-md-11 col-sm-11 col-xs-11">';
-                        r+='<div class="jumbotron" style="background-image: url(Images/Users.png); border: 1px solid black; height: 500px;" align= "center">';
+                    r+='<a href="#" id="btnUser" class="col-md-11 col-sm-11 col-xs-11 ">';
+                        r+='<div class="jumbotron grow" style="background-image: url(Images/Users.png); border: 1px solid black; height: 500px;" align= "center">';
                             r+='<h1 id="imageText">Users</h1>';
+                            
                         r+='</div>';
                     r+='</a>';
                 r+='</div>';
@@ -30,7 +31,7 @@ function home() {
             r+='<div class="col-md-6 col-sm-6 col-xs-6">';
                 r+='<div class="row">';
                     r+='<a href="#" id="btnFleetAndDriver" class="col-md-11 col-sm-11 col-xs-11">';
-                        r+='<div class="jumbotron" style="background-image: url(Images/FleetDriver.png); border: 1px solid black; height: 500px;" align= "center">';
+                        r+='<div class="jumbotron grow" style="background-image: url(Images/FleetDriver.png); border: 1px solid black; height: 500px;" align= "center">';
                             r+='<h1 id="imageText">Fleet managers <br> & Bus drivers</h1>';
                         r+='</div>';
                     r+='</a>';
@@ -249,26 +250,24 @@ function mainFleet() {
         r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div class="row">';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-                r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modBuses.jpg)" align= "center">';
-                        r+='<h3 id="imageText">Modify Buses</h3>';
+                r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
+                    r+='<div class="jumbotron grow" id="btnBus" style="background-image: url(Images/modBuses.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
+                        r+='<h1 id="imageText">Buses</h1>';
                         r+='<h4 id="imageText">Here you can add, remove or modify our buses </h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "btnBus"> <span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
                     r+='</div>';
-                r+='</div>';
+                r+='</a>';
             r+='</div>';
         r+='</div>';
             
        //<!--MODIFY DRIVERS -->     
         r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div class="row">';
-                r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyDriver.jpg)" align= "center">';
-                        r+='<h3 id="imageText">Modify Drivers</h3>';
+                r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
+                    r+='<div class="jumbotron grow" id="btnDriver" style="background-image: url(Images/modifyDriver.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
+                        r+='<h1 id="imageText">Drivers</h1>';
                         r+='<h4 id="imageText">Here we can see and modify all the drivers of our company </h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "btnDriver"><span class="glyphicon glyphicon-scissors"></span>Modify Driver</button>';
                     r+='</div>';
-                r+='</div>';
+                r+='</a>';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
             r+='</div>';
         r+='</div>';
@@ -279,26 +278,24 @@ function mainFleet() {
         r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div class="row">';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-                r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyRoute.jpg)" align= "center">';
-                        r+='<h3 id="imageText">Modify Routes</h3>';
-                        r+='<h4 id="imageText">Here you can add, remove or modify the routes that the buses will cover </h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "btnRoute"><span class="glyphicon glyphicon-scissors"></span>Modify Route</button>';
+                r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
+                    r+='<div class="jumbotron grow" id="btnRoute" style="background-image: url(Images/modifyRoute.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
+                        r+='<h1 id="imageText">Routes</h1>';
+                        r+='<h4 id="imageText">Here you can add, remove or modify the routes the buses will cover</h4>';
                     r+='</div>';
-                r+='</div>';
+                r+='</a>';
             r+='</div>';
         r+='</div>';
             
         //<!--MODIFY SCHEDULE TIME -->  
         r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div class="row">';
-                r+='<div class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifySchedule.jpg)" align= "center">';
-                        r+='<h3  id="imageText">Modify Schedule</h3>';
+                r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
+                    r+='<div class="jumbotron grow" id="buttonHomeFleet" style="background-image: url(Images/modifySchedule.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
+                        r+='<h1  id="imageText">Schedule</h1>';
                         r+='<h4 id="imageText">Here you can see and modify all the schedule time of our company</h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "buttonHomeFleet"><span class="glyphicon glyphicon-scissors"></span>Modify Buses</button>';
                     r+='</div>';
-                r+='</div>';
+                r+='</a>';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
             r+='</div>';
         r+='</div>';
@@ -308,13 +305,12 @@ function mainFleet() {
     r+='<div style="margin-bottom: 40px">';
         r+='<div class="row">';
             r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
-            r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-                r+='<div class="jumbotron" id="jumboStyle" style="background-image: url(Images/modifyUser.jpg)" align= "center">';
-                        r+='<h3 id="imageText">View User Request</h3>';
-                        r+='<h4 id="imageText">Here you can view all the user requests </h4>';
-                        r+='<button type="button" class="btn btn-primary" id= "btnRequest"><span class="glyphicon glyphicon-scissors"></span>View User Request</button>';
-                    r+='</div>';
-            r+='</div>';
+            r+='<a href=# class="col-md-6 col-sm-6 col-xs-6">';
+                r+='<div class="jumbotron grow" id="btnRequest" style="background-image: url(Images/modifyUser.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
+                    r+='<h1 id="imageText">User Requests</h1>';
+                    r+='<h4 id="imageText">Here you can view all the user requests</h4>';
+                r+='</div>';
+            r+='</a>';
             r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
         
         r+='</div>';
@@ -328,9 +324,9 @@ function mainDriver(data) {
     r+='<div class = "row">';
     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-    r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container" style="height:500px">';
+    r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container text-center" style="height:500px">';
     
-    r+='<h2 style="padding-left:5%">YOUR SCHEDULE TODAY</h2>';
+    r+='<h2>YOUR SCHEDULE TODAY</h2>';
     r+='<ul class="list-group">';
     var count = 1;
     data.forEach(function (d) {
@@ -342,10 +338,9 @@ function mainDriver(data) {
     r+='</div>';
     r+='</div>';
     
-    r+='<div class="col-md-7 col-sm-7 col-xs-7" id="map1">';
-    r+='<button type="button" onclick="getMapDriver()" class="btn">Submit</button>';
+    r+='<div class="col-md-7 col-sm-7 col-xs-7" id="map1"></div>';
     r+='</div>';
-    r+='</div>';
+    
     return r;
 }
 

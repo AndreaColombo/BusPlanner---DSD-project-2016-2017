@@ -157,6 +157,7 @@ $(document).ready(function() {
                                     $('#header').html(changeHeader);
                                     var result = mainDriver(snapshot);
                                     $('#main').html(result);
+                                    document.onload = getMapDriver();
                                 });
                             window.location.hash = "homeDriver";
                         }

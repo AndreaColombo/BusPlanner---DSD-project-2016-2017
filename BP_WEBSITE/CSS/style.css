@@ -132,3 +132,15 @@ div.scroll {
     height: 700px;
     width: 800px;
 }
+
+.grow:hover
+{
+    -webkit-transform: scale(1.02);
+    -ms-transform: scale(1.02);
+    transform: scale(1.02);
+    -webkit-box-shadow: -1px 1px 11px 5px rgba(0,0,0,0.59);
+    -moz-box-shadow: -1px 1px 11px 5px rgba(0,0,0,0.59);
+    box-shadow: -1px 1px 11px 5px rgba(0,0,0,0.59); 
+}
+
+a:hover{text-decoration: none}
