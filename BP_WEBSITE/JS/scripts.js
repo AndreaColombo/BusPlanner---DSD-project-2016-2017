@@ -363,7 +363,7 @@ function getBus(data) {
     r += '<div class="col-md-5 col-sm-5 col-xs-5" id="busList" style="margin-top: 60px">';
     r += '<div class="row">' +
          '<div class=" col-md-2 col-sm-2 col-xs-2"></div>' +
-         '<div class=" col-md-9 col-sm-9 col-xs-9 scroll container" style="height: 500px; margin-bottom: 70px" >';    //to close row and col 10
+         '<div class=" col-md-9 col-sm-9 col-xs-9 scroll container" style="height: 500px; margin-bottom: 10px" >';    //to close row and col 10
 
     /*
      r+='<div class = "row">';
@@ -517,8 +517,8 @@ function getBus(data) {
     r += '</div>';
 
     //adding bus button
-    r += '<div align="center" style="margin-bottom: 25px">';
-    r += '<button class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingBusModal" class="btn btn-lg btn-primary btn-circle">ADD BUS<i class="fa fa-plus"></i></button>';
+    r += '<div align="center" >';
+    r += '<button class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingBusModal" class="btn btn-lg btn-primary btn-circle" style="margin-bottom: 70px">ADD BUS<i class="fa fa-plus"></i></button>';
     //<!-- Modal add bus -->
     r += '<div id="addingBusModal" class="modal fade" role="dialog">';
     r += '<div class="modal-dialog">';
@@ -526,7 +526,7 @@ function getBus(data) {
     //  <!-- Modal content add bus-->
     r += '<div class="modal-content">';
     r += '<div class="modal-header">';
-    r += '<button type="button" class="close" data-dismiss="modal">&times;</button>',
+    r += '<button type="button" class="close" data-dismiss="modal" >&times;</button>',
         r += '<h4 class="modal-title">Add Bus</h4>';
     r += '</div>';
     r += '<div class="modal-body">';
@@ -576,7 +576,6 @@ function getBus(data) {
          '</div>'; //closing row
     r += '<div class="col-md-7 col-sm-7 col-xs-7">';
     r += '<div id="mapBus" align="center" style="width:730px;height:500px;background:transparent; margin-bottom: 60px; margin-top: 60px">';
-    r += '<button type="button" class="btn btn-secondary" onclick="getMapBus()" id="mapBus" class="btn btn-default">Get Bus Location</button>';
     r += '</div>';
     r += '</div>';
     r += '</div>';
@@ -841,7 +840,7 @@ function getRequest(data){
     r+='</div>';
 
 
-    r+="<div style='margin-top: 20px' class='row'>" +
+    r+="<div style='margin-top: 20px; margin-bottom: 70px' class='row'>" +
         "   <div class='col-md-6 col-sm-6 col-xs-6 '>" +
         "<div class='row'><div class='col-md-1 col-sm-1 col-xs-1'></div>" +
         "<div class='col-md-10 col-sm-10 col-xs-10 container'> " ;
@@ -866,7 +865,8 @@ function getRequest(data){
         // date has this pattern 2016-12-09T23:52:13.589861
        var date= d.child("departure_datetime").val().toString();
        var day = date.substring(0, 10);
-       var hour = date.substring(12, 20);
+       var hour = date.substring(12, 19);
+       var hour = date.substring(12, 19);
        var start= d.child("starting_bus_stop").child("name").val();
        var end= d.child("ending_bus_stop").child("name").val();
 

@@ -133,7 +133,6 @@ div.scroll {
     width: 800px;
 }
 
-<<<<<<< Updated upstream
 .grow:hover
 {
     -webkit-transform: scale(1.02);
@@ -144,10 +143,7 @@ div.scroll {
     box-shadow: -1px 1px 11px 5px rgba(0,0,0,0.59); 
 }
 
-a:hover{text-decoration: none}
-=======
 #tableUser{
     margin: 20px;
 
 }
->>>>>>> Stashed changes

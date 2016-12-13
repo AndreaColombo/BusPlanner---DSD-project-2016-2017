@@ -178,6 +178,7 @@ $(document).ready(function() {
                 //bus is the function in script.js
                 var result = getBus(snapshot);
                 $("#main").html(result);
+                document.onload(getMapBus());
             });
 
         window.location.hash = "fleetBus";
@@ -739,15 +740,13 @@ function getMapBus(){
 
 
 
-
-
                 // Add a marker clusterer to manage the markers.
                 var markerCluster = new MarkerClusterer(map, markers,
                     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
             });
 
-            //console.log(locations);
+            console.log(locations);
         });
 }
 
@@ -853,8 +852,24 @@ function deleteDriver(num){
 
 }
 
-function getDiagram(){
+function drawChart() {
 
+    var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['Work',     11],
+        ['Eat',      2],
+        ['Commute',  2],
+        ['Watch TV', 2],
+        ['Sleep',    7]
+    ]);
+
+    var options = {
+        title: 'My Daily Activities'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
 }
 
 
