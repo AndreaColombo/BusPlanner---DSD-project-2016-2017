@@ -333,12 +333,15 @@ function mainDriver(data) {
         r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
         count++;
     });
-
     r+='</ul>';
     r+='</div>';
     r+='</div>';
     
-    r+='<div class="col-md-7 col-sm-7 col-xs-7" id="map1"></div>';
+    r+='<div class="col-md-7 col-sm-7 col-xs-7">';
+    r+='<div class="col-md-11 col-sm-11 col-xs-11" id="map1"></div>';
+    r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+    r+='</div>';
+    
     r+='</div>';
     
     return r;
