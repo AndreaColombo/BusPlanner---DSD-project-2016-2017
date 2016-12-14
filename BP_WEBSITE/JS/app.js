@@ -227,7 +227,7 @@ $(document).ready(function() {
                 $("#main").html(result);
                 google.charts.load('current', {'packages':['corechart']});
                 google.charts.setOnLoadCallback(drawChart);
-                document.onload(drawChart(snapshot));
+                document.onload(drawChart());
             });
 
 
@@ -924,48 +924,80 @@ function initeMapRoute(num){
 
 
 
+
 //d is the snapshot od the database
 function drawChart(d) {
+
     var variables = [];
+    var route1 = 1;
+    var route2 = 1;
+    var route3 = 1;
+    var route4 = 1;
+    var route5 = 1;
+
+    var query = firebase.database().ref("UserRequest");
+    query.once("value")
+        .then(function(snapshot) {
+            snapshot.forEach(function(d){
+                var route = d.child("route_id").val();
+
+                var x = false;
+                for (i = 0; i < variables.length && x == false; i++) {
+                    if(variables[i].route == route ){
+                        variables[i].utilization++;
+                        x = true;
+                    }
+                }
+
+                if(variables.lenght == 0 || x == false){
+                    variables.push({ route: route, utilization: 1})
+                }
+            });
+
+            route1 = variables[0].utilization;
+            route2 = variables[1].utilization;
+            route3 = variables[2].utilization;
+            route4 = variables[3].utilization;
+            route5 = variables[4].utilization;
+
+            console.log(variables);
+            data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+                ['Route 1', route1],
+                ['Route 2', route2],
+                ['Route 3', route3],
+                ['Route 4', route4],
+                ['Route 5', route5]
+            ]);
+
+            var options = {
+                title: 'Route utilization'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
 
 
-    d.forEach(function (d) {
-        var route = d.child("route_id").val();
 
-        var x = false;
-        for (i = 0; i < variables.length && x == false; i++) {
-            if(variables[i].route == route ){
-                variables[i].utilization++;
-                x = true;
-            }
-        }
+        });
 
-        if(variables.lenght == 0 || x == false){
-            variables.push({ route: route, utilization: 1})
-        }
 
-        
-    });
-
-    console.log(variables);
+    /*
     var data = google.visualization.arrayToDataTable([
         ['Task', 'User utilization'],
-        ['Route 1',     variables[0].utilization],
-        ['Route 2',     variables[1].utilization],
-        ['Route 3',     variables[2].utilization],
-        ['Route 4',     variables[3].utilization],
-        ['Route 5',     variables[4].utilization]
+        ['Route 1',     route1],
+        ['Route 2',     route2],
+        ['Route 3',     route3],
+        ['Route 4',     route4],
+        ['Route 5',     route5]
     ]);
-    console.log("bella");
-    console.log(data);
+    */
 
-    var options = {
-        title: 'Route utilization'
-    };
+    
 
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-    chart.draw(data, options);
 }
 
 /*

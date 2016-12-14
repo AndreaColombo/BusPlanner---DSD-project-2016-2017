@@ -866,9 +866,8 @@ function getRequest(data){
        var date= d.child("departure_datetime").val().toString();
        var day = date.substring(0, 10);
        var hour = date.substring(12, 19);
-       var hour = date.substring(12, 19);
-       var start= d.child("starting_bus_stop").child("name").val();
-       var end= d.child("ending_bus_stop").child("name").val();
+       var start= d.child("starting_bus_stop").child("Name").val();
+       var end= d.child("ending_bus_stop").child("Name").val();
 
        r+="<tr>" +
            "<td>"+ name +"</td>" +
