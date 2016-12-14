@@ -919,7 +919,10 @@ function getRequest(data){
         "</div>" +
         "   " +
         "   <div class='col-md-6 col-sm-6 col-xs-6'>" +
-        "   <div id='piechart' style='width: 900px; height: 500px;'></div></div>" +
+        "<div class='row'><div class=col-md-1 col-sm-1 col-xs-1'></div><div class=col-md-10 col-sm-10 col-xs-10'>" +
+        "   <div id='piechart' style='width: 500px; height: 500px;'></div></div>" +
+        "<div class=col-md-1 col-sm-1 col-xs-1'></div></div>" +
+        "</div></div>" +
         "</div>";
 
     /*

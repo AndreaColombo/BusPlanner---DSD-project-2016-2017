@@ -225,9 +225,8 @@ $(document).ready(function() {
                 //getRequest is the function in script.js
                 var result = getRequest(snapshot);
                 $("#main").html(result);
-                google.charts.load('current', {'packages':['corechart']});
-                google.charts.setOnLoadCallback(drawChart);
-                document.onload(drawChart());
+                var data = getDataUtilization();
+                document.onload(drawChart(data));
             });
 
 
@@ -921,12 +920,94 @@ function initeMapRoute(num){
 
 }
 
+function getDataUtilization(){
+    var variables = [];
+    var route1 = 1;
+    var route2 = 1;
+    var route3 = 1;
+    var route4 = 1;
+    var route5 = 1;
+
+    var query = firebase.database().ref("UserRequest");
+    query.once("value")
+        .then(function(snapshot) {
+            snapshot.forEach(function(d){
+                var route = d.child("route_id").val();
+
+                var x = false;
+                for (i = 0; i < variables.length && x == false; i++) {
+                    if(variables[i].route == route ){
+                        variables[i].utilization++;
+                        x = true;
+                    }
+                }
+
+                if(variables.lenght == 0 || x == false){
+                    variables.push({ route: route, utilization: 1})
+                }
 
 
 
+            });
+            route1 = variables[0].utilization.val();
+            route2 = variables[1].utilization.val();
+            route3 = variables[2].utilization.val();
+            route4 = variables[3].utilization.val();
+            route5 = variables[4].utilization.val();
+
+            var data = [variables[0].utilization, variables[1].utilization, variables[2].utilization, variables[3].utilization, variables[4].utilization];
+            return data;
+
+
+        });
+}
+
+function drawChart(data){
+
+    var route1 = data[0];
+    var route2 = data[0];
+    var route3 = data[0];
+    var route4 = data[0];
+    var route5 = data[0];
+
+
+
+    var chart = new CanvasJS.Chart("piechart",
+        {
+            title:{
+                text: "Route Utilization"
+            },
+                animationEnabled: true,
+            legend:{
+                verticalAlign: "bottom",
+                horizontalAlign: "center"
+            },
+            data: [
+                {
+                    indexlabelFontSize: 20,
+                    indexLabelFontFamily: "Monospace",
+                    indexLabelFontColor: "darkgrey",
+                    indexLabelPlacement: "outsize",
+                    type: "pie",
+                    showInLegend: true,
+                    toolTipContent:"{y} - <strong>#percent%</strong>",
+                    dataPoints:[
+                        {y: route1, legendText:"Route 1", indexLabel:"Route 1" },
+                        {y: route2, legendText:"Route 2", indexLabel:"Route 2" },
+                        {y: route3, legendText:"Route 3", indexLabel:"Route 3" },
+                        {y: route4, legendText:"Route 4", indexLabel:"Route 4" },
+                        {y: route5, legendText:"Route 5", indexLabel:"Route 5" },
+                    ]
+
+                }
+            ]
+        }
+    );
+    chart.render();
+}
 
 //d is the snapshot od the database
-function drawChart(d) {
+function drawChartGoogle() {
 
     var variables = [];
     var route1 = 1;
@@ -952,6 +1033,32 @@ function drawChart(d) {
                 if(variables.lenght == 0 || x == false){
                     variables.push({ route: route, utilization: 1})
                 }
+
+                route1 = variables[0].utilization;
+                route2 = variables[1].utilization;
+                route3 = variables[2].utilization;
+                route4 = variables[3].utilization;
+                route5 = variables[4].utilization;
+
+                console.log(variables);
+                data = new google.visualization.DataTable();
+                data.addColumn('string', 'Topping');
+                data.addColumn('number', 'Slices');
+                data.addRows([
+                    ['Route 1', route1],
+                    ['Route 2', route2],
+                    ['Route 3', route3],
+                    ['Route 4', route4],
+                    ['Route 5', route5]
+                ]);
+
+                var options = {
+                    title: 'Route utilization'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                chart.draw(data, options);
             });
 
             route1 = variables[0].utilization;
@@ -984,47 +1091,16 @@ function drawChart(d) {
 
         });
 
-
-    /*
-    var data = google.visualization.arrayToDataTable([
-        ['Task', 'User utilization'],
-        ['Route 1',     route1],
-        ['Route 2',     route2],
-        ['Route 3',     route3],
-        ['Route 4',     route4],
-        ['Route 5',     route5]
-    ]);
-    */
-
-    
-
 }
 
-/*
-var locations = [
+function drawChart1(){
 
-    {lat: -31.563910, lng: 147.154312},
-    {lat: -33.718234, lng: 150.363181},
-    {lat: -33.727111, lng: 150.371124},
-    {lat: -33.848588, lng: 151.209834},
-    {lat: -33.851702, lng: 151.216968},
-    {lat: -34.671264, lng: 150.863657},
-    {lat: -35.304724, lng: 148.662905},
-    {lat: -36.817685, lng: 175.699196},
-    {lat: -36.828611, lng: 175.790222},
-    {lat: -37.750000, lng: 145.116667},
-    {lat: -37.759859, lng: 145.128708},
-    {lat: -37.765015, lng: 145.133858},
-    {lat: -37.770104, lng: 145.143299},
-    {lat: -37.773700, lng: 145.145187},
-    {lat: -37.774785, lng: 145.137978},
-    {lat: -37.819616, lng: 144.968119},
-    {lat: -38.330766, lng: 144.695692},
-    {lat: -39.927193, lng: 175.053218},
-    {lat: -41.330162, lng: 174.865694},
-    {lat: -42.734358, lng: 147.439506},
-    {lat: -42.734358, lng: 147.501315},
-    {lat: -42.735258, lng: 147.438000},
-    {lat: -43.999792, lng: 170.463352}
-]
-*/
+    var firebaseData = firebase.database().ref("UserRequest").responseText;
+
+    // Create our data table out of JSON data loaded from server.
+    var data = new google.visualization.DataTable(firebaseData);
+
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(data, {width: 400, height: 240});
+}
