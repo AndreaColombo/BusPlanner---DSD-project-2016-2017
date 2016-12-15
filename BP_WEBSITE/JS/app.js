@@ -225,8 +225,7 @@ $(document).ready(function() {
                 //getRequest is the function in script.js
                 var result = getRequest(snapshot);
                 $("#main").html(result);
-                var data = getDataUtilization();
-                document.onload(drawChart(data));
+                document.onload(drawChart());
             });
 
 
@@ -855,7 +854,7 @@ function deleteDriver(num){
 
 }
 
-function drawChart() {
+function drawChart456() {
 
     var data = google.visualization.arrayToDataTable([
         ['Task', 'Hours per Day'],
@@ -920,90 +919,66 @@ function initeMapRoute(num){
 
 }
 
-function getDataUtilization(){
-    var variables = [];
-    var route1 = 1;
-    var route2 = 1;
-    var route3 = 1;
-    var route4 = 1;
-    var route5 = 1;
+
+
+function drawChart(){
 
     var query = firebase.database().ref("UserRequest");
     query.once("value")
         .then(function(snapshot) {
+            var variables = [];
             snapshot.forEach(function(d){
                 var route = d.child("route_id").val();
 
                 var x = false;
-                for (i = 0; i < variables.length && x == false; i++) {
+                for (var i = 0; i < variables.length && x == false; i++) {
                     if(variables[i].route == route ){
                         variables[i].utilization++;
                         x = true;
                     }
                 }
 
-                if(variables.lenght == 0 || x == false){
+                if(variables.length == 0 || x == false){
                     variables.push({ route: route, utilization: 1})
                 }
 
 
 
             });
-            route1 = variables[0].utilization.val();
-            route2 = variables[1].utilization.val();
-            route3 = variables[2].utilization.val();
-            route4 = variables[3].utilization.val();
-            route5 = variables[4].utilization.val();
+            var chart = new CanvasJS.Chart("piechart", {
+                    title:{
+                        text: "Route Utilization"
+                    },
+                    animationEnabled: true,
+                    legend:{
+                        verticalAlign: "bottom",
+                        horizontalAlign: "center"
+                    },
+                    data: [
+                        {
+                            indexlabelFontSize: 20,
+                            indexLabelFontFamily: "Monospace",
+                            indexLabelFontColor: "darkgrey",
+                            indexLabelPlacement: "outsize",
+                            type: "pie",
+                            showInLegend: true,
+                            toolTipContent:"{y} - <strong>#percent%</strong>",
+                            dataPoints:[
+                            ]
 
-            var data = [variables[0].utilization, variables[1].utilization, variables[2].utilization, variables[3].utilization, variables[4].utilization];
-            return data;
-
-
-        });
-}
-
-function drawChart(data){
-
-    var route1 = data[0];
-    var route2 = data[0];
-    var route3 = data[0];
-    var route4 = data[0];
-    var route5 = data[0];
-
-
-
-    var chart = new CanvasJS.Chart("piechart",
-        {
-            title:{
-                text: "Route Utilization"
-            },
-                animationEnabled: true,
-            legend:{
-                verticalAlign: "bottom",
-                horizontalAlign: "center"
-            },
-            data: [
-                {
-                    indexlabelFontSize: 20,
-                    indexLabelFontFamily: "Monospace",
-                    indexLabelFontColor: "darkgrey",
-                    indexLabelPlacement: "outsize",
-                    type: "pie",
-                    showInLegend: true,
-                    toolTipContent:"{y} - <strong>#percent%</strong>",
-                    dataPoints:[
-                        {y: route1, legendText:"Route 1", indexLabel:"Route 1" },
-                        {y: route2, legendText:"Route 2", indexLabel:"Route 2" },
-                        {y: route3, legendText:"Route 3", indexLabel:"Route 3" },
-                        {y: route4, legendText:"Route 4", indexLabel:"Route 4" },
-                        {y: route5, legendText:"Route 5", indexLabel:"Route 5" },
+                        }
                     ]
+                });
 
-                }
-            ]
-        }
-    );
-    chart.render();
+            for(var i = 0; i < variables.length; i++){
+                chart.options.data[0].dataPoints.push({y: variables[i].utilization, legendText:"Route "+ variables[i].route, indexLabel:"Route "+ variables[i].route });
+            }
+            console.log("1");
+            console.log(chart.options.data[0].dataPoints);
+            chart.render();
+        });
+
+
 }
 
 //d is the snapshot od the database
@@ -1023,14 +998,14 @@ function drawChartGoogle() {
                 var route = d.child("route_id").val();
 
                 var x = false;
-                for (i = 0; i < variables.length && x == false; i++) {
+                for (var i = 0; i < variables.length && x == false; i++) {
                     if(variables[i].route == route ){
                         variables[i].utilization++;
                         x = true;
                     }
                 }
 
-                if(variables.lenght == 0 || x == false){
+                if(variables.length == 0 || x == false){
                     variables.push({ route: route, utilization: 1})
                 }
 
