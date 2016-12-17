@@ -172,7 +172,7 @@ $(document).ready(function() {
     //the loading of the page for manage the bus
     $("body").on("click", "#btnBus", function (e){
 
-        var query = firebase.database().ref().child("Bus");
+        var query = firebase.database().ref("Bus").orderByChild('Bus_id');
         query.once("value")
             .then(function (snapshot) {
                 //bus is the function in script.js
@@ -209,6 +209,7 @@ $(document).ready(function() {
                 //bus is the function in script.js
                 var result = getRoute(snapshot);
                 $("#main").html(result);
+                document.onload = initeMapRoute(1);
             });
 
         window.location.hash = "fleetRoute";
@@ -714,8 +715,8 @@ function modifyBusData(num){
 function getMapBus(){
 
     var map = new google.maps.Map(document.getElementById('mapBus'), {
-        zoom: 12,
-        center: {lat: -26.324, lng: 28.000}
+        zoom: 11,
+        center: {lat: -26.195246, lng: 28.034088}
     });
 
 
@@ -736,7 +737,7 @@ function getMapBus(){
                 var markers = locations.map(function(location, i) {
                     return new google.maps.Marker({
                         position: location,
-                        label: d.child("Bus_id").val()
+                        label: d.child("Bus_id").val().toString()
                     });
                 });
 
@@ -876,47 +877,58 @@ function drawChart456() {
 
 
 function initeMapRoute(num){
-    var map = new google.maps.Map(document.getElementById('mapRoute'), {
-        zoom: 12,
-        center: {lat: -26.324, lng: 28.000}
+    
+    var routes = firebase.database().ref("Route");
+    routes.once("value").then(function(snapshot) {
+        var specificRoute;
+        var numberOfChildren = snapshot.numChildren();
+        for(var i=1; i<=numberOfChildren; i++) {
+            specificRoute = document.getElementById('Route'+i);
+            if(specificRoute.classList.contains('active')){
+                specificRoute.classList.remove('active');
+            }
+        }
+        document.getElementById('Route'+num).classList.add('active');
     });
-
-
-    var query = firebase.database().ref("Route");
-    query.once("value")
-        .then(function(snapshot) {
-            //dbRefStepLong = snapshot.child("Route"+ num).child("Longitude");
-            snapshot.child("Route"+ num).child("BusStops").forEach(function(d){
-                //console.log("Latitude: "+ d.val() +" Longitude: "+dbRefStepLong.child(cont.toString()).val());
-                var locations = [];
-                locations.push({ lat: parseFloat(d.child("Point").child("Latitude").val()), lng: parseFloat(d.child("Point").child("Longitude").val()) });
-                console.log(locations);
-
-                // Add some markers to the map.
-                // Note: The code uses the JavaScript Array.prototype.map() method to
-                // create an array of markers based on a given "locations" array.
-                // The map() method here has nothing to do with the Google Maps API.
-                var markers = locations.map(function(location, i) {
-                    return new google.maps.Marker({
-                        position: location,
-                        label: d.child("Stop_id").val()
-                    });
-                });
-
-
-
-
-
-                // Add a marker clusterer to manage the markers.
-                var markerCluster = new MarkerClusterer(map, markers,
-                    {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
-            });
-
-            //console.log(locations);
+    
+    var uluru = {lat: -26.195246, lng: 28.034088};
+        var routeMap = new google.maps.Map(document.getElementById('mapRoute'), {
+            center: uluru,
+            zoom: 11,
+            styles: [{
+                featureType: 'poi',
+                stylers: [{
+                visibility: 'on'
+                }] // Turn off points of interest.
+            }, {
+                featureType: 'transit.station',
+                stylers: [{
+                    visibility: 'on'
+                }] // Turn off bus stations, train stations, etc.
+            }],
+            disableDoubleClickZoom: false
         });
-
-
+    
+    var query = routes.child("Route"+ num).child("BusStops");
+    query.once("value").then(function(snapshot) {
+        snapshot.forEach(function(d) {
+            var lat = d.child('Point').child('Latitude').val();
+            var long = d.child('Point').child('Longitude').val();
+            var status = d.child('Name').val();
+            var latLng = new google.maps.LatLng(lat,long);
+            var infowindow = new google.maps.InfoWindow({
+                content: status
+            });
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: routeMap,
+                label: d.child("Stop_id").val()
+            });
+            marker.addListener('click', function() {
+                infowindow.open(routeMap, marker);
+            });
+        });
+    });
 }
 
 

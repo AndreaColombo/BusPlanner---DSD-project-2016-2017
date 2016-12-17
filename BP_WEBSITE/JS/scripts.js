@@ -349,55 +349,36 @@ function mainDriver(data) {
 
 function getBus(data) {
     
-        var r = "";
+    var r = "";
     r += '<div class = "intestation" id="intestation">';
     r += '<div class = "row" >';
     r += '<div class="col-md-6 col-sm-6 col-xs-6" >';
-    r += '<h3 id = "titleIntestation" >Bus Management</h3>';
-    r += '<h4 id = "minimalDescription">Here you can add, remove, or modify our buses </h4>';
+    r += '<h1 id = "titleIntestation" >Bus Management</h1>';
+    r += '<h4 id = "minimalDescription">Here you can add, modify and remove buses.</h4>';
     r += '</div>';
     r += '<div class="col-md-6 col-sm-6 col-xs-6">';
-    r += '<img src = "Images/modBuses.jpg" align="right" class = "intestationImages"  >';
+    r += '<img src = "Images/modBuses.jpg" align="right" class = "intestationImages img-responsive">';
     r += '</div>';
     r += '</div>';
     r += '</div>';
+    r += '<div class="row">';
+    r += '<div class="col-md-5 col-sm-5 col-xs-5" style="margin-top: 60px">';
+    r += '<div class=" col-md-2 col-sm-2 col-xs-2"></div>' +
+         '<div class=" col-md-9 col-sm-9 col-xs-9 scroll container" style="height: 500px" >';    //to close row and col 10
 
-    r += '<div class="row" id="realTimeData">';
-    r += '<div class="col-md-5 col-sm-5 col-xs-5" id="busList" style="margin-top: 60px">';
-    r += '<div class="row">' +
-         '<div class=" col-md-2 col-sm-2 col-xs-2"></div>' +
-         '<div class=" col-md-9 col-sm-9 col-xs-9 scroll container" style="height: 500px; margin-bottom: 10px" >';    //to close row and col 10
-
-    /*
-     r+='<div class = "row">';
-     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
-     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-     r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container" style="height:500px">';
-
-     r+='<h2 style="padding-left:5%">YOUR SCHEDULE TODAY</h2>';
-     r+='<ul class="list-group">';
-     var count = 1;
-     data.forEach(function (d) {
-     r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
-     r+='</li>';
-     count++;
-     });
-
-     r+='</ul>';
-     r+='</div>';
-     r+='</div>';
-    */
     var cont = 0;
+    var count = 1;
     r+= '<ul class ="list-group">';
     data.forEach(function (d) {
+        count++;
 
         if(cont++ == 0){
-            r += '<div class="list-group-item" align="center" style="margin-top: 10px"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
-                ' &emsp;<a data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
+            r += '<div class="list-group-item" align="center" style="margin-top: 13px"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+                ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
         }
         else {
             r += '<div class="list-group-item" align="center"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
-                ' &emsp;<a data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
+                ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
         }
         //<!-- start modalView -->
         r += '<div id="modalView' + d.child('Bus_id').val() + '" class="modal fade" role="dialog">';
@@ -418,10 +399,9 @@ function getBus(data) {
             '</p>';
         r += '</div>';
         r += '<div class="modal-footer">';
-        r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r += '<button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
         r += '</div>';
         r += '</div>';
-
         r += '</div>';
         r += '</div>';
         //<!-- end modalView -->
@@ -463,20 +443,16 @@ function getBus(data) {
             '<input type="text" class="form-control " id="busLongitude' + d.child('Bus_id').val() + '" value="' + d.child("Longitude").val() + '" disabled>' +
             '</div>' +
             //i have to put in get data the dynamic index
-            '<button type="submit" onclick="modifyBusData(' + d.child('Bus_id').val() + ')" id="submitModBus' + d.child('Bus_id').val() + '" class="btn btn-default">Submit</button>' +
+            '<button href="#" type="submit" onclick="modifyBusData(' + d.child('Bus_id').val() + ')" id="submitModBus' + d.child('Bus_id').val() + '" class="btn btn-default">Submit</button>' +
             '</form>';
-
-
         r += '</div>';
         r += '<div class="modal-footer">';
-        r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r += '<button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
         r += '</div>';
         r += '</div>';
-
         r += '</div>';
         r += '</div>';
         //<!-- end modalModify -->
-
 
         //<!-- start deleteModify -->
         r += '<div id="modalDelete' + d.child('Bus_id').val() + '" class="modal fade" role="dialog">';
@@ -496,32 +472,21 @@ function getBus(data) {
             'Longitude: ' + d.child('Longitude').val() + '<br>' +
             '</p>' +
             //i have to put in get data the dynamic index
-            '<button type="submit" onclick="deleteBus(' + d.child('Bus_id').val() + ')" id="deleteBus' + d.child('Bus_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
+            '<button href="#" type="submit" onclick="deleteBus(' + d.child('Bus_id').val() + ')" id="deleteBus' + d.child('Bus_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
             '</div>';
-
-
         r += '</div>';
         r += '<div class="modal-footer">';
-        r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+        r += '<button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
         r += '</div>';
         r += '</div>';
-
         r += '</div>';
         r += '</div>';
         //<!-- end delete Modal -->
   
-
     });
 
     r += '</ul>';
-
-
-
-    r += '</div>';
-
-    //adding bus button
-    r += '<div align="center" >';
-    r += '<button class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingBusModal" class="btn btn-lg btn-primary btn-circle" style="margin-bottom: 70px">ADD BUS<i class="fa fa-plus"></i></button>';
+    r += '<div>';
     //<!-- Modal add bus -->
     r += '<div id="addingBusModal" class="modal fade" role="dialog">';
     r += '<div class="modal-dialog">';
@@ -530,13 +495,13 @@ function getBus(data) {
     r += '<div class="modal-content">';
     r += '<div class="modal-header">';
     r += '<button type="button" class="close" data-dismiss="modal" >&times;</button>',
-        r += '<h4 class="modal-title">Add Bus</h4>';
+    r += '<h4 class="modal-title">Add Bus</h4>';
     r += '</div>';
     r += '<div class="modal-body">';
     r += '<form>' +
         '<div class="form-group">' +
         '<label for="id">Bus Id:</label>' +
-        '<input type="text" class="form-control" id="addBusId" >' +
+        '<input type="text" class="form-control" id="addBusId" value="'+count+'" disabled>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="capacity">Capacity:</label>' +
@@ -566,24 +531,28 @@ function getBus(data) {
     r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
     r += '</div>';
     r += '</div>';
-
     r += '</div>';
     r += '</div>';
     //end modal add bus
 
-
-
     r += '</div>';
     r += '</div>'; //closing col 10
-    r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>' +
-         '</div>'; //closing row
+    r += '</div>'; //closing row
     r += '<div class="col-md-7 col-sm-7 col-xs-7">';
-    r += '<div id="mapBus" align="center" style="width:730px;height:500px;background:transparent; margin-bottom: 60px; margin-top: 60px">';
+    r += '<div class="col-md-11 col-sm-11 col-xs-11" id="mapBus" style="height:500px; margin-top:60px;"></div>';
+    r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+    r += '</div>';
+    r+='<div class="row">'; 
+    r+='<div class=" col-md-5 col-sm-5 col-xs-5">';
+    r+='<div class=" col-md-2 col-sm-2 col-xs-2"></div>';
+    r+='<div class=" col-md-9 col-sm-9 col-xs-9 text-center">'; 
+    r +='<button href="#" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingBusModal" class="btn btn-lg btn-primary btn-circle" style="margin-bottom:70px; margin-top:10px; margin-left:10px;">ADD BUS</button>';
+    r += '</div>';
+    r += '</div>';
+    r+='<div class=" col-md-7 col-sm-7 col-xs-7"></div>';
     r += '</div>';
     r += '</div>';
     r += '</div>';
-
-
     return r;
 }
 
@@ -594,20 +563,20 @@ function getDriver(data) {
     r+='<div class = "intestation" id="intestation">';
     r+='<div class = "row" >';
     r+='<div class="col-md-6 col-sm-6 col-xs-6" >';
-    r+='<h3 id = "titleIntestation" >Driver Management</h3>';
-    r+='<h4 id = "minimalDescription">Here you can see and modify the drivers of our company </h4>';
+    r+='<h3 id = "titleIntestation">Driver Management</h3>';
+    r+='<h4 id = "minimalDescription">Here you can view, modify and remove the drivers of our company.</h4>';
     r+='</div>';
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<img src = "Images/modifyDriver.jpg" class = "intestationImages"  >';
+    r+='<img src = "Images/modifyDriver3.jpg" align="right" class = "intestationImages img-responsive">';
     r+='</div>';
     r+='</div>';
     r+='</div>';
-
-
-
-
+    
+    var count = 1;
+    
     data.forEach( function(d){
-        r += '<div class="row" id="realTimeData"style=" margin: 10px">';
+        count++;
+        r += '<div class="row" style=" margin: 10px">';
         r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>';
         r += '<div class="col-md-3 col-sm-3 col-xs-3">' +
              '<img src="Images/'+d.child('Image').val() +'" class="img-circle" id="imageDriver">' +
@@ -616,7 +585,7 @@ function getDriver(data) {
                 '<h3>'+ d.child('Driver_name').val()+'</h3>' +
                 '<p style="font-size: medium">'+d.child('Description').val() +'</p>';
                 r += '<h4 align="center">'+
-        ' &emsp;<a data-toggle="modal" data-target="#modalView' + d.child('Driver_id').val() + '">Info</a>&emsp;' + '<a data-toggle="modal" data-target="#modalModify' + d.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a data-toggle="modal" data-target="#modalDelete' + d.child('Driver_id').val() + '">Delete</a></h4></div>';
+        ' &emsp;<a href="#" data-toggle="modal" data-target="#modalView' + d.child('Driver_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Driver_id').val() + '">Delete</a></h4></div>';
         r += '</div>';
         //<!-- start modalView -->
         r += '<div id="modalView' + d.child('Driver_id').val() + '" class="modal fade" role="dialog">';
@@ -735,7 +704,7 @@ function getDriver(data) {
     //button for add new driver
     r+= '<div class="row">' +
         '<div class="col-md-4 col-sm-4 col-xs-4"></div>' +
-        '<div class="col-md-4 col-sm-4 col-xs-4">';
+        '<div class="col-md-4 col-sm-4 col-xs-4 text-center">';
     r+='<button class="btn btn-info btn-lg" data-toggle="modal"  data-target="#addingDriver" class="btn btn-lg btn-primary btn-circle" style="margin: 60px" >NEW DRIVER<i class="fa fa-plus"></i></button>' +
         '</div><div class="col-md-4 col-sm-4 col-xs-4"></div></div>';   //closing row
     //<!-- Modal add driver -->
@@ -751,7 +720,7 @@ function getDriver(data) {
     r += '<form>' +
         '<div class="form-group">' +
         '<label for="id">Driver ID:</label>' +
-        '<input type="text" class="form-control" id="addDriverId" >' +
+        '<input type="text" class="form-control" id="addDriverId" value="' + count + '" disabled>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="name">Name:</label>' +
@@ -793,33 +762,40 @@ function getRoute(data){
     r+='<div class = "intestation" id="intestation">';
     r+='<div class = "row" >';
     r+='<div class="col-md-6 col-sm-6 col-xs-6" >';
-    r+='<h3 id = "titleIntestation" >Route Management</h3>';
-    r+='<h4 id = "minimalDescription">Here you can see and modify the route covered by the buses </h4>';
+    r+='<h3 id = "titleIntestation">Route Management</h3>';
+    r+='<h4 id = "minimalDescription">Here you can view, modify and remove routes.</h4>';
     r+='</div>';
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<img src = "Images/modifyRoute.jpg" align="right" class = "intestationImages"  >';
+    r+='<img src = "Images/modifyRoute.jpg" align="right" class = "intestationImages">';
     r+='</div>';
     r+='</div>';
     r+='</div>';
-    //r+='<div id="mapRoute"></div>';
-    //r+='<button onclick="initeMapRoute('+ num +')" style="margin: 50px">BUTTON</button>';
-
-    r+="<div align='center'><h3 style='color: #2aabd2'>Click on the route name to see all the steps on the map</h3></div><div class='row'>"+
-        "<div align='center' style='margin-top: 40px' class='col-md-4 col-sm-4 col-xs-4' >" ;
-
-    data.forEach( function(d){
-        r+= "<div style='margin-left: 25px' class='well'><a style='font-size: large' onclick='initeMapRoute("+ d.child('Route_id').val() +")'>"+ d.child('Route_name').val() +"<br></a></div>";
-
-
+    r+='<h3 style="color:#2aabd2; margin-bottom:20px;" class="text-center">Click on the route name to see all its steps on the map:</h3>';
+    
+    r+='<div class="row" style="margin-bottom:70px">';
+    r+='<div class="col-md-5 col-sm-5 col-xs-5">';
+    r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+    r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container" style="height: 500px">';
+    r+='<ul class="list-group">';
+    var count = 1;
+    data.forEach(function (d) {
+        if(count == 1) {
+            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item active" style="margin-top:17px">'+d.child('Route_name').val()+'</a>';
+        }
+        else {
+            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item">'+d.child('Route_name').val()+'</a>';
+        }
+        count++;
     });
-    r+="</div><div align='center' style='margin-top: 20px; margin-bottom: 40px' class='col-md-8 col-sm-8 col-xs-8'>" +
-        "<div id='mapRoute'></div>" +
-        "</div>" +
-        "</div>";
-
+    r+='</ul>';
+    r+='</div>';
+    r+='</div>';
+    r+='<div class="col-md-7 col-sm-7 col-xs-7">';
+    r+='<div class="col-md-11 col-sm-11 col-xs-11" id="mapRoute"></div>'; 
+    r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
+    r+='</div>'; 
+    r+='</div>';
     return r;
-
-
 }
 
 

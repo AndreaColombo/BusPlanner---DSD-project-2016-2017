@@ -73,8 +73,6 @@ html, body { height: 100%; width:100%; margin: 0; padding: 0; }
     border: 1px solid black;
     height: 200px;
     background-size: 620px 290px;
-
-
 }
 
 #imageText{
@@ -91,15 +89,12 @@ html, body { height: 100%; width:100%; margin: 0; padding: 0; }
 #titleIntestation {
     font-weight: bold;
     text-align: center;
-    font-size: 30px;
+    font-size: 60px;
+    color:#004C99;
 }
 
 #intestation{
     border-bottom: 1px solid lightBlue;
-}
-
-.verticalLine {
-    border-left: solid #000000;
 }
 
 #map1 {
@@ -128,8 +123,7 @@ div.scroll {
 
 
 #mapRoute{
-    height: 700px;
-    width: 800px;
+    height: 500px;
 }
 
 .grow:hover
