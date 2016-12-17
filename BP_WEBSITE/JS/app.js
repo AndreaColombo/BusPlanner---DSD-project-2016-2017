@@ -683,7 +683,6 @@ function changeMarker(id) {
 //get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
 function modifyBusData(num){
 
-
     const inputBusId = document.getElementById("busId"+num);
     const inputCapacity = document.getElementById("busCapacity"+num);
     const inputType = document.getElementById("busType"+num);
@@ -694,10 +693,6 @@ function modifyBusData(num){
     const dbRefBus = firebase.database().ref().child('Bus');
     const dbRefBusN = dbRefBus.child('Bus'+ num);
 
-
-
-
-
     dbRefBusN.set({
         Bus_capacity: inputCapacity.value.toString(),
         Bus_id: inputBusId.value.toString(),
@@ -707,7 +702,6 @@ function modifyBusData(num){
         Longitude: inputLongitude.value.toString()
 
     });
-
 
 }
 
@@ -850,8 +844,8 @@ function insertDriver(count){
              '<img src="Images/'+snap.child('Image').val() +'" class="img-circle" id="imageDriver">' +
              '</div>' +
              '<div class="col-md-7 col-sm-7 col-xs-7">' +
-                '<h3>'+ snap.child('Driver_name').val()+'</h3>' +
-                '<p style="font-size: medium">'+snap.child('Description').val() +'</p><h4 align="center">'+
+                '<h3 id="dName'+snap.child('Driver_id').val()+'">'+ snap.child('Driver_name').val()+'</h3>' +
+                '<p id="dDescription'+snap.child('Driver_id').val()+'" style="font-size: medium">'+snap.child('Description').val() +'</p><h4 align="center">'+
         ' &emsp;<a href="#" data-toggle="modal" data-target="#modalView' + snap.child('Driver_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + snap.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + snap.child('Driver_id').val() + '">Delete</a></h4></div></div><div id="modalView' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + snap.child('Driver_name').val() + ' Information</h4></div><div class="modal-body"><p>Driver ID: ' + snap.child('Driver_id').val() + '<br>Driver Name: ' + snap.child('Driver_name').val() + '<br>Mobile Number: ' + snap.child('Mobile_number').val() + '<br>Date of birth: ' + snap.child('Date_birth').val() + '<br></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Driver ' + snap.child('Driver_name').val() + ' to modify</h4></div><div class="modal-body"><form>' +
             '<div class="form-group">' +
             '<label for="id">Driver Id:</label>' +
@@ -910,8 +904,11 @@ function modifyDriverData(num){
         Mobile_number: inputNumber.value.toString(),
         Description: inputDescription.value.toString(),
         Image: inputImange.value.toString()
-
     });
+    
+    document.getElementById('dName'+num).innerHTML = inputName.value.toString();
+    document.getElementById("dDescription"+num).innerHTML = inputDescription.value.toString();
+    document.getElementById("dImage"+num).innerHTML = inputImange.value.toString();
 }
 
 
