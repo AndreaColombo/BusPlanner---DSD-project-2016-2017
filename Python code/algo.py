@@ -4,7 +4,6 @@ from firebase import firebase
 import random
 import pyrebase
 import requests
-import re
 from pulp import *
 
 #lana_data = db.child("UserRequest").child("UserRequest1").get(user['idToken']).val()
@@ -20,7 +19,7 @@ def trip_generator(line_name, drop_in, drop_out):
 
 
 def work_generator(number_works, trips):
-   
+
   tentative_hours = {t[1] for t in trips}
   route_per_hour = defaultdict(list)
   for t in trips:
@@ -45,20 +44,20 @@ def work_generator(number_works, trips):
 
 
 def rule_controler(work):
-   
+
   constraintloop = max(len(work), 8)
 
-   
+
   if len(work) > 8 :
-    
+
     constraintloop += 0.5 * (len(work) - 8)
 
-   
+
   if len(work) > 4:
     first_hour = work[0][1]
     last_hour = work[-1][1]
     if last_hour - first_hour + 1 == len(work):
-      
+
       constraintloop = 1e6
 
   return constraintloop
@@ -68,33 +67,33 @@ def solve(works, trips):
   problem = LpProblem('BusPlanner', LpMinimize)
   variables = []
   rule_controlers = []
-  
+
   trip_refer = {trip: [] for trip in trips}
 
-   
+
   works = works + [[trip] for trip in trips]
 
-  
+
   for i, work in enumerate(works):
-  
+
     x = LpVariable('x{}'.format(i + 1), 0, 1, LpBinary)
     variables.append(x)
     rule_controlers.append(rule_controler(work))
     for trip in work:
       trip_refer[trip].append(x)
 
-   
+
   problem += lpDot(rule_controlers, variables)
- 
+
   for xs in trip_refer.values():
     problem += lpSum(xs) == 1
 
- 
+
   print(problem)
   status = problem.solve()
   print(LpStatus[status])
 
-   
+
   solve = []
   total_rule_controler = 0
   for i, x in enumerate(variables):
@@ -136,27 +135,24 @@ def main():
   print("------------")
   #count=0
   for Route in k5.split(')]'):
-   if(Route):
+    if(Route):
+      savedata(Route[9], Route[13])
 
-    # test1 = Route[0],Route[1].strip().lstrip("("),Route[2].strip().lstrip("',)")
-    # test = re.sub('[^0-9]', '', test1)
-    # print(Route)
-    # print("###################")
-    sample = Route[9], Route[13]
-    # print(sample)
-
-    savedata(Route[9], Route[13])
-
-   else:
-       print(('2', '3'))
+    else:
+       print('')
 
 def savedata(R9,R13):
    db= firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
+   schedule = {
+     'Bus_id': R9,
+     'Route_id': R9,
+     'User_id': R13
+   }
+   name = 'Schedule'
+   db.put("/AlgDynamic", name, schedule)
+   print('result'+str(schedule))
 
-   db.put('','/AlgDynamic', {'Schedule': {'Bus_id': R9, 'Route_id': R9, 'User_id': R13}})
 
 
 if __name__ == '__main__':
     main()
-
-
