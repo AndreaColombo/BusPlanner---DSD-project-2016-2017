@@ -822,11 +822,11 @@ function getRequest(data){
     r+="<div style='margin-top: 20px; margin-bottom: 70px' class='row'>" +
         "   <div class='col-md-6 col-sm-6 col-xs-6 '>" +
         "<div class='row'><div class='col-md-1 col-sm-1 col-xs-1'></div>" +
-        "<div class='col-md-10 col-sm-10 col-xs-10 container'> " ;
+        "<div class='col-md-11 col-sm-11 col-xs-11 container'> " ;
 
 
     r+="" +
-        "<table class='table table-striped'>" +
+        "<table style='height: 800px' class='table table-striped'>" +
         "<thead class='thead-inverse'>"+
         "<tr>"+
         "<th>User</th>"+
@@ -892,15 +892,16 @@ function getRequest(data){
 
     r+="</tbody></table>";
 
-
     r+= "</div>" +
-        "<div class='col-md-1 col-sm-1 col-xs-1'></div></div>" +
+        "</div>" +
         "</div>" +
         "   " +
         "   <div class='col-md-6 col-sm-6 col-xs-6'>" +
-        "<div class='row'><div class=col-md-1 col-sm-1 col-xs-1'></div><div class=col-md-10 col-sm-10 col-xs-10'>" +
-        "   <div id='piechart' style='width: 500px; height: 500px;'></div></div>" +
-        "<div class=col-md-1 col-sm-1 col-xs-1'></div></div>" +
+        "<div class='row'><div class=col-md-11 col-sm-11 col-xs-11'>" +
+        "   <div id='piechart' style='width: 650px; height: 400px;'></div>" +
+        "   <div id='piechartstop' style='width: 650px; height: 400px;margin-top: 10px'></div>" +
+        "</div>" +
+        "<div class='col-md-1 col-sm-1 col-xs-1'></div></div>" +
         "</div></div>" +
         "</div>";
 

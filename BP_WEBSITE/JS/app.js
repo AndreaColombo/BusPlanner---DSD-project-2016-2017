@@ -226,7 +226,7 @@ $(document).ready(function() {
                 //getRequest is the function in script.js
                 var result = getRequest(snapshot);
                 $("#main").html(result);
-                document.onload(drawChart());
+                document.onload(drawChart(), drawChartStop());
             });
 
 
@@ -986,6 +986,92 @@ function drawChart(){
                 chart.options.data[0].dataPoints.push({y: variables[i].utilization, legendText:"Route "+ variables[i].route, indexLabel:"Route "+ variables[i].route });
             }
             console.log("1");
+            console.log(chart.options.data[0].dataPoints);
+            chart.render();
+        });
+
+
+}
+
+
+function drawChartStop(){
+    var query = firebase.database().ref("UserRequest");
+    query.once("value")
+        .then(function(snapshot) {
+            var variables = [];
+            snapshot.forEach(function(d){
+                //starting bus stop utilization
+                var routeStart = d.child("starting_bus_stop").child("Name").val();
+
+                var x = false;
+                for (var i = 0; i < variables.length && x == false; i++) {
+                    if(variables[i].stopName == routeStart ){
+                        variables[i].utilization++;
+                        x = true;
+                    }
+                }
+
+                if(variables.length == 0 || x == false){
+                    variables.push({ stopName: routeStart, utilization: 1})
+                }
+
+                //ending bus stop utilization
+
+                var routeEnd = d.child("ending_bus_stop").child("Name").val();
+
+                var y = false;
+                for (var j = 0; j < variables.length && y == false; j++) {
+                    if(variables[j].stopName == routeEnd ){
+                        variables[j].utilization++;
+                        y = true;
+                    }
+                }
+
+                if(variables.length == 0 || y == false){
+                    variables.push({ stopName: routeEnd, utilization: 1})
+                }
+
+
+
+            });
+            var chart = new CanvasJS.Chart("piechartstop", {
+                title:{
+                    text: "Top 5 Stop Utilization"
+                },
+                animationEnabled: true,
+                legend:{
+                    verticalAlign: "bottom",
+                    horizontalAlign: "center"
+                },
+                data: [
+                    {
+                        indexlabelFontSize: 20,
+                        indexLabelFontFamily: "Monospace",
+                        indexLabelFontColor: "darkgrey",
+                        indexLabelPlacement: "outsize",
+                        type: "pie",
+                        showInLegend: true,
+                        toolTipContent:"{y} - <strong>#percent%</strong>",
+                        dataPoints:[
+                        ]
+
+                    }
+                ]
+            });
+
+            //sort algorithm
+            for(var k = 0; k < variables.length-1; k++)
+                for(var j = k+1; j < variables.length; j++)
+                    if(variables[k].utilization < variables[j].utilization) {
+                        var t = variables[k];
+                        variables[k] = variables[j];
+                        variables[j] = t;
+                    }
+
+            for(var i = 0; i < 5; i++){
+                chart.options.data[0].dataPoints.push({y: variables[i].utilization, legendText:"Stop "+ variables[i].stopName, indexLabel:"Stop "+ variables[i].stopName });
+            }
+
             console.log(chart.options.data[0].dataPoints);
             chart.render();
         });
