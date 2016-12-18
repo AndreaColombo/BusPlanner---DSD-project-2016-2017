@@ -178,7 +178,7 @@ $(document).ready(function() {
                 //bus is the function in script.js
                 var result = getBus(snapshot);
                 $("#main").html(result);
-                document.onload(getMapBus());
+                document.onload = getMapBus();
             });
 
         window.location.hash = "fleetBus";
@@ -227,7 +227,11 @@ $(document).ready(function() {
                 //getRequest is the function in script.js
                 var result = getRequest(snapshot);
                 $("#main").html(result);
+
                 document.onload(drawChart(), drawChartStop());
+
+                //document.onload = drawChart();
+
             });
 
 
@@ -684,7 +688,6 @@ function changeMarker(id) {
 //get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
 function modifyBusData(num){
 
-
     const inputBusId = document.getElementById("busId"+num);
     const inputCapacity = document.getElementById("busCapacity"+num);
     const inputType = document.getElementById("busType"+num);
@@ -694,10 +697,6 @@ function modifyBusData(num){
 
     const dbRefBus = firebase.database().ref().child('Bus');
     const dbRefBusN = dbRefBus.child('Bus'+ num);
-
-
-
-
 
     dbRefBusN.set({
         Bus_capacity: inputCapacity.value.toString(),
@@ -709,14 +708,13 @@ function modifyBusData(num){
 
     });
 
-
 }
 
 
 function getMapBus(){
 
     var map = new google.maps.Map(document.getElementById('mapBus'), {
-        zoom: 11,
+        zoom: 9,
         center: {lat: -26.195246, lng: 28.034088}
     });
 
@@ -724,12 +722,9 @@ function getMapBus(){
     var query = firebase.database().ref("Bus");
     query.once("value")
         .then(function(snapshot) {
-            //dbRefStepLong = snapshot.child("Route"+ num).child("Longitude");
             snapshot.forEach(function(d){
-                //console.log("Latitude: "+ d.val() +" Longitude: "+dbRefStepLong.child(cont.toString()).val());
                 var locations = [];
                 locations.push({ lat: parseFloat(d.child("Latitude").val()), lng: parseFloat(d.child("Longitude").val()) });
-                console.log(locations);
 
                 // Add some markers to the map.
                 // Note: The code uses the JavaScript Array.prototype.map() method to
@@ -750,34 +745,73 @@ function getMapBus(){
 
             });
 
-            console.log(locations);
         });
 }
 
 
-function insertBus(){
+function insertBus(count){
 
-    const inputBusId = document.getElementById("addBusId");
     const inputCapacity = document.getElementById("addBusCapacity");
     const inputType = document.getElementById("addBusType");
     const inputDriver = document.getElementById("addBusDriver");
     const inputLatitude = document.getElementById("addBusLatitude");
     const inputLongitude = document.getElementById("addBusLongitude");
 
-    const dbRefBus = firebase.database().ref();
+    const dbRefBus = firebase.database().ref('Bus');
 
-    //save the new data in the databse
+    //save the new data in the database
 
-    dbRefBus.child('Bus/'+'Bus'+ inputBusId.value.toString()).set({
+    dbRefBus.child('Bus'+ count).set({
         Bus_capacity: inputCapacity.value.toString(),
-        Bus_id: inputBusId.value.toString(),
+        Bus_id: count,
         Bus_type: inputType.value.toString(),
         Driver_id: inputDriver.value.toString(),
         Latitude: inputLatitude.value.toString(),
         Longitude: inputLongitude.value.toString()
 
     });
-
+    
+    dbRefBus.once('child_added', snap => {
+        var busList = document.getElementById('busListGroup');
+        busList.innerHTML = busList.innerHTML + '<div class="list-group-item" id="busItem'+snap.child('Bus_id').val()+'" align="center"><h5>Bus Id: ' + snap.child('Bus_id').val() +
+                ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + snap.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + snap.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + snap.child('Bus_id').val() + '">Delete</a></h5></div><div id="modalView' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Bus ' + snap.child('Bus_id').val() + ' Information</h4></div><div class="modal-body"><p>Bus capacity: ' + snap.child('Bus_capacity').val() + '<br>Bus Type:' + snap.child('Bus_type').val() + '<br>Driver Id: ' + snap.child('Driver_id').val() + '<br>Latitude: ' + snap.child('Latitude').val() + '<br>Longitude: ' + snap.child('Longitude').val() + '<br></p></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Bus ' + snap.child('Bus_id').val() + ' to modify</h4></div><div class="modal-body"><form>' +
+            '<div class="form-group">' +
+            '<label for="id">Bus Id:</label>' +
+            '<input type="text" class="form-control" id="busId' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_id").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="capacity">Capacity:</label>' +
+            '<input type="text" class="form-control" id="busCapacity' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_capacity").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="type">Type:</label>' +
+            '<input type="text" class="form-control" id="busType' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_type").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="driver">Driver:</label>' +
+            '<input type="text" class="form-control" id="busDriver' + snap.child('Bus_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="latitude">Latitude:</label>' +
+            '<input type="text" class="form-control " id="busLatitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Latitude").val() + '" disabled>' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="longitude">Longitude:</label>' +
+            '<input type="text" class="form-control " id="busLongitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Longitude").val() + '" disabled>' +
+            '</div>' +
+            //i have to put in get data the dynamic index
+            '<button href="#" type="submit" onclick="modifyBusData(' + snap.child('Bus_id').val() + ')" id="submitModBus' + snap.child('Bus_id').val() + '" class="btn btn-default">Submit</button>' +
+            '</form></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting the bus ' + snap.child('Bus_id').val() + '</h4></div><div class="modal-body"><div>' +
+            '<p>Bus capacity: ' + snap.child('Bus_capacity').val() + '<br>' +
+            'Bus Type:' + snap.child('Bus_type').val() + '<br>' +
+            'Driver Id: ' + snap.child('Driver_id').val() + '<br>' +
+            'Latitude: ' + snap.child('Latitude').val() + '<br>' +
+            'Longitude: ' + snap.child('Longitude').val() + '<br>' +
+            '</p>' +
+            //i have to put in get data the dynamic index
+            '<button href="#" type="submit" onclick="deleteBus(' + snap.child('Bus_id').val() + ')" id="deleteBus' + snap.child('Bus_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
+            '</div></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+    });
 }
 
 
@@ -800,43 +834,82 @@ function insertRoute(){
 
 function deleteBus(num){
 
-    const dbRefBus = firebase.database().ref().child('Bus');
+    const dbRefBus = firebase.database().ref('Bus');
     const dbRefBusN = dbRefBus.child('Bus'+ num);
     //i have to test the remove command
     dbRefBusN.remove();
-
+    document.getElementById('busItem'+num).remove();
 }
 
 
-function insertDriver(){
+function insertDriver(count){
 
-    const inputDriverId = document.getElementById("addDriverId");
     const inputName = document.getElementById("addDriverName");
     const inputNumber = document.getElementById("addNumber");
     const inputDescription = document.getElementById("addDescription");
     const inputImage = document.getElementById("addImage");
 
-
-    const dbRef = firebase.database().ref();
+    const dbRef = firebase.database().ref('Driver');
 
     //save the new data in the databse
 
-    dbRef.child('Driver/'+'Driver'+ inputDriverId.value.toString()).set({
-        Driver_id: inputDriverId.value.toString(),
+    dbRef.child('Driver'+ count).set({
+        Driver_id: count,
         Driver_name: inputName.value.toString(),
         Mobile_number: inputNumber.value.toString(),
         Description: inputDescription.value.toString(),
         Image: inputImage.value.toString()
-
     });
 
+    dbRef.once('child_added', snap => {
+        var driversList = document.getElementById('driversListGroup');
+        driversList.innerHTML = driversList.innerHTML + '<div class="row" id="driverItem'+snap.child('Driver_id').val()+'" style=" margin: 10px"><div class="col-md-1 col-sm-1 col-xs-1"></div><div class="col-md-3 col-sm-3 col-xs-3">' +
+             '<img src="Images/'+snap.child('Image').val() +'" class="img-circle" id="imageDriver">' +
+             '</div>' +
+             '<div class="col-md-7 col-sm-7 col-xs-7">' +
+                '<h3 id="dName'+snap.child('Driver_id').val()+'">'+ snap.child('Driver_name').val()+'</h3>' +
+                '<p id="dDescription'+snap.child('Driver_id').val()+'" style="font-size: medium">'+snap.child('Description').val() +'</p><h4 align="center">'+
+        ' &emsp;<a href="#" data-toggle="modal" data-target="#modalView' + snap.child('Driver_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + snap.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + snap.child('Driver_id').val() + '">Delete</a></h4></div></div><div id="modalView' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + snap.child('Driver_name').val() + ' Information</h4></div><div class="modal-body"><p>Driver ID: ' + snap.child('Driver_id').val() + '<br>Driver Name: ' + snap.child('Driver_name').val() + '<br>Mobile Number: ' + snap.child('Mobile_number').val() + '<br>Date of birth: ' + snap.child('Date_birth').val() + '<br></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Driver ' + snap.child('Driver_name').val() + ' to modify</h4></div><div class="modal-body"><form>' +
+            '<div class="form-group">' +
+            '<label for="id">Driver Id:</label>' +
+            '<input type="text" class="form-control" id="driverId' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="capacity">Name:</label>' +
+            '<input type="text" class="form-control" id="driverName' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_name").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="type">Date of birth:</label>' +
+            '<input type="text" class="form-control" id="driverDateBirth' + snap.child('Driver_id').val() + '" value="' + snap.child("Date_birth").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="driver">Mobile number:</label>' +
+            '<input type="text" class="form-control" id="driverNumber' + snap.child('Driver_id').val() + '" value="' + snap.child("Mobile_number").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="latitude">Description:</label>' +
+            '<input type="text" class="form-control " id="driverDescription' + snap.child('Driver_id').val() + '" value="' + snap.child("Description").val() + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="longitude">Image:</label>' +
+            '<input type="text" class="form-control " id="driverImage' + snap.child('Driver_id').val() + '" value="' + snap.child("Image").val() + '">' +
+            '</div>' +
+            //i have to put in get data the dynamic index
+            '<button type="submit" onclick="modifyDriverData(' + snap.child('Driver_id').val() + ')" id="submitModBus' + snap.child('Driver_id').val() + '" class="btn btn-default">Submit</button>' +
+            '</form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting ' + snap.child('Driver_name').val() + ' from the driver list</h4></div><div class="modal-body"><div>' +
+            '<p>Driver ID: ' + snap.child('Driver_id').val() + '<br>' +
+            'Driver Name: ' + snap.child('Driver_name').val() + '<br>' +
+            'Mobile Number: ' + snap.child('Mobile_number').val() + '<br>' +
+            'Date of birth: ' + snap.child('Date_birth').val() + '<br>' +
+            '</p><button type="submit" onclick="deleteDriver(' + snap.child('Driver_id').val() + ')" id="deleteDriver' + snap.child('Driver_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
+            '</div></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+    });
 }
 
 
 //get data from a form, num is the dynamic index of the bus, num = d.child('Bus_id').val()
 function modifyDriverData(num){
-
-
+    
     const inputDriverId = document.getElementById("driverId"+num);
     const inputName = document.getElementById("driverName"+num);
     const inputDate = document.getElementById("driverDateBirth"+num);
@@ -847,10 +920,6 @@ function modifyDriverData(num){
     const dbRefBus = firebase.database().ref().child('Driver');
     const dbRefBusN = dbRefBus.child('Driver'+ num);
 
-
-
-
-
     dbRefBusN.set({
         Driver_id: inputDriverId.value.toString(),
         Driver_name: inputName.value.toString(),
@@ -858,10 +927,11 @@ function modifyDriverData(num){
         Mobile_number: inputNumber.value.toString(),
         Description: inputDescription.value.toString(),
         Image: inputImange.value.toString()
-
     });
-
-
+    
+    document.getElementById('dName'+num).innerHTML = inputName.value.toString();
+    document.getElementById("dDescription"+num).innerHTML = inputDescription.value.toString();
+    document.getElementById("dImage"+num).innerHTML = inputImange.value.toString();
 }
 
 
@@ -871,7 +941,7 @@ function deleteDriver(num){
     const dbRefBusN = dbRefBus.child('Driver'+ num);
     //i have to test the remove command
     dbRefBusN.remove();
-
+    document.getElementById('driverItem'+num).remove();
 }
 
 function drawChart456() {
@@ -1059,7 +1129,6 @@ function drawChart(){
             var variables = [];
             snapshot.forEach(function(d){
                 var route = d.child("route_id").val();
-
                 var x = false;
                 for (var i = 0; i < variables.length && x == false; i++) {
                     if(variables[i].route == route ){
@@ -1071,9 +1140,6 @@ function drawChart(){
                 if(variables.length == 0 || x == false){
                     variables.push({ route: route, utilization: 1})
                 }
-
-
-
             });
             var chart = new CanvasJS.Chart("piechart", {
                     title:{
@@ -1103,12 +1169,8 @@ function drawChart(){
             for(var i = 0; i < variables.length; i++){
                 chart.options.data[0].dataPoints.push({y: variables[i].utilization, legendText:"Route "+ variables[i].route, indexLabel:"Route "+ variables[i].route });
             }
-            console.log("1");
-            console.log(chart.options.data[0].dataPoints);
             chart.render();
         });
-
-
 }
 
 
@@ -1231,7 +1293,6 @@ function drawChartGoogle() {
                 route4 = variables[3].utilization;
                 route5 = variables[4].utilization;
 
-                console.log(variables);
                 data = new google.visualization.DataTable();
                 data.addColumn('string', 'Topping');
                 data.addColumn('number', 'Slices');
@@ -1258,7 +1319,6 @@ function drawChartGoogle() {
             route4 = variables[3].utilization;
             route5 = variables[4].utilization;
 
-            console.log(variables);
             data = new google.visualization.DataTable();
             data.addColumn('string', 'Topping');
             data.addColumn('number', 'Slices');

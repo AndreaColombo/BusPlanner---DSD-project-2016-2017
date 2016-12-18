@@ -321,7 +321,7 @@ function mainFleet() {
 
 function mainDriver(data) {
     var r = "";
-    r+='<div class = "row">';
+    r+='<div class = "row" style="margin-bottom:60px">';
     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
     r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container text-center" style="height:500px">';
@@ -368,16 +368,16 @@ function getBus(data) {
 
     var cont = 0;
     var count = 1;
-    r+= '<ul class ="list-group">';
+    r+= '<ul class ="list-group" id="busListGroup">';
     data.forEach(function (d) {
         count++;
 
         if(cont++ == 0){
-            r += '<div class="list-group-item" align="center" style="margin-top: 13px"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+            r += '<div class="list-group-item" align="center" id="busItem'+d.child('Bus_id').val()+'" style="margin-top: 13px"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
                 ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
         }
         else {
-            r += '<div class="list-group-item" align="center"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+            r += '<div class="list-group-item" id="busItem'+d.child('Bus_id').val()+'" align="center"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
                 ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
         }
         //<!-- start modalView -->
@@ -524,7 +524,7 @@ function getBus(data) {
         '<input type="text" class="form-control " id="addBusLongitude" >' +
         '</div>' +
         //i have to put in get data the dynamic index
-        '<button type="submit" onclick="insertBus()" id="submitModDriver" class="btn btn-default" data-dismiss="modal">Submit</button>' +
+        '<button type="submit" onclick="insertBus('+count+')" id="submitModDriver" class="btn btn-default" data-dismiss="modal">Submit</button>' +
         '</form>';
     r += '</div>';
     r += '<div class="modal-footer">';
@@ -573,17 +573,17 @@ function getDriver(data) {
     r+='</div>';
     
     var count = 1;
-    
+    r+='<div id="driversListGroup">';
     data.forEach( function(d){
         count++;
-        r += '<div class="row" style=" margin: 10px">';
+        r += '<div class="row" id="driverItem'+d.child('Driver_id').val()+'" style=" margin: 10px">';
         r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>';
         r += '<div class="col-md-3 col-sm-3 col-xs-3">' +
              '<img src="Images/'+d.child('Image').val() +'" class="img-circle" id="imageDriver">' +
              '</div>' +
              '<div class="col-md-7 col-sm-7 col-xs-7">' +
-                '<h3>'+ d.child('Driver_name').val()+'</h3>' +
-                '<p style="font-size: medium">'+d.child('Description').val() +'</p>';
+                '<h3 id="dName'+d.child('Driver_id').val()+'">'+ d.child('Driver_name').val()+'</h3>' +
+                '<p id="dDescription'+d.child('Driver_id').val()+'" style="font-size: medium">'+d.child('Description').val() +'</p>';
                 r += '<h4 align="center">'+
         ' &emsp;<a href="#" data-toggle="modal" data-target="#modalView' + d.child('Driver_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Driver_id').val() + '">Delete</a></h4></div>';
         r += '</div>';
@@ -700,6 +700,7 @@ function getDriver(data) {
 
 
     });
+    r+='</div>';
 
     //button for add new driver
     r+= '<div class="row">' +
@@ -739,7 +740,7 @@ function getDriver(data) {
         '<input type="text" class="form-control " id="addImage" >' +
         '</div>' +
         //i have to put in get data the dynamic index
-        '<button type="submit" onclick="insertDriver()" id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
+        '<button type="submit" onclick="insertDriver('+count+')" id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
         '</form>';
     r += '</div>';
     r += '<div class="modal-footer">';
@@ -843,19 +844,15 @@ function getRoute(data){
 
 
 function getRequest(data){
-
-
-
-   
     var r = "";
     r+='<div class = "intestation" id="intestation">';
     r+='<div class = "row" >';
     r+='<div class="col-md-6 col-sm-6 col-xs-6" >';
-    r+='<h3 id = "titleIntestation" >View User Request</h3>';
-    r+='<h4 id = "minimalDescription">Here you can view all the user requests </h4>';
+    r+='<h3 id = "titleIntestation" >View User Requests</h3>';
+    r+='<h4 id = "minimalDescription">Here you can view all the user requests.</h4>';
     r+='</div>';
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<img src = "Images/modifyUser.jpg" align="right" class = "intestationImages"  >';
+    r+='<img src = "Images/modifyUser2.jpg" align="right" class = "intestationImages img-responsive">';
     r+='</div>';
     r+='</div>';
     r+='</div>';
@@ -868,7 +865,7 @@ function getRequest(data){
 
 
     r+="" +
-        "<table style='height: 800px' class='table table-striped'>" +
+        "<table style='height: 800px' class=' table hover table table-striped'>" +
         "<thead class='thead-inverse'>"+
         "<tr>"+
         "<th>User</th>"+
@@ -895,7 +892,7 @@ function getRequest(data){
            "<td>"+ route +"</td>" +
            "<td>"+ day + " "+ hour +"</td>" +
            //link to the modal that show more information
-           "<td><a data-toggle='modal'  data-target='#modalMoreRequestInfo"+ d.child('id').val()+ "'>Info</a></td>" +
+           "<td><a href='#' data-toggle='modal'  data-target='#modalMoreRequestInfo"+ d.child('id').val()+ "'>Info</a></td>" +
            "</tr>";
 
 
