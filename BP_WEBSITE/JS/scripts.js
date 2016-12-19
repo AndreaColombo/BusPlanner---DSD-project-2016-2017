@@ -805,6 +805,7 @@ function getRoute(data){
         r += '<h4 class="modal-title">Add Route</h4>';
     r += '</div>';
     r += '<div  class="modal-body">';
+
     r += '<form>' +
         '<div  class="form-group">' +
         '<label for="id">Route id:</label>' +
@@ -815,11 +816,16 @@ function getRoute(data){
         '<input type="text" class="form-control" id="addRouteName" >' +
         '</div>' +
         '<label for="busStop">Click in order on the map to the insert the bus stop' +
-        '<div  id="mapRouteAdd" style="height: 300px; width: 500px"></div>' +
+        '<div class="row"><div class="col-md-8 col-sm-8 col-xs-8">' +
+        '<div  id="mapRouteAdd" style="height: 300px; width: 370px"></div></div>' +
+        '<div class="col-md-4 col-sm-4 col-xs-4" >' +
+        '<label for="stopName">StopName:</label>' +
+        '<input type="text" class="form-control" id="stopName" >' +
+        '</div></div>' +
         '</label>' +
 
 
-        //i have to put in get data the dynamic index
+        //i have pass to insert route the array of markers to add in the database to the route
         '<button  style="margin-top: 10px" type="submit" onclick="insertRoute()" id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
         '</form>';
     r += '</div>';

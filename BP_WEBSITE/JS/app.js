@@ -210,7 +210,7 @@ $(document).ready(function() {
                 var result = getRoute(snapshot);
                 $("#main").html(result);
                 document.onload = initeMapRoute(1);
-                initeMapAddRoute();
+                var markers = initeMapAddRoute();
             });
 
         window.location.hash = "fleetRoute";
@@ -1022,35 +1022,9 @@ function initeMapRoute(num){
 
 function initeMapAddRoute(){
 
-    /*
-    var uluru = {lat: -26.195246, lng: 28.034088};
-    var routeMap = new google.maps.Map(document.getElementById('mapRouteAdd'), {
-        center: uluru,
-        zoom: 11,
-        styles: [{
-            featureType: 'poi',
-            stylers: [{
-                visibility: 'on'
-            }] // Turn off points of interest.
-        }, {
-            featureType: 'transit.station',
-            stylers: [{
-                visibility: 'on'
-            }] // Turn off bus stations, train stations, etc.
-        }],
-        disableDoubleClickZoom: false
-    });
-    */
-
-
-
-
-
-
     var map;
     var markers = [];
     var cont = 1;
-
 
     var haightAshbury = new google.maps.LatLng(-26.195246, 28.034088);
     var mapOptions = {
@@ -1075,16 +1049,19 @@ function initeMapAddRoute(){
     function addMarker(location) {
 
 
+
+
         var marker = new google.maps.Marker({
             position: location,
             map: map,
             label: (cont++).toString(),
 
         });
-        var ciao = "ciao";
-        var contentString = '<form><div class="form-group"><label for="stopName">Stop Name:</label> ' +
+
+        //the info clicking on the marker
+        /*var contentString = '<form><div class="form-group"><label for="stopName">Stop Name:</label> ' +
                             '<input type="text" class="form-control">' +
-                            '<button type="button" class="btn btn-default" onclick="printSomething('+ciao+')">Submit</button> ' +
+                            '<button type="button" class="btn btn-default">Submit</button> ' +
                             '</div></form>';
 
         var infowindow = new google.maps.InfoWindow({
@@ -1094,20 +1071,20 @@ function initeMapAddRoute(){
 
 
         infowindow.open(map, marker);
+        */
+        var nameStop = document.getElementById("stopName").value.toString();
 
-
-        markers.push({position: location, stopNumber: cont-1, name: "not yet defined"});
-        //console.log(markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
+        markers.push({position: location, stopNumber: cont-1, name: nameStop});
+        console.log(markers);
         return markers;
     }
 
+    return markers;
     
 
 }
 
-function printSomething(dio){
-    console.log("DD");
-}
+
 
 
 
