@@ -1352,6 +1352,20 @@ function drawChartGoogle() {
 
 }
 
+
+function deleteRoute(routeId) {
+
+    console.log("I'm going to delete the route selected "+ routeId.toString());
+    if (confirm("Are you sure to cancel the route?") == true) {
+        const dbRefRoute = firebase.database().ref().child('Route');
+        const dbRefRouteSelected = dbRefRoute.child('Route'+ routeId.toString());
+        dbRefRouteSelected.remove();
+    } else {
+    }
+
+
+}
+
 function drawChart1(){
 
     var firebaseData = firebase.database().ref("UserRequest").responseText;

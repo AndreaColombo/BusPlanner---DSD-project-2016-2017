@@ -781,10 +781,10 @@ function getRoute(data){
     var count = 1;
     data.forEach(function (d) {
         if(count == 1) {
-            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item active" style="margin-top:17px">'+d.child('Route_name').val()+'</a>';
+            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item active" style="margin-top:17px">'+d.child('Route_name').val()+'<span class="badge" onclick="deleteRoute('+ d.child('Route_id').val() +')">x</span></a>';
         }
         else {
-            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item">'+d.child('Route_name').val()+'</a>';
+            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item">'+d.child('Route_name').val()+'<span class="badge" onclick="deleteRoute('+ d.child('Route_id').val() +')">x</span></a>';
         }
         count++;
     });
