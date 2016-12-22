@@ -826,7 +826,7 @@ function getRoute(data){
 
 
         //i have pass to insert route the array of markers to add in the database to the route
-        '<button  style="margin-top: 10px" type="submit" onclick="insertRoute()" id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
+        '<button  style="margin-top: 10px" type="submit"  id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
         '</form>';
     r += '</div>';
     r += '<div class="modal-footer">';

@@ -746,6 +746,7 @@ function getMapBus(){
             });
 
         });
+
 }
 
 
@@ -815,7 +816,10 @@ function insertBus(count){
 }
 
 
-function insertRoute(){
+function insertRoute(markers){
+
+    console.log("YES it works");
+    console.log(markers);
 
     const inputRouteId = document.getElementById("addRouteId");
     const inputName = document.getElementById("addRouteName");
@@ -828,7 +832,29 @@ function insertRoute(){
     dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()).set({
         Route_id: inputRouteId.value.toString(),
         Route_name: inputName.value.toString(),
+        id: inputRouteId.value.toString(),
     });
+
+    for(var i=0; i < markers.length; i++){
+        var name = markers[i].name;
+        var latitude = markers[i].marker.getPosition().lat();
+        var longitude = markers[i].marker.getPosition().lng();
+        var stopNumber = markers[i].stopNumber;
+        console.log(latitude);
+        dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()+'/BusStops/'+'BusStops'+stopNumber.toString()).set({
+            Name: name,
+            Stop_id: stopNumber.toString(),
+        });
+
+
+        dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()+'/BusStops/'+'BusStops'+stopNumber.toString() + '/Point').set({
+            Latitude: latitude.toString(),
+            Longitude: longitude.toString(),
+        });
+
+
+    }
+
 
 }
 
@@ -1058,29 +1084,34 @@ function initeMapAddRoute(){
 
         });
 
-        //the info clicking on the marker
-        /*var contentString = '<form><div class="form-group"><label for="stopName">Stop Name:</label> ' +
-                            '<input type="text" class="form-control">' +
-                            '<button type="button" class="btn btn-default">Submit</button> ' +
-                            '</div></form>';
 
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 200
-        });
-
-
-        infowindow.open(map, marker);
-        */
         var nameStop = document.getElementById("stopName").value.toString();
 
-        markers.push({position: location, stopNumber: cont-1, name: nameStop});
-        console.log(markers);
+        //the info clicking on the marker
+         var contentString = '<div><h4>'+ nameStop +'</h4></div>';
+
+         var infowindow = new google.maps.InfoWindow({
+         content: contentString,
+         maxWidth: 200
+         });
+
+
+         infowindow.open(map, marker);
+         marker.addListener('click', function() {
+            infowindow.open(map, marker);
+         });
+
+
+        markers.push({marker: marker, stopNumber: cont-1, name: nameStop});
+        console.log(markers+" the latitude is: "+ markers[0].marker.getPosition().lat());
         return markers;
     }
 
-    return markers;
-    
+    document.getElementById("submitModBus").onclick = function () {
+        insertRoute(markers);
+    };
+
+
 
 }
 
