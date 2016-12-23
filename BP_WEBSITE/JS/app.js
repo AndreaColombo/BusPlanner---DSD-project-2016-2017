@@ -810,9 +810,6 @@ function insertBus(count){
     });
 }
 
-<<<<<<< HEAD
-=======
-
 function insertRoute(markers){
 
     console.log("YES it works");
@@ -855,7 +852,6 @@ function insertRoute(markers){
 
 }
 
->>>>>>> origin/master
 function deleteBus(num){
 
     const dbRefBus = firebase.database().ref('Bus');
@@ -864,7 +860,6 @@ function deleteBus(num){
     dbRefBusN.remove();
     document.getElementById('busItem'+num).remove();
 }
-
 
 function insertDriver(count){
 
@@ -1044,8 +1039,6 @@ function initeMapRoute(num){
     });
 }
 
-<<<<<<< HEAD
-=======
 function initeMapAddRoute(){
 
     var map;
@@ -1110,14 +1103,7 @@ function initeMapAddRoute(){
     document.getElementById("submitModBus").onclick = function () {
         insertRoute(markers);
     };
-
-
-
 }
-
-
-
-
 
 function setStopName(markers, cont){
     console.log("HI GUIZZ" + markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
@@ -1127,8 +1113,6 @@ function setStopName(markers, cont){
     console.log(markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
 
 }
->>>>>>> origin/master
-
 
 function drawChart(){
 
