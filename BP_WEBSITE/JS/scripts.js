@@ -781,16 +781,65 @@ function getRoute(data){
     var count = 1;
     data.forEach(function (d) {
         if(count == 1) {
-            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item active" style="margin-top:17px">'+d.child('Route_name').val()+'</a>';
+            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item active" style="margin-top:17px">'+d.child('Route_name').val()+'<span class="badge" onclick="deleteRoute('+ d.child('Route_id').val() +')">x</span></a>';
         }
         else {
-            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item">'+d.child('Route_name').val()+'</a>';
+            r+='<a href="#" id="Route'+count+'" onclick="initeMapRoute('+ d.child('Route_id').val() +')" class="list-group-item">'+d.child('Route_name').val()+'<span class="badge" onclick="deleteRoute('+ d.child('Route_id').val() +')">x</span></a>';
         }
         count++;
     });
     r+='</ul>';
     r+='</div>';
+<<<<<<< HEAD
     r+='</div>';
+=======
+
+
+    //<!-- Modal add Route -->
+    r += '<div id="addingRouteModal" class="modal fade" role="dialog">';
+    r += '<div class="modal-dialog">';
+    //  <!-- Modal content add Route-->
+    r += '<div class="modal-content">';
+    r += '<div class="modal-header">';
+    r += '<button type="button" class="close" data-dismiss="modal">&times;</button>',
+        r += '<h4 class="modal-title">Add Route</h4>';
+    r += '</div>';
+    r += '<div  class="modal-body">';
+
+    r += '<form>' +
+        '<div  class="form-group">' +
+        '<label for="id">Route id:</label>' +
+        '<input type="text" class="form-control" id="addRouteId" value="' + count++ + '" disabled>' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="name">Name:</label>' +
+        '<input type="text" class="form-control" id="addRouteName" >' +
+        '</div>' +
+        '<label for="busStop">Click in order on the map to the insert the bus stop' +
+        '<div class="row"><div class="col-md-8 col-sm-8 col-xs-8">' +
+        '<div  id="mapRouteAdd" style="height: 300px; width: 370px"></div></div>' +
+        '<div class="col-md-4 col-sm-4 col-xs-4" >' +
+        '<label for="stopName">StopName:</label>' +
+        '<input type="text" class="form-control" id="stopName" >' +
+        '</div></div>' +
+        '</label>' +
+
+
+        //i have pass to insert route the array of markers to add in the database to the route
+        '<button  style="margin-top: 10px" type="submit"  id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
+        '</form>';
+    r += '</div>';
+    r += '<div class="modal-footer">';
+    r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    r += '</div>';
+    r += '</div>';
+
+    r += '</div>';
+    r += '</div>';
+    //end modal add Route
+
+
+>>>>>>> origin/master
     r+='<div class="col-md-7 col-sm-7 col-xs-7">';
     r+='<div class="col-md-11 col-sm-11 col-xs-11" id="mapRoute"></div>'; 
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';

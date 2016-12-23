@@ -741,6 +741,7 @@ function getMapBus(){
             });
 
         });
+
 }
 
 
@@ -809,6 +810,52 @@ function insertBus(count){
     });
 }
 
+<<<<<<< HEAD
+=======
+
+function insertRoute(markers){
+
+    console.log("YES it works");
+    console.log(markers);
+
+    const inputRouteId = document.getElementById("addRouteId");
+    const inputName = document.getElementById("addRouteName");
+
+
+    const dbRefBus = firebase.database().ref();
+
+    //save the new data in the databse
+
+    dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()).set({
+        Route_id: inputRouteId.value.toString(),
+        Route_name: inputName.value.toString(),
+        id: inputRouteId.value.toString(),
+    });
+
+    for(var i=0; i < markers.length; i++){
+        var name = markers[i].name;
+        var latitude = markers[i].marker.getPosition().lat();
+        var longitude = markers[i].marker.getPosition().lng();
+        var stopNumber = markers[i].stopNumber;
+        console.log(latitude);
+        dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()+'/BusStops/'+'BusStops'+stopNumber.toString()).set({
+            Name: name,
+            Stop_id: stopNumber.toString(),
+        });
+
+
+        dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()+'/BusStops/'+'BusStops'+stopNumber.toString() + '/Point').set({
+            Latitude: latitude.toString(),
+            Longitude: longitude.toString(),
+        });
+
+
+    }
+
+
+}
+
+>>>>>>> origin/master
 function deleteBus(num){
 
     const dbRefBus = firebase.database().ref('Bus');
@@ -997,6 +1044,90 @@ function initeMapRoute(num){
     });
 }
 
+<<<<<<< HEAD
+=======
+function initeMapAddRoute(){
+
+    var map;
+    var markers = [];
+    var cont = 1;
+
+    var haightAshbury = new google.maps.LatLng(-26.195246, 28.034088);
+    var mapOptions = {
+        zoom: 12,
+        center: haightAshbury,
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+    };
+    map = new google.maps.Map(document.getElementById('mapRouteAdd'),
+        mapOptions);
+
+    google.maps.event.addListener(map, 'click', function(event) {
+            markers = addMarker(event.latLng);
+    });
+
+    $("#addingRouteModal").on("shown.bs.modal", function () {
+        google.maps.event.trigger(map, "resize");
+    });
+
+
+
+    // Add a marker to the map and push to the array.
+    function addMarker(location) {
+
+
+
+
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            label: (cont++).toString(),
+
+        });
+
+
+        var nameStop = document.getElementById("stopName").value.toString();
+
+        //the info clicking on the marker
+         var contentString = '<div><h4>'+ nameStop +'</h4></div>';
+
+         var infowindow = new google.maps.InfoWindow({
+         content: contentString,
+         maxWidth: 200
+         });
+
+
+         infowindow.open(map, marker);
+         marker.addListener('click', function() {
+            infowindow.open(map, marker);
+         });
+
+
+        markers.push({marker: marker, stopNumber: cont-1, name: nameStop});
+        console.log(markers+" the latitude is: "+ markers[0].marker.getPosition().lat());
+        return markers;
+    }
+
+    document.getElementById("submitModBus").onclick = function () {
+        insertRoute(markers);
+    };
+
+
+
+}
+
+
+
+
+
+function setStopName(markers, cont){
+    console.log("HI GUIZZ" + markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
+    var busStopName = document.getElementById("busStopNameMap").toString();
+    console.log(busStopName);
+    markers[cont].name = busStopName;
+    console.log(markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
+
+}
+>>>>>>> origin/master
 
 
 function drawChart(){
@@ -1133,6 +1264,20 @@ function drawChartGoogle() {
 
 
         });
+
+}
+
+
+function deleteRoute(routeId) {
+
+    console.log("I'm going to delete the route selected "+ routeId.toString());
+    if (confirm("Are you sure to cancel the route?") == true) {
+        const dbRefRoute = firebase.database().ref().child('Route');
+        const dbRefRouteSelected = dbRefRoute.child('Route'+ routeId.toString());
+        dbRefRouteSelected.remove();
+    } else {
+    }
+
 
 }
 
