@@ -306,7 +306,7 @@ function mainFleet() {
         r+='<div class="row">';
             r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
             r+='<a href=# class="col-md-6 col-sm-6 col-xs-6">';
-                r+='<div class="jumbotron grow" id="btnRequest" style="background-image: url(Images/modifyUser.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
+                r+='<div class="jumbotron grow" id="btnRequest" style="background-image: url(Images/modifyUser2.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
                     r+='<h1 id="imageText">User Requests</h1>';
                     r+='<h4 id="imageText">Here you can view all the user requests</h4>';
                 r+='</div>';
@@ -772,7 +772,7 @@ function getRoute(data){
     r+='</div>';
     r+='</div>';
     r+='<h3 style="color:#2aabd2; margin-bottom:20px;" class="text-center">Click on the route name to see all its steps on the map:</h3>';
-    
+
     r+='<div class="row" style="margin-bottom:70px">';
     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
@@ -789,7 +789,9 @@ function getRoute(data){
         count++;
     });
     r+='</ul>';
-    r+='</div>';
+    r+='</div>' +
+        '<div align="center"><button href="#" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingRouteModal" class="btn btn-lg btn-primary btn-circle" style="margin-bottom:70px; margin-top:10px; margin-left:10px;">ADD ROUTE</button>' +
+        '</div>';
     r+='</div>';
 
 
@@ -838,9 +840,9 @@ function getRoute(data){
 
 
     r+='<div class="col-md-7 col-sm-7 col-xs-7">';
-    r+='<div class="col-md-11 col-sm-11 col-xs-11" id="mapRoute"></div>'; 
+    r+='<div class="col-md-11 col-sm-11 col-xs-11" id="mapRoute"></div>';
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-    r+='</div>'; 
+    r+='</div>';
     r+='</div>';
     return r;
 }
@@ -865,11 +867,11 @@ function getRequest(data){
     r+="<div style='margin-top: 20px; margin-bottom: 70px' class='row'>" +
         "   <div class='col-md-6 col-sm-6 col-xs-6 '>" +
         "<div class='row'><div class='col-md-1 col-sm-1 col-xs-1'></div>" +
-        "<div class='col-md-10 col-sm-10 col-xs-10 container'> " ;
+        "<div class='col-md-11 col-sm-11 col-xs-11 container'> " ;
 
 
     r+="" +
-        "<table class='table table-striped table-hover'>" +
+        "<table style='height: 800px' class=' table hover table table-striped'>" +
         "<thead class='thead-inverse'>"+
         "<tr>"+
         "<th>User</th>"+
@@ -935,15 +937,16 @@ function getRequest(data){
 
     r+="</tbody></table>";
 
-
     r+= "</div>" +
-        "<div class='col-md-1 col-sm-1 col-xs-1'></div></div>" +
+        "</div>" +
         "</div>" +
         "   " +
         "   <div class='col-md-6 col-sm-6 col-xs-6'>" +
-        "<div class='row'><div class=col-md-1 col-sm-1 col-xs-1'></div><div class=col-md-10 col-sm-10 col-xs-10'>" +
-        "   <div id='piechart' style='width: 500px; height: 500px;'></div></div>" +
-        "<div class=col-md-1 col-sm-1 col-xs-1'></div></div>" +
+        "<div class='row'><div class=col-md-11 col-sm-11 col-xs-11'>" +
+        "   <div id='piechart' style='width: 650px; height: 400px;'></div>" +
+        "   <div id='piechartstop' style='width: 650px; height: 400px;margin-top: 10px'></div>" +
+        "</div>" +
+        "<div class='col-md-1 col-sm-1 col-xs-1'></div></div>" +
         "</div></div>" +
         "</div>";
 
