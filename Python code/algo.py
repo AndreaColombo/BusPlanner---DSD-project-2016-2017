@@ -2,7 +2,6 @@ from collections import defaultdict
 from pprint import pprint
 from firebase import firebase
 import random
-import pyrebase
 import requests
 from pulp import *
 
@@ -111,8 +110,22 @@ def main():
   routes = 'ABCDE' #actualy it is a b c d e so 5 routes
   #TREAT THESE NUMBERS AS THE RANDON NUMBER OF USER REQUESTS
 
+  a = []
+  db = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
+  for gotit in range(11):
+    result = db.get('/UserRequest', 'UserRequest' + str(gotit) + '/route_id')
 
-  drop_in = random.randrange(1, 15)
+    a.append(result)
+
+    if not result:
+      print('No more data')
+    print(a)
+  for arr in a:
+    print("---------")
+    print(random.choice(a))
+  print("---------")
+  #drop_in = random.randrange(1, 15)
+  drop_in = random.choice(a)
   drop_out = random.randrange(1, 8)
 
   trips = trip_generator(routes, drop_in, drop_out)
@@ -136,17 +149,17 @@ def main():
   #count=0
   for Route in k5.split(')]'):
     if(Route):
-      savedata(Route[9], Route[13])
+      savedata(Route[9], Route[13],a)
 
     else:
        print('')
 
-def savedata(R9,R13):
+def savedata(R9,R13,a):
    db= firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
    schedule = {
      'Bus_id': R9,
-     'Route_id': R9,
-     'User_id': R13
+     'Route_id': R13,
+     'User_id': random.choice(a)
    }
    name = 'Schedule'+R9+''
    db.put("/AlgDynamic", name, schedule)
