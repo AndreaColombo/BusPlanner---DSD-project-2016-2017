@@ -789,56 +789,8 @@ function getRoute(data){
         count++;
     });
     r+='</ul>';
-    r+='</div>' +
-        '<div align="center"><button href="#" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addingRouteModal" class="btn btn-lg btn-primary btn-circle" style="margin-bottom:70px; margin-top:10px; margin-left:10px;">ADD ROUTE</button>' +
-        '</div>';
     r+='</div>';
-
-
-    //<!-- Modal add Route -->
-    r += '<div id="addingRouteModal" class="modal fade" role="dialog">';
-    r += '<div class="modal-dialog">';
-    //  <!-- Modal content add Route-->
-    r += '<div class="modal-content">';
-    r += '<div class="modal-header">';
-    r += '<button type="button" class="close" data-dismiss="modal">&times;</button>',
-        r += '<h4 class="modal-title">Add Route</h4>';
-    r += '</div>';
-    r += '<div  class="modal-body">';
-
-    r += '<form>' +
-        '<div  class="form-group">' +
-        '<label for="id">Route id:</label>' +
-        '<input type="text" class="form-control" id="addRouteId" value="' + count++ + '" disabled>' +
-        '</div>' +
-        '<div class="form-group">' +
-        '<label for="name">Name:</label>' +
-        '<input type="text" class="form-control" id="addRouteName" >' +
-        '</div>' +
-        '<label for="busStop">Click in order on the map to the insert the bus stop' +
-        '<div class="row"><div class="col-md-8 col-sm-8 col-xs-8">' +
-        '<div  id="mapRouteAdd" style="height: 300px; width: 370px"></div></div>' +
-        '<div class="col-md-4 col-sm-4 col-xs-4" >' +
-        '<label for="stopName">StopName:</label>' +
-        '<input type="text" class="form-control" id="stopName" >' +
-        '</div></div>' +
-        '</label>' +
-
-
-        //i have pass to insert route the array of markers to add in the database to the route
-        '<button  style="margin-top: 10px" type="submit" onclick="insertRoute()" id="submitModBus" class="btn btn-default" data-dismiss="modal">Submit</button>' +
-        '</form>';
-    r += '</div>';
-    r += '<div class="modal-footer">';
-    r += '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
-    r += '</div>';
-    r += '</div>';
-
-    r += '</div>';
-    r += '</div>';
-    //end modal add Route
-
-
+    r+='</div>';
     r+='<div class="col-md-7 col-sm-7 col-xs-7">';
     r+='<div class="col-md-11 col-sm-11 col-xs-11" id="mapRoute"></div>'; 
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
@@ -867,11 +819,11 @@ function getRequest(data){
     r+="<div style='margin-top: 20px; margin-bottom: 70px' class='row'>" +
         "   <div class='col-md-6 col-sm-6 col-xs-6 '>" +
         "<div class='row'><div class='col-md-1 col-sm-1 col-xs-1'></div>" +
-        "<div class='col-md-11 col-sm-11 col-xs-11 container'> " ;
+        "<div class='col-md-10 col-sm-10 col-xs-10 container'> " ;
 
 
     r+="" +
-        "<table style='height: 800px' class=' table hover table table-striped'>" +
+        "<table class='table table-striped table-hover'>" +
         "<thead class='thead-inverse'>"+
         "<tr>"+
         "<th>User</th>"+
@@ -937,16 +889,15 @@ function getRequest(data){
 
     r+="</tbody></table>";
 
+
     r+= "</div>" +
-        "</div>" +
+        "<div class='col-md-1 col-sm-1 col-xs-1'></div></div>" +
         "</div>" +
         "   " +
         "   <div class='col-md-6 col-sm-6 col-xs-6'>" +
-        "<div class='row'><div class=col-md-11 col-sm-11 col-xs-11'>" +
-        "   <div id='piechart' style='width: 650px; height: 400px;'></div>" +
-        "   <div id='piechartstop' style='width: 650px; height: 400px;margin-top: 10px'></div>" +
-        "</div>" +
-        "<div class='col-md-1 col-sm-1 col-xs-1'></div></div>" +
+        "<div class='row'><div class=col-md-1 col-sm-1 col-xs-1'></div><div class=col-md-10 col-sm-10 col-xs-10'>" +
+        "   <div id='piechart' style='width: 500px; height: 500px;'></div></div>" +
+        "<div class=col-md-1 col-sm-1 col-xs-1'></div></div>" +
         "</div></div>" +
         "</div>";
 

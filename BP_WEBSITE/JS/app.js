@@ -210,7 +210,6 @@ $(document).ready(function() {
                 var result = getRoute(snapshot);
                 $("#main").html(result);
                 document.onload = initeMapRoute(1);
-                var markers = initeMapAddRoute();
             });
 
         window.location.hash = "fleetRoute";
@@ -227,11 +226,7 @@ $(document).ready(function() {
                 //getRequest is the function in script.js
                 var result = getRequest(snapshot);
                 $("#main").html(result);
-
-                document.onload(drawChart(), drawChartStop());
-
-                //document.onload = drawChart();
-
+                document.onload = drawChart();
             });
 
 
@@ -814,24 +809,6 @@ function insertBus(count){
     });
 }
 
-
-function insertRoute(){
-
-    const inputRouteId = document.getElementById("addRouteId");
-    const inputName = document.getElementById("addRouteName");
-
-
-    const dbRefBus = firebase.database().ref();
-
-    //save the new data in the databse
-
-    dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()).set({
-        Route_id: inputRouteId.value.toString(),
-        Route_name: inputName.value.toString(),
-    });
-
-}
-
 function deleteBus(num){
 
     const dbRefBus = firebase.database().ref('Bus');
@@ -1020,82 +997,6 @@ function initeMapRoute(num){
     });
 }
 
-function initeMapAddRoute(){
-
-    var map;
-    var markers = [];
-    var cont = 1;
-
-    var haightAshbury = new google.maps.LatLng(-26.195246, 28.034088);
-    var mapOptions = {
-        zoom: 12,
-        center: haightAshbury,
-        mapTypeId: google.maps.MapTypeId.TERRAIN
-    };
-    map = new google.maps.Map(document.getElementById('mapRouteAdd'),
-        mapOptions);
-
-    google.maps.event.addListener(map, 'click', function(event) {
-            markers = addMarker(event.latLng);
-    });
-
-    $("#addingRouteModal").on("shown.bs.modal", function () {
-        google.maps.event.trigger(map, "resize");
-    });
-
-
-
-    // Add a marker to the map and push to the array.
-    function addMarker(location) {
-
-
-
-
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            label: (cont++).toString(),
-
-        });
-
-        //the info clicking on the marker
-        /*var contentString = '<form><div class="form-group"><label for="stopName">Stop Name:</label> ' +
-                            '<input type="text" class="form-control">' +
-                            '<button type="button" class="btn btn-default">Submit</button> ' +
-                            '</div></form>';
-
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 200
-        });
-
-
-        infowindow.open(map, marker);
-        */
-        var nameStop = document.getElementById("stopName").value.toString();
-
-        markers.push({position: location, stopNumber: cont-1, name: nameStop});
-        console.log(markers);
-        return markers;
-    }
-
-    return markers;
-    
-
-}
-
-
-
-
-
-function setStopName(markers, cont){
-    console.log("HI GUIZZ" + markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
-    var busStopName = document.getElementById("busStopNameMap").toString();
-    console.log(busStopName);
-    markers[cont].name = busStopName;
-    console.log(markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
-
-}
 
 
 function drawChart(){
@@ -1148,92 +1049,6 @@ function drawChart(){
             }
             chart.render();
         });
-}
-
-
-function drawChartStop(){
-    var query = firebase.database().ref("UserRequest");
-    query.once("value")
-        .then(function(snapshot) {
-            var variables = [];
-            snapshot.forEach(function(d){
-                //starting bus stop utilization
-                var routeStart = d.child("starting_bus_stop").child("Name").val();
-
-                var x = false;
-                for (var i = 0; i < variables.length && x == false; i++) {
-                    if(variables[i].stopName == routeStart ){
-                        variables[i].utilization++;
-                        x = true;
-                    }
-                }
-
-                if(variables.length == 0 || x == false){
-                    variables.push({ stopName: routeStart, utilization: 1})
-                }
-
-                //ending bus stop utilization
-
-                var routeEnd = d.child("ending_bus_stop").child("Name").val();
-
-                var y = false;
-                for (var j = 0; j < variables.length && y == false; j++) {
-                    if(variables[j].stopName == routeEnd ){
-                        variables[j].utilization++;
-                        y = true;
-                    }
-                }
-
-                if(variables.length == 0 || y == false){
-                    variables.push({ stopName: routeEnd, utilization: 1})
-                }
-
-
-
-            });
-            var chart = new CanvasJS.Chart("piechartstop", {
-                title:{
-                    text: "Top 5 Stop Utilization"
-                },
-                animationEnabled: true,
-                legend:{
-                    verticalAlign: "bottom",
-                    horizontalAlign: "center"
-                },
-                data: [
-                    {
-                        indexlabelFontSize: 20,
-                        indexLabelFontFamily: "Monospace",
-                        indexLabelFontColor: "darkgrey",
-                        indexLabelPlacement: "outsize",
-                        type: "pie",
-                        showInLegend: true,
-                        toolTipContent:"{y} - <strong>#percent%</strong>",
-                        dataPoints:[
-                        ]
-
-                    }
-                ]
-            });
-
-            //sorting algorithm
-            for(var k = 0; k < variables.length-1; k++)
-                for(var j = k+1; j < variables.length; j++)
-                    if(variables[k].utilization < variables[j].utilization) {
-                        var t = variables[k];
-                        variables[k] = variables[j];
-                        variables[j] = t;
-                    }
-
-            for(var i = 0; i < 5; i++){
-                chart.options.data[0].dataPoints.push({y: variables[i].utilization, legendText:"Stop "+ variables[i].stopName, indexLabel:"Stop "+ variables[i].stopName });
-            }
-
-            console.log(chart.options.data[0].dataPoints);
-            chart.render();
-        });
-
-
 }
 
 //d is the snapshot od the database
