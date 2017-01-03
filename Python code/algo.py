@@ -102,10 +102,17 @@ def main():
   routes = 'ABCDE' #actualy it is a b c d e so 5 routes
 
   a = []
+  b=[]
+  c = []
   #11 is hard coded can not get the total number of children a root has in firebase
   db = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
   for gotit in range(11):
     result = db.get('/UserRequest', 'UserRequest' + str(gotit) + '/user_name')
+    coo= db.get('/UserRequest', 'UserRequest' + str(gotit) + '/ending_bus_stop/Point/Latitude')
+    coo2 = db.get('/UserRequest', 'UserRequest' + str(gotit) + '/ending_bus_stop/Point/Longitude')
+
+    b.append(coo)
+    c.append(coo2)
 
     a.append(result)
 
@@ -116,7 +123,11 @@ def main():
 
    ra=random.choice(a)
    print(ra)
-
+   #if needed also we randomize the latitude and longitude of the request
+   la=random.choice(b)
+   print(la)
+   lo = random.choice(c)
+   print(lo)
 
   drop_in = random.choice(a)
   drop_out = random.choice(a)
