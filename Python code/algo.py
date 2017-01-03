@@ -3,11 +3,12 @@ from firebase import firebase
 import random
 from pulp import *
 
-def trip_generator(line_name, drop_in, drop_out):
+def trip_generator(line_name, drop_in, drop_out,a,b):
   results = []
   for actual_route in line_name:
     for hour in range(drop_in, drop_out):
-      results.append((actual_route, hour))
+      for c in range(a, b):
+       results.append((actual_route, hour))
   return results
 
 
@@ -110,18 +111,21 @@ def main():
 
     if not result:
       print('No more data')
-    #print(a)
+
   for arr in range(0,11):
 
    ra=random.choice(a)
    print(ra)
 
-  #also hours can be implemented
+
   drop_in = random.choice(a)
   drop_out = random.choice(a)
 
-  trips = trip_generator(routes, drop_in, drop_out)
-  works = work_generator(6, trips)
+  hour_start=8
+  hour_end=hour_start+12
+
+  trips = trip_generator(routes, drop_in, drop_out,hour_start,hour_end)
+  works = work_generator(8, trips)
   solve_works, solve_rule_controler = solve(works, trips)
 
 
