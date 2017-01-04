@@ -939,7 +939,7 @@ function insertRoute(markers){
     const inputRouteId = document.getElementById("addRouteId");
     const inputName = document.getElementById("addRouteName");
 
-
+    const dbRefRoute = firebase.database().ref('Route');
     const dbRefBus = firebase.database().ref();
 
     //save the new data in the databse
@@ -965,11 +965,13 @@ function insertRoute(markers){
             Latitude: latitude.toString(),
             Longitude: longitude.toString(),
         });
-
-
     }
 
-
+    dbRefRoute.once('child_added', snap => {
+        var routeList = document.getElementById('listRoute');
+        
+        routeList.innerHTML = routeList.innerHTML + '<a href="#" id="Route'+inputRouteId.value.toString()+'" onclick="initeMapRoute('+inputRouteId.value.toString()+')" class="list-group-item">'+inputName.value.toString()+'<span class="badge" onclick="deleteRoute('+ inputRouteId.value.toString() +')">x</span></a>';
+    });
 }
 
 function deleteBus(num){
