@@ -214,8 +214,8 @@ function headerFleet() {
                     r+='<ul class="nav navbar-nav navbar-right">';
                         r+='<li><a id="btnBus" href="#" style="padding-top:25px">Bus Managment</a></li>';
                         r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Driver</a></li>';
-		                r+='<li><a id="btnRoute" href="#" style="padding-top:25px">Route Schedule</a></li>';
-                        r+='<li><a id="btnTime" href="#" style="padding-top:25px">Schedule Time</a></li>';
+		                r+='<li><a id="btnRoute" href="#" style="padding-top:25px">Route</a></li>';
+                        r+='<li><a id="btnStatistics" href="#" style="padding-top:25px">Statistics</a></li>';
                         r+='<li><a id="btnRequest" href="#" style="padding-top:25px">User Request</a></li>';
                         r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
                    r+='</ul>';
@@ -287,13 +287,13 @@ function mainFleet() {
             r+='</div>';
         r+='</div>';
             
-        //<!--MODIFY SCHEDULE TIME -->  
+        //<!--MODIFY STATISTICS TIME -->
         r+='<div class="col-md-6 col-sm-6 col-xs-6">';
             r+='<div class="row">';
                 r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
-                    r+='<div class="jumbotron grow" id="buttonHomeFleet" style="background-image: url(Images/modifySchedule.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
-                        r+='<h1  id="imageText">Schedule</h1>';
-                        r+='<h4 id="imageText">Here you can see and modify all the schedule time of our company</h4>';
+                    r+='<div class="jumbotron grow" id="btnStatistics" style="background-image: url(Images/statistics.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
+                        r+='<h1  id="imageText">Statistics</h1>';
+                        r+='<h4 id="imageText">Here you can see the statistics of the company routes</h4>';
                     r+='</div>';
                 r+='</a>';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
@@ -347,6 +347,35 @@ function mainDriver(data) {
     return r;
 }
 
+
+function getStatistics(){
+    var r = "";
+    r += '<div class = "intestation" id="intestation">';
+    r += '<div class = "row" style="margin-top: 15px" >';
+    r += '<div class="col-md-6 col-sm-6 col-xs-6" >';
+    r += '<h1 id = "titleIntestation" >Statistics</h1>';
+    r += '<h4 id = "minimalDescription">Here you can see the statistics of the company routes.</h4>';
+    r += '</div>';
+    r += '<div class="col-md-6 col-sm-6 col-xs-6">';
+    r += '<img src = "Images/statistics.jpg" align="right" class = "intestationImages img-responsive">';
+    r += '</div>';
+    r += '</div>';
+    r += '</div>';
+
+    r += '<div class="row" style="margin-bottom: 60px">' +
+        '<div class="col-md-6 col-sm-6 col-xs-6" >' +
+        '<div class="row"><div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-1 col-xs-11" id= "piechart" style="height: 400px;"></div></div>' +
+        '</div>' +
+        '<div class="col-md-6 col-sm-6 col-xs-6" >' +
+        '<div class="row"><div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-1 col-xs-11" id= "piechartstop" style="height: 400px;"></div></div>' +
+        '</div>' +
+        '</div>';
+
+    return r;
+}
+
+
+
 function getBus(data) {
     
     var r = "";
@@ -364,7 +393,7 @@ function getBus(data) {
     r += '<div class="row">';
     r += '<div class="col-md-5 col-sm-5 col-xs-5" style="margin-top: 60px">';
     r += '<div class=" col-md-2 col-sm-2 col-xs-2"></div>' +
-         '<div class=" col-md-9 col-sm-9 col-xs-9 scroll container" style="height: 500px" >';    //to close row and col 10
+         '<div class=" col-md-9 col-sm-9 col-xs-9 scroll container" style="height: 500px" >';    
 
     var cont = 0;
     var count = 1;

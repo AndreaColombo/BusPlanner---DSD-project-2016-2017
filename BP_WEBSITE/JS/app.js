@@ -200,6 +200,24 @@ $(document).ready(function() {
     });
 
 
+    $("body").on("click", "#btnStatistics", function (e){
+
+        var query = firebase.database().ref().child("Driver");
+        query.once("value")
+            .then(function (snapshot) {
+                //bus is the function in script.js
+                var result = getStatistics();
+                $("#main").html(result);
+                
+                
+                document.onload(drawChart(), drawChartStop());
+            });
+
+        window.location.hash = "fleetBus";
+        e.preventDefault();
+    });
+
+
     // loading the route page
     $("body").on("click", "#btnRoute", function (e){
 
@@ -229,9 +247,7 @@ $(document).ready(function() {
                 $("#main").html(result);
 
                 document.onload = getMapUserRequest();
-                //document.onload(drawChart(), drawChartStop());
 
-                //document.onload = drawChart();
 
             });
 
@@ -692,7 +708,7 @@ function getMapUserRequest() {
         disableDoubleClickZoom: false
     });
 
-    
+
 
 
     var userRequests = firebase.database().ref('UserRequest');
