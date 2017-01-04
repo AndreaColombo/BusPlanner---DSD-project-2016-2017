@@ -228,7 +228,8 @@ $(document).ready(function() {
                 var result = getRequest(snapshot);
                 $("#main").html(result);
 
-                document.onload(drawChart(), drawChartStop());
+                document.onload = getMapUserRequest();
+                //document.onload(drawChart(), drawChartStop());
 
                 //document.onload = drawChart();
 
@@ -669,6 +670,59 @@ function getMapDriver() {
         });
     });
 }
+
+
+function getMapUserRequest() {
+
+    var uluru = {lat: -26.195246, lng: 28.034088};
+    driverMap = new google.maps.Map(document.getElementById('mapRequest'), {
+        center: uluru,
+        zoom: 10,
+        styles: [{
+            featureType: 'poi',
+            stylers: [{
+                visibility: 'on'
+            }] // Turn off points of interest.
+        }, {
+            featureType: 'transit.station',
+            stylers: [{
+                visibility: 'on'
+            }] // Turn off bus stations, train stations, etc.
+        }],
+        disableDoubleClickZoom: false
+    });
+
+    
+
+
+    var userRequests = firebase.database().ref('UserRequest');
+    userRequests.once("value").then(function(snapshot) {
+        snapshot.forEach(function(d) {
+            var latUser = d.child('starting_bus_stop').child('Point').child('Latitude').val();
+            var longUser = d.child('starting_bus_stop').child('Point').child('Longitude').val();
+            var statusUser = d.child('starting_bus_stop').child('Name').val();
+            var latLngUser = new google.maps.LatLng(latUser,longUser);
+            var infowindowUser = new google.maps.InfoWindow({
+                content: statusUser
+            });
+            var iconUser = {
+                url: "https://cdn1.iconfinder.com/data/icons/map-objects/154/map-object-user-login-man-point-512.png", // url
+                scaledSize: new google.maps.Size(40, 45) // scaled size
+            };
+            var markerUser = new google.maps.Marker({
+                position: latLngUser,
+                map: driverMap,
+                title: d.child('id').val(),
+                icon: iconUser
+            });
+            markerUser.addListener('click', function() {
+                infowindowUser.open(driverMap, markerUser);
+            });
+        });
+    });
+}
+
+
 
 function changeMarker(id) {
     var markers = markerClusterer1.getMarkers();
