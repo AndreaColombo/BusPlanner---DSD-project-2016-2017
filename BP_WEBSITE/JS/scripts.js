@@ -205,11 +205,11 @@ function headerFleet() {
                 r+='</div>';
                 r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
                     r+='<ul class="nav navbar-nav navbar-right">';
-                        r+='<li><a id="btnBus" href="#" style="padding-top:25px">Bus Managment</a></li>';
-                        r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Driver</a></li>';
-		                r+='<li><a id="btnRoute" href="#" style="padding-top:25px">Route</a></li>';
+                        r+='<li><a id="btnBus" href="#" style="padding-top:25px">Buses</a></li>';
+                        r+='<li><a id="btnDriver" href="#" style="padding-top:25px">Drivers</a></li>';
+		                r+='<li><a id="btnRoute" href="#" style="padding-top:25px">Routes</a></li>';
                         r+='<li><a id="btnStatistics" href="#" style="padding-top:25px">Statistics</a></li>';
-                        r+='<li><a id="btnRequest" href="#" style="padding-top:25px">User Request</a></li>';
+                        r+='<li><a id="btnRequest" href="#" style="padding-top:25px">User Requests</a></li>';
                         r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
                    r+='</ul>';
                 r+='</div>';
@@ -246,7 +246,6 @@ function mainFleet() {
                 r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
                     r+='<div class="jumbotron grow" id="btnBus" style="background-image: url(Images/modBuses.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
                         r+='<h1 id="imageText">Buses</h1>';
-                        r+='<h4 id="imageText">Here you can add, remove or modify our buses </h4>';
                     r+='</div>';
                 r+='</a>';
             r+='</div>';
@@ -258,7 +257,6 @@ function mainFleet() {
                 r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
                     r+='<div class="jumbotron grow" id="btnDriver" style="background-image: url(Images/modifyDriver.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
                         r+='<h1 id="imageText">Drivers</h1>';
-                        r+='<h4 id="imageText">Here we can see and modify all the drivers of our company </h4>';
                     r+='</div>';
                 r+='</a>';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
@@ -274,7 +272,6 @@ function mainFleet() {
                 r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
                     r+='<div class="jumbotron grow" id="btnRoute" style="background-image: url(Images/modifyRoute.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
                         r+='<h1 id="imageText">Routes</h1>';
-                        r+='<h4 id="imageText">Here you can add, remove or modify the routes the buses will cover</h4>';
                     r+='</div>';
                 r+='</a>';
             r+='</div>';
@@ -286,7 +283,6 @@ function mainFleet() {
                 r+='<a href=# class="col-md-11 col-sm-11 col-xs-11">';
                     r+='<div class="jumbotron grow" id="btnStatistics" style="background-image: url(Images/statistics.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
                         r+='<h1  id="imageText">Statistics</h1>';
-                        r+='<h4 id="imageText">Here you can see the statistics of the company routes</h4>';
                     r+='</div>';
                 r+='</a>';
                 r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
@@ -301,7 +297,6 @@ function mainFleet() {
             r+='<a href=# class="col-md-6 col-sm-6 col-xs-6">';
                 r+='<div class="jumbotron grow" id="btnRequest" style="background-image: url(Images/modifyUser2.jpg); border: 1px solid black; height: 200px; background-size: 620px 290px;" align= "center">';
                     r+='<h1 id="imageText">User Requests</h1>';
-                    r+='<h4 id="imageText">Here you can view all the user requests</h4>';
                 r+='</div>';
             r+='</a>';
             r+='<div class="col-md-3 col-sm-3 col-xs-3"></div>';
