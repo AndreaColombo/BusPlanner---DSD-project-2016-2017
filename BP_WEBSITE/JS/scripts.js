@@ -354,9 +354,9 @@ function getStatistics(){
 
     r += '<div class="row" style="margin-bottom: 60px">' +
         '<div class="col-md-6 col-sm-6 col-xs-6" >' +
-        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechart" style="height: 400px; width: 300px"></div></div>' +
+        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechart" style="height: 400px"></div></div>' +
         '<div class="col-md-6 col-sm-6 col-xs-6" >' +
-        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechartstop" style="height: 400px; width: 300px"></div></div>' +
+        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechartstop" style="height: 400px"></div></div>' +
         '</div>';
         
 
@@ -585,7 +585,7 @@ function getDriver(data) {
     r+='<h4 id = "minimalDescription">Here you can view, modify and remove the drivers of our company.</h4>';
     r+='</div>';
     r+='<div class="col-md-6 col-sm-6 col-xs-6">';
-    r+='<img src = "Images/modifyDriver3.jpg" align="right" class = "intestationImages img-responsive">';
+    r+='<img src = "Images/modifyDriver.jpg" align="right" class = "intestationImages img-responsive">';
     r+='</div>';
     r+='</div>';
     r+='</div>';
