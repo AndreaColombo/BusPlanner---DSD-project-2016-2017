@@ -814,6 +814,19 @@ function insertBus(count){
             '</div></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
     });
 }
+/*
+function testHide(){
+    var div = document.getElementsByName("listRoute");
+    if (div.style.display !== "none") {
+        div.style.display = "none";
+    }
+    else {
+        div.style.display = "block";
+    }
+
+}
+*/
+
 
 function insertRoute(markers){
 

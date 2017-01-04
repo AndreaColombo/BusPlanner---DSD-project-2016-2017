@@ -776,8 +776,8 @@ function getRoute(data){
     r+='<div class="row" style="margin-bottom:70px">';
     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
-    r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container" style="height: 500px">';
-    r+='<ul class="list-group">';
+    r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container"  style="height: 500px">';
+    r+='<ul id="listRoute" class="list-group">';
     var count = 1;
     data.forEach(function (d) {
         if(count == 1) {
