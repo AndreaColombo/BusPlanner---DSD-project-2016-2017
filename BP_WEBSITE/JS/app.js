@@ -727,13 +727,19 @@ function getMapDriver(routeId) {
     
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
+    var directionsDisplayTwo = new google.maps.DirectionsRenderer;
+    // very important! Here we can modify the marker related to directionDisplay and so remove the markers A,B,C...
+    // I have delete the markers for the moment
     directionsDisplay.setMap(driverMap);
-    calculateAndDisplayRoute(directionsService, directionsDisplay, routeId);
+    directionsDisplay.setOptions( { suppressMarkers: true } );
+    directionsDisplayTwo.setMap(driverMap);
+    directionsDisplayTwo.setOptions( { suppressMarkers: true } );
+    calculateAndDisplayRoute(directionsService, directionsDisplay,directionsDisplayTwo, routeId);
     /*
     geolocation();*/
 }
 
-function calculateAndDisplayRoute(directionsService, directionsDisplay, routeId) {
+function calculateAndDisplayRoute(directionsService, directionsDisplay, directionsDisplayTwo, routeId) {
     
     var dbRefBusStops = firebase.database().ref().child('Route').child('Route'+routeId).child('BusStops');
     dbRefBusStops.once('value').then(function(snapshot){
@@ -770,13 +776,14 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, routeId)
           travelMode: 'DRIVING'
         }, function(response, status) {
           if (status === 'OK') {
-            concatenatedResponses = response;
-            
+              //concatenatedResponses = response;
+              directionsDisplay.setDirections(response);
+
           } else {
             window.alert('Directions request failed due to ' + status);
           }
         });
-        
+
         var end2 = waypts2[waypts2.length - 1].location;
         waypts2.pop();
         directionsService.route({
@@ -787,8 +794,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, routeId)
           travelMode: 'DRIVING'
         }, function(response, status) {
           if (status === 'OK') {
-            concatenatedResponses = concatenatedResponses.concat(response);
-            directionsDisplay.setDirections(concatenatedResponses);
+              //Array.prototype.push.apply(concatenatedResponses, response);
+              directionsDisplayTwo.setDirections(response);
             
           } else {
             window.alert('Directions request failed due to ' + status);
@@ -1261,16 +1268,12 @@ function initeMapAddRoute(){
     // Add a marker to the map and push to the array.
     function addMarker(location) {
 
-
-
-
         var marker = new google.maps.Marker({
             position: location,
             map: map,
             label: (cont++).toString(),
 
         });
-
 
         var nameStop = document.getElementById("stopName").value.toString();
 
