@@ -85,8 +85,8 @@ class UserRequestSimulator(object):
 def generate_additional_timetable(timetable):
 	firebasedb = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/', None)
 	bus_line_id = timetable.get('bus_line_id')
-	timetable_entries = timetable.get('timetable_entries')
-	additional_timetable = {'bus_line_id': bus_line_id, 'timetable_entries': [], 'travel_requests': []}
+	timetable_entries = timetable.get('Timetable')
+	additional_timetable = {'bus_line_id': bus_line_id, 'Timetable': [], 'travel_requests': []}
 
 	for timetable_entry in timetable_entries:
 		additional_timetable_entry = {
@@ -94,7 +94,7 @@ def generate_additional_timetable(timetable):
         	'ending_bus_stop': timetable_entry.get('ending_bus_stop'),
         	'departure_datetime': timetable_entry.get('departure_datetime'),
        		'arrival_datetime': timetable_entry.get('arrival_datetime'),
-        	'route': timetable_entry.get('route'),
+        	'route_id': timetable_entry.get('route_id'),
         	'number_of_onboarding_passengers': 0,
         	'number_of_deboarding_passengers': 0,
         	'number_of_current_passengers': 0
@@ -104,9 +104,9 @@ def generate_additional_timetable(timetable):
 
 def generate_update_timetable(self, timetable, route_generator_response):
 	firebasedb = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/', None)
-	timetable_entries = timetable.get('timetable_entries')
+	timetable_entries = timetable.get('Timetable')
 	number_of_timetable_entries = len(timetable_entries)
-	intermediate_routes = [intermediate_response.get('route') for intermediate_response in route_generator_response]
+	intermediate_routes = [intermediate_response.get('route_id') for intermediate_response in route_generator_response]
 	total_times = [intermediate_route.get('total_time') for intermediate_route in intermediate_routes]
 
 	def ceil_datetime_minutes(starting_datetime):
