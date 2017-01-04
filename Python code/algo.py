@@ -3,11 +3,10 @@ from firebase import firebase
 import random
 from pulp import *
 
-def trip_generator(line_name, drop_in, drop_out,a,b):
+def trip_generator(line_name,a,b):
   results = []
   for actual_route in line_name:
-    for hour in range(drop_in, drop_out):
-      for c in range(a, b):
+    for hour in range(a, b):
        results.append((actual_route, hour))
   return results
 
@@ -104,58 +103,54 @@ def main():
   a = []
   b=[]
   c = []
+  d=[]
+  gotit=0
   #11 is hard coded can not get the total number of children a root has in firebase
   db = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
-  for gotit in range(11):
-    result = db.get('/UserRequest', 'UserRequest' + str(gotit) + '/user_name')
-    coo= db.get('/UserRequest', 'UserRequest' + str(gotit) + '/ending_bus_stop/Point/Latitude')
-    coo2 = db.get('/UserRequest', 'UserRequest' + str(gotit) + '/ending_bus_stop/Point/Longitude')
+  #for gotit in range(0,5):
 
-    b.append(coo)
-    c.append(coo2)
+  result = db.get('/Timetable', '/Timetable'+ str(gotit) + '/number_of_deboarding_passengers')
+  onbo = db.get('/Timetable', '/Timetable'+ str(gotit) + '/number_of_onboarding_passengers')
+  coo= db.get('/Timetable', '/Timetable'+ str(gotit) + '','/ending_bus_stop/Point/Latitude')
+  coo2 = db.get('/Timetable', '/Timetable'+ str(gotit) + '', '/ending_bus_stop/Point/Longitude')
 
-    a.append(result)
+  b.append(coo)
+  c.append(coo2)
+  d.append(onbo)
+  a.append(result)
 
-    if not result:
+
+  if not result:
       print('No more data')
-
-  for arr in range(0,11):
-
-   ra=random.choice(a)
-   print(ra)
-   #if needed also we randomize the latitude and longitude of the request
-   la=random.choice(b)
-   print(la)
-   lo = random.choice(c)
-   print(lo)
-
-  drop_in = random.choice(a)
-  drop_out = random.choice(a)
 
   hour_start=8
   hour_end=hour_start+12
+  for o in d:
+   print (o)
+   for de in a:
+    print(de)
+  if o>de:
+   trips = trip_generator(routes,hour_start,hour_end)
+   works = work_generator(8, trips)
+   solve_works, solve_rule_controler = solve(works, trips)
 
-  trips = trip_generator(routes, drop_in, drop_out,hour_start,hour_end)
-  works = work_generator(8, trips)
-  solve_works, solve_rule_controler = solve(works, trips)
 
+   k = ''.join(str(e) for e in solve_works)
 
-  k = ''.join(str(e) for e in solve_works)
+   k1 = k.replace("A", "Route 1")
+   k2 = k1.replace("B", "Route 2")
+   k3 = k2.replace("C", "Route 3")
+   k4 = k3.replace("D", "Route 4")
+   k5 = k4.replace("E", "Route 5")
+   print(k5)
+   print("------------")
 
-  k1 = k.replace("A", "Route 1")
-  k2 = k1.replace("B", "Route 2")
-  k3 = k2.replace("C", "Route 3")
-  k4 = k3.replace("D", "Route 4")
-  k5 = k4.replace("E", "Route 5")
-  print(k5)
-  print("------------")
-
-  for Route in k5.split(')]'):
+   for Route in k5.split(')]'):
     if(Route):
-      savedata(Route[9], Route[13],random.choice(a))
+     savedata(Route[9], Route[13],random.choice(a))
 
-    else:
-       print('')
+   else:
+     print('')
 
 def savedata(R9,R13,a):
    db= firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
@@ -169,4 +164,4 @@ def savedata(R9,R13,a):
    print('result'+str(schedule))
 
 if __name__ == '__main__':
-  main()
+    main()
