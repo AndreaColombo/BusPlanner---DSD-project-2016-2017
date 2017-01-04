@@ -7,10 +7,11 @@
 		\item Get bus location.
 		\item Add/Remove/Modify bus.
 		\item Assign drivers to buses.
-		\item Add/Remove/Modify route.
+		\item Add/Remove route.
 		\item Add/Remove/Modify driver.
 		\item View the user requests on a map.
 		\item View previous user requests.
+		\item View routes utilization.
 	\end{itemize}
 \item \textbf{Bus driver}, who performs the following activities:
 \begin{itemize}
@@ -34,15 +35,15 @@ User stories are short and simple sentences that contain the features customers 
 		\hline
 		UserStory3 & As fleet manager I want to be able to add, modify or remove a driver. & High & \hyperlink{AddDriver}{Add driver}. \hyperlink{ModifyDriver}{Modify driver}. \hyperlink{DeleteDriver}{Remove driver}.\\
 		\hline
-		UserStory4 & As fleet manager I want to be able to see user requests on a map. & High & \hyperlink{Mapping_user_requests_fm}{Mapping user requests}.\\
+		UserStory4 & As fleet manager I want to be able to view user requests on a map. & High & \hyperlink{Mapping_user_requests_fm}{View user requests}.\\
 		\hline
 		UserStory5 & As fleet manager I want to be able to view previous user requests. & High & \hyperlink{PreviousUserRequestsFm}{Previous user requests}.\\
 		\hline
-		UserStory6 & As fleet manager I want to be able to get the position of all the buses. & High & \hyperlink{Get_bus_location_fm}{Get bus location}.\\
+		UserStory6 & As fleet manager I want to be able to get the position of all the buses. & High & \hyperlink{Get_bus_location_fm}{Get buses location}.\\
 		\hline
-		UserStory7 & As fleet manager I want to be able to get the utilization of the selected bus. & Average & \hyperlink{View_bus_utilization_fm}{View bus utilization}.\\
+		UserStory7 & As fleet manager I want to be able to get the utilization of all the routes. & Average & \hyperlink{View_bus_utilization_fm}{View routes utilization}.\\
 		\hline
-		UserStory8 & As fleet manager I want to be able to add, modify or remove a route. & High & \hyperlink{AddRoute}{Add route}. \hyperlink{ModifyRoute}{Modify route}. \hyperlink{DeleteRoute}{Remove route}.\\
+		UserStory8 & As fleet manager I want to be able to add or remove a route. & High & \hyperlink{AddRoute}{Add route}. \hyperlink{DeleteRoute}{Remove route}.\\
 		\hline
 		UserStory9 & As a bus driver I want to be able to login (or logout) into the system with my account at any time. & High & \hyperlink{Login_bd}{Login}.\\
 		\hline
@@ -304,11 +305,9 @@ The routes are five and we cannot change them. The only thing that can change is
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
 			\item Open user requests page. 
-			\item Read from database. 
-			\item Information is shown.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & The fleet manager is able to see the user requests.\\
+		\textbf{Exit Conditions} & The fleet manager is able to see the user requests on a map.\\
 		\hline
 		\textbf{Exceptions} & Data is not available.\\
 		\hline
@@ -332,12 +331,10 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Previous user requests page is opened. 
-			\item Read data from the database.
-			\item Information is shown. 
+			\item Open user requests page.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & Fleet manager is able to see the previous users requests.\\
+		\textbf{Exit Conditions} & Fleet manager is able to see the previous users requests in a table.\\
 		\hline
 		\textbf{Exceptions} & Data is not available.\\
 		\hline
@@ -348,7 +345,7 @@ The routes are five and we cannot change them. The only thing that can change is
 	\includegraphics[width=14cm]{FmViewPreviousUserRequests}
 \end{figure}
 \newpage
-\item \hypertarget{Get_bus_location_fm} Get bus location:
+\item \hypertarget{Get_bus_location_fm} Get buses location:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
@@ -361,12 +358,10 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Respective web page is opened. 
-			\item Desired bus is selected. 
-			\item Information is shown on the map.
+			\item From the homepage click on \textit{Buses} button.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & Getting the bus' current position in a map.\\
+		\textbf{Exit Conditions} & The fleet manager is able to view the buses location on a map.\\
 		\hline
 		\textbf{Exceptions} & Data not available.\\
 		\hline
@@ -377,7 +372,7 @@ The routes are five and we cannot change them. The only thing that can change is
 	\includegraphics[width=14cm]{FmGetBusLocation}
 \end{figure}
 \newpage
-\item \hypertarget{View_bus_utilization_fm} View bus utilization:
+\item \hypertarget{View_bus_utilization_fm} View routes utilization:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
@@ -390,12 +385,10 @@ The routes are five and we cannot change them. The only thing that can change is
 		\hline
 		\textbf{Flow of Events} & 
 		\begin{enumerate}
-			\item Respective web page is opened. 
-			\item Desired bus is selected. 
-			\item Information is shown.
+			\item From the homepage click on \textit{Statistics} button.
 		\end{enumerate}\\
 		\hline
-		\textbf{Exit Conditions} & The fleet manager is able to view the utilization of the selected bus.\\
+		\textbf{Exit Conditions} & The fleet manager is able to view the utilization of the company's routes.\\
 		\hline
 		\textbf{Exceptions} & Data not available.\\
 		\hline
@@ -403,7 +396,7 @@ The routes are five and we cannot change them. The only thing that can change is
 \end{table}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{FmViewBusUtilization}
+	\includegraphics[width=14cm]{FmViewRoutesUtilization}
 \end{figure}
 \newpage
 \item \hypertarget{AddRoute} Add route:
@@ -434,35 +427,6 @@ The routes are five and we cannot change them. The only thing that can change is
 	\centering
 	\includegraphics[height=13cm]{FmAddRoute}
 \end{figure}
-\item \hypertarget{ModifyRoute} Modify route:
-\begin{table}[H]
-	\centering
-	\begin{tabular}{| m{3.5cm} | m{9.5cm} |}
-		\hline
-		\textbf{Name} & Modify route [\hyperlink{ModifyRouteSeq}{Sequence diagram}]\\
-		\hline
-		\textbf{Actor} & Fleet manager\\
-		\hline
-		\textbf{Entry conditions} & Fleet manager is logged in.\\
-		\hline
-		\textbf{Flow of Events} & 
-		\begin{enumerate}
-			\item Open routes page.
-			\item Route is selected. 
-			\item Form with route's technical details is modified. 
-			\item Submit button pressed.
-		\end{enumerate}\\
-	\hline
-\textbf{Exit Conditions} & Database confirmation and routes page shown.\\
-\hline
-\textbf{Exceptions} & Wrong information is entered.\\
-\hline
-	\end{tabular}
-\end{table}
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=13cm]{FmModifyRoute}
-\end{figure}
 \item \hypertarget{DeleteRoute} Remove route:
 \begin{table}[H]
 	\centering
@@ -478,7 +442,7 @@ The routes are five and we cannot change them. The only thing that can change is
 		\begin{enumerate}
 			\item Open routes page.
 			\item Route is selected. 
-			\item "Delete" button pressed.
+			\item "X" button pressed.
 		\end{enumerate}\\
 	\hline
 \textbf{Exit Conditions} & Route is removed and routes page is shown.\\
@@ -613,28 +577,21 @@ The routes are five and we cannot change them. The only thing that can change is
 	\includegraphics[width=14cm]{FmViewPreviousUserRequestsSeq}
 \end{figure}
 \newpage
-\item \hypertarget{GetBusLocationSeq} Get bus location:
+\item \hypertarget{GetBusLocationSeq} Get buses location:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=14cm]{FmGetBusLocationSeq}
 \end{figure}
-\newpage
-\item \hypertarget{View_bus_utilization_fm_seq} View bus utilization:
+\item \hypertarget{View_bus_utilization_fm_seq} View routes utilization:
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{FmViewBusUtilizationSeq}
+	\includegraphics[width=14cm]{FmViewRoutesUtilizationSeq}
 \end{figure}
 \newpage
 \item \hypertarget{AddRouteSeq} Add route:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=14cm]{FmAddRouteSeq}
-\end{figure}
-\newpage
-\item \hypertarget{ModifyRouteSeq} Modify route:
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=14cm]{FmModifyRouteSeq}
 \end{figure}
 \newpage
 \item \hypertarget{DeleteRouteSeq} Delete route:

@@ -137,13 +137,6 @@ function headerFleetAndDriver() {
     r+='<a class="navbar-brand" href="#" id="btnLogo1FleetDriver"><img alt="Brand" style="max-height:40px" src="Images/BusLogo.gif"></a>';
     r+='<a class="navbar-brand" style="padding-top:25px" href="#" id="btnLogo2FleetDriver">BusPlanner</a>';
     r+='</div>';
-    r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
-    r+='<ul class="nav navbar-nav navbar-right">';
-    r+='<li><a id="btnMap" href="#" style="padding-top:25px">MAP</a></li>';
-    r+='<li><a id="btnRead" href="#" style="padding-top:25px">Read JSON</a></li>';
-    r+='<li><a id="btnWrite" href="#" style="padding-top:25px">Write JSON</a></li>';
-    r+='</ul>';
-    r+='</div>';
     r+='</div>';
     r+='</nav>';
     return r;

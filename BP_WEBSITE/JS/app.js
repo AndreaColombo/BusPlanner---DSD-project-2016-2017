@@ -28,6 +28,10 @@ $(document).ready(function() {
     //const dbRefList = dbRefLogin.child('Login1');
     const dbRefObject = firebase.database().ref().child('Bus');
     const dbRefList = dbRefObject.child('Bus1');
+    const dbRefDriver = firebase.database().ref().child('Driver');
+    const dbRefBus = firebase.database().ref().child('Bus');
+    const dbRefAlgDyn = firebase.database().ref().child('AlgDynamic');
+    const dbRefRoute = firebase.database().ref().child('Route');
     
     $( "body" ).on( "click", "#btnUser",function(e){
         var result = mainUser();
@@ -150,15 +154,46 @@ $(document).ready(function() {
                         } 
                         // Bus driver's home
                         else {
-                            var query = firebase.database().ref().child("Route").child("Route1").child("BusStops");
-                            query.orderByChild("Stop_id").once("value")
-                                .then(function (snapshot) {
-                                    var changeHeader = headerDriver();
-                                    $('#header').html(changeHeader);
-                                    var result = mainDriver(snapshot);
-                                    $('#main').html(result);
-                                    document.onload = getMapDriver();
+                            var loginId = d.child('Login_id').val();
+                            var driverId;
+                            var busId;
+                            var routeId;
+                            var query;
+                            dbRefDriver.once('value').then(function(snapshot){
+                               snapshot.forEach(function(d){
+                                 if(loginId == d.child('Login_id').val()){
+                                     driverId = d.child('Driver_id').val();
+                                 }  
+                               });
+                                dbRefBus.once('value').then(function(snapshot){
+                                    snapshot.forEach(function(d){
+                                        if(driverId == d.child('Driver_id').val()){
+                                            busId = d.child('Bus_id').val();
+                                        }  
+                                    });
+                                    dbRefAlgDyn.once('value').then(function(snapshot){
+                                        snapshot.forEach(function(d){
+                                            if(busId == d.child('Bus_id').val()){
+                                                routeId = d.child('Route_id').val();
+                                            }  
+                                        });
+                                        dbRefRoute.once('value').then(function(snapshot){
+                                            snapshot.forEach(function(d){
+                                                if(routeId == d.child('Route_id').val()){
+                                                    query = dbRefRoute.child("Route"+routeId).child("BusStops");
+                                                }  
+                                            });
+                                            query.orderByChild("Stop_id").once("value").then(function (snapshot) {
+                                                var changeHeader = headerDriver();
+                                                $('#header').html(changeHeader);
+                                                var result = mainDriver(snapshot);
+                                                $('#main').html(result);
+                                                document.onload = getMapDriver(routeId);
+                                            });
+                                        });
+                                    });
                                 });
+                            });
                             window.location.hash = "homeDriver";
                         }
                     } 
@@ -616,7 +651,7 @@ function getEmailAndPassword(txtEmail, txtPassword) {
     pass = txtPassword.value;
 }
 
-function getMapDriver() {
+function getMapDriver(routeId) {
     
     var uluru = {lat: -26.195246, lng: 28.034088};
         driverMap = new google.maps.Map(document.getElementById('map1'), {
@@ -636,9 +671,9 @@ function getMapDriver() {
             disableDoubleClickZoom: false
         });
     
-    var route1 = firebase.database().ref('Route').child('Route1').child('BusStops');
+    var route = firebase.database().ref('Route').child('Route'+routeId).child('BusStops');
     var allMarkers = [];
-    route1.once("value").then(function(snapshot) {
+    route.once("value").then(function(snapshot) {
         snapshot.forEach(function(d) {
             var lat = d.child('Point').child('Latitude').val();
             var long = d.child('Point').child('Longitude').val();
@@ -663,26 +698,28 @@ function getMapDriver() {
     var userRequests = firebase.database().ref('UserRequest');
     userRequests.once("value").then(function(snapshot) {
         snapshot.forEach(function(d) {
-            var latUser = d.child('starting_bus_stop').child('Point').child('Latitude').val();
-            var longUser = d.child('starting_bus_stop').child('Point').child('Longitude').val();
-            var statusUser = d.child('starting_bus_stop').child('Name').val();
-            var latLngUser = new google.maps.LatLng(latUser,longUser);
-            var infowindowUser = new google.maps.InfoWindow({
-                content: statusUser
-            });
-            var iconUser = {
-                url: "https://cdn1.iconfinder.com/data/icons/map-objects/154/map-object-user-login-man-point-512.png", // url
-                scaledSize: new google.maps.Size(40, 45) // scaled size
-            };
-            var markerUser = new google.maps.Marker({
-                position: latLngUser,
-                map: driverMap,
-                title: d.child('id').val(),
-                icon: iconUser
-            });
-            markerUser.addListener('click', function() {
-                infowindowUser.open(driverMap, markerUser);
-            });
+            if(routeId == d.child('route_id').val()){
+                var latUser = d.child('starting_bus_stop').child('Point').child('Latitude').val();
+                var longUser = d.child('starting_bus_stop').child('Point').child('Longitude').val();
+                var statusUser = d.child('starting_bus_stop').child('Name').val();
+                var latLngUser = new google.maps.LatLng(latUser,longUser);
+                var infowindowUser = new google.maps.InfoWindow({
+                    content: statusUser
+                });
+                var iconUser = {
+                    url: "https://cdn1.iconfinder.com/data/icons/map-objects/154/map-object-user-login-man-point-512.png", // url
+                    scaledSize: new google.maps.Size(40, 45) // scaled size
+                };
+                var markerUser = new google.maps.Marker({
+                    position: latLngUser,
+                    map: driverMap,
+                    title: d.child('id').val().toString(),
+                    icon: iconUser
+                });
+                markerUser.addListener('click', function() {
+                    infowindowUser.open(driverMap, markerUser);
+                });
+            }
         });
     });
 }
@@ -899,10 +936,6 @@ function testHide(){
 
 
 function insertRoute(markers){
-
-    console.log("YES it works");
-    console.log(markers);
-
     const inputRouteId = document.getElementById("addRouteId");
     const inputName = document.getElementById("addRouteName");
 
@@ -922,7 +955,6 @@ function insertRoute(markers){
         var latitude = markers[i].marker.getPosition().lat();
         var longitude = markers[i].marker.getPosition().lng();
         var stopNumber = markers[i].stopNumber;
-        console.log(latitude);
         dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()+'/BusStops/'+'BusStops'+stopNumber.toString()).set({
             Name: name,
             Stop_id: stopNumber.toString(),
@@ -1184,7 +1216,6 @@ function initeMapAddRoute(){
 
 
         markers.push({marker: marker, stopNumber: cont-1, name: nameStop});
-        console.log(markers+" the latitude is: "+ markers[0].marker.getPosition().lat());
         return markers;
     }
 
@@ -1194,12 +1225,8 @@ function initeMapAddRoute(){
 }
 
 function setStopName(markers, cont){
-    console.log("HI GUIZZ" + markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
     var busStopName = document.getElementById("busStopNameMap").toString();
-    console.log(busStopName);
     markers[cont].name = busStopName;
-    console.log(markers[0].position +" "+ markers[0].stopNumber+" "+ markers[0].name);
-
 }
 
 function drawChart(){
@@ -1341,16 +1368,11 @@ function drawChartGoogle() {
 
 
 function deleteRoute(routeId) {
-
-    console.log("I'm going to delete the route selected "+ routeId.toString());
     if (confirm("Are you sure to cancel the route?") == true) {
         const dbRefRoute = firebase.database().ref().child('Route');
         const dbRefRouteSelected = dbRefRoute.child('Route'+ routeId.toString());
         dbRefRouteSelected.remove();
-    } else {
     }
-
-
 }
 
 
@@ -1432,7 +1454,6 @@ function drawChartStop(){
                 chart.options.data[0].dataPoints.push({y: variables[i].utilization, legendText:"Stop "+ variables[i].stopName, indexLabel:"Stop "+ variables[i].stopName });
             }
 
-            console.log(chart.options.data[0].dataPoints);
             chart.render();
         });
 
