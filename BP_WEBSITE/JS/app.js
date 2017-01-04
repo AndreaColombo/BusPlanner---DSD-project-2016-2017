@@ -1370,11 +1370,13 @@ function drawChartGoogle() {
 
 
 function deleteRoute(routeId) {
-    if (confirm("Are you sure to cancel the route?") == true) {
+    if (confirm("Are you sure you want to cancel this route?") == true) {
         const dbRefRoute = firebase.database().ref().child('Route');
         const dbRefRouteSelected = dbRefRoute.child('Route'+ routeId.toString());
         dbRefRouteSelected.remove();
+        document.getElementById('Route'+routeId).remove();
     }
+    
 }
 
 
