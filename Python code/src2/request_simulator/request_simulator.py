@@ -82,25 +82,59 @@ class UserRequestSimulator(object):
 			name = 'UserRequest'+str(id)
 			firebasedb.put("/UserRequest", name, user_request)
 
-def generate_additional_timetable(timetable):
+	# Generate timetable
+	# time_document: {
+	# 	'_id', 'route_id',
+	# 	'starting_bus_stop': {'_id', 'osm_id', 'name', 'point': {'longitude', 'latitude'}},
+	# 	'ending_bus_stop': {'_id', 'osm_id', 'name', 'point': {'longitude', 'latitude'}},
+	# 	'departure_datetime'
+	#   'arrival_datetime'
+	#   'number_of_onboarding_passengers'
+	#   'number_of_deboarding_passengers'
+	#   'number_of_current_passengers'
+	# }
+def generate_additional_timetable(self,m,n,l):
+	min_timetable_number = min(n,m)
+	max_timetable_number = max(n,m)
 	firebasedb = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/', None)
-	bus_line_id = timetable.get('bus_line_id')
-	timetable_entries = timetable.get('Timetable')
-	additional_timetable = {'bus_line_id': bus_line_id, 'Timetable': [], 'travel_requests': []}
-
-	for timetable_entry in timetable_entries:
-		additional_timetable_entry = {
-			'starting_bus_stop': timetable_entry.get('starting_bus_stop'),
-        	'ending_bus_stop': timetable_entry.get('ending_bus_stop'),
-        	'departure_datetime': timetable_entry.get('departure_datetime'),
-       		'arrival_datetime': timetable_entry.get('arrival_datetime'),
-        	'route_id': timetable_entry.get('route_id'),
-        	'number_of_onboarding_passengers': 0,
-        	'number_of_deboarding_passengers': 0,
-        	'number_of_current_passengers': 0
+	user_request_number = random.randint(
+			min_timetable_number,
+			max_timetable_number
+	)
+	weighted_datetimes = []
+	initial_datetime = datetime.now();
+	for i in range(24):
+		n = self.poisson_generator(l)
+		weighted_datetimes.append((initial_datetime + timedelta(hours=i), n))
+	datetime_population = [val for val, cnt in weighted_datetimes for i in range(cnt)]
+	for i in range(0, user_request_number):
+		route_id = random.randint(1,5)
+		route = '/Route/Route'+str(route_id)+'/BusStops'
+		bus_stops = firebasedb.get(route, None)
+		starting_bus_stop_id = random.randint(0, len(bus_stops)-2)
+		ending_bus_stop_id = random.randint(starting_bus_stop_id+1, len(bus_stops)-1)
+		starting_bus_stop_key = "BusStop"+str(starting_bus_stop_id)
+		ending_bus_stop_key = "BusStop"+str(ending_bus_stop_id)
+		starting_bus_stop = bus_stops.get(starting_bus_stop_key)
+		ending_bus_stop = bus_stops.get(ending_bus_stop_key)
+		additional_departure_time_interval = random.randint(0, 59)
+		additional_arrival_time_interval = random.randint(0, 59)
+		departure_datetime = (random.choice(datetime_population) + timedelta(minutes=additional_departure_time_interval))
+		arrival_datetime = (random.choice(datetime_population) + timedelta(minutes=additional_arrival_time_interval))
+		number_of_onboarding_passengers_system = random.randint(0,100)
+		number_of_deboarding_passengers_system = random.randint(0,100)
+		number_of_current_passengers_system = random.randint(0,40)
+		additional_timetable = {
+			'starting_bus_stop': starting_bus_stop,
+			'ending_bus_stop': ending_bus_stop,
+			'departure_datetime': departure_datetime,
+			'arrival_datetime': arrival_datetime,
+			'route_id': route_id,
+			'number_of_onboarding_passengers': number_of_onboarding_passengers_system,
+        	'number_of_deboarding_passengers': number_of_deboarding_passengers_system,
+        	'number_of_current_passengers': number_of_current_passengers_system
 		}
-	firebasedb.put("/Timetable", additional_timetable_entry)
-	return additional_timetable
+	firebasedb.put("/Timetable", additional_timetable)
 
 def generate_update_timetable(self, timetable, route_generator_response):
 	firebasedb = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/', None)
@@ -116,16 +150,15 @@ def generate_update_timetable(self, timetable, route_generator_response):
 
 	for i in range(0, number_of_timetable_entries):
 		timetable_entry = timetable_entries[i]
-    	total_time = total_times[i]
+		total_time = total_times[i]
     	departure_datetime = timetable_entry.get('departure_datetime')
-    	if i > 0:
-			previous_timetable_entry = timetable_entries[i - 1]
-        	previous_arrival_datetime = previous_timetable_entry.get('arrival_datetime')
-        	departure_datetime_based_on_previous_arrival_datetime = ceil_datetime_minutes(
-            starting_datetime=previous_arrival_datetime)
-        	if departure_datetime_based_on_previous_arrival_datetime > departure_datetime:
-            	departure_datetime = departure_datetime_based_on_previous_arrival_datetime
-            	timetable_entry['departure_datetime'] = departure_datetime
-
-    	arrival_datetime = departure_datetime + timedelta(seconds=total_time)
-    	timetable_entry['arrival_datetime'] = arrival_datetime
+        if i > 0:
+		previous_timetable_entry = timetable_entries[i - 1]
+        previous_arrival_datetime = previous_timetable_entry.get('arrival_datetime')
+        departure_datetime_based_on_previous_arrival_datetime = ceil_datetime_minutes(
+        starting_datetime=previous_arrival_datetime)
+        if departure_datetime_based_on_previous_arrival_datetime > departure_datetime:
+		departure_datetime = departure_datetime_based_on_previous_arrival_datetime
+		timetable_entry['departure_datetime'] = departure_datetime
+		arrival_datetime = departure_datetime + timedelta(seconds=total_time)
+		timetable_entry['arrival_datetime'] = arrival_datetime
