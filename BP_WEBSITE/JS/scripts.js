@@ -591,19 +591,26 @@ function getDriver(data) {
     r+='</div>';
     
     var count = 1;
-    r+='<div id="driversListGroup">';
+    
+    r+='<div class = "row" >';
+    r+='<div class = "col-md-2 col-sm-2 col-xs-2"></div>';
+    r+='<div class = "col-md-8 col-sm-8 col-xs-8">';
+    
+    r+='<div class="list-group" id="driversListGroup">';
     data.forEach( function(d){
         count++;
-        r += '<div class="row" id="driverItem'+d.child('Driver_id').val()+'" style=" margin: 10px">';
+        r += '<div href="#" class="list-group-item row" id="driverItem'+d.child('Driver_id').val()+'" style=" margin: 10px; border-radius: 25px;">';
         r += '<div class="col-md-1 col-sm-1 col-xs-1"></div>';
         r += '<div class="col-md-3 col-sm-3 col-xs-3">' +
              '<img src="Images/'+d.child('Image').val() +'" class="img-circle" id="imageDriver">' +
              '</div>' +
-             '<div class="col-md-7 col-sm-7 col-xs-7">' +
+             '<div align="right" class="col-md-7 col-sm-7 col-xs-7">' +
                 '<h3 id="dName'+d.child('Driver_id').val()+'">'+ d.child('Driver_name').val()+'</h3>' +
                 '<p id="dDescription'+d.child('Driver_id').val()+'" style="font-size: medium">'+d.child('Description').val() +'</p>';
-                r += '<h4 align="center">'+
-        ' &emsp;<a href="#" data-toggle="modal" data-target="#modalView' + d.child('Driver_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Driver_id').val() + '">Delete</a></h4></div>';
+      
+        r+= '<div class="btn-group" role="group" aria-label="..."><button data-toggle="modal" data-target="#modalView' + d.child('Driver_id').val() + '" type="button" class="btn btn-default">Info</button><button data-toggle="modal" data-target="#modalModify' + d.child('Driver_id').val() + '" type="button" class="btn btn-default">Modify</button><button data-toggle="modal" data-target="#modalDelete' + d.child('Driver_id').val() + '" type="button" class="btn btn-default">Delete</button></div></div>';
+        /*
+        ' r += '<h4 align="center">&emsp;<a href="#" data-toggle="modal" data-target="#modalView' + d.child('Driver_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Driver_id').val() + '">Delete</a></h4></div>';*/
         r += '</div>';
         //<!-- start modalView -->
         r += '<div id="modalView' + d.child('Driver_id').val() + '" class="modal fade" role="dialog">';
@@ -719,12 +726,15 @@ function getDriver(data) {
 
     });
     r+='</div>';
+    r+='</div>';
+    r+='<div class = "col-md-2 col-sm-2 col-xs-2"></div>';
+    r+='</div>';
 
     //button for add new driver
     r+= '<div class="row">' +
         '<div class="col-md-4 col-sm-4 col-xs-4"></div>' +
         '<div class="col-md-4 col-sm-4 col-xs-4 text-center">';
-    r+='<button class="btn btn-info btn-lg" data-toggle="modal"  data-target="#addingDriver" class="btn btn-lg btn-primary btn-circle" style="margin: 60px" >NEW DRIVER<i class="fa fa-plus"></i></button>' +
+    r+='<button class="btn btn-info btn-lg" data-toggle="modal"  data-target="#addingDriver" class="btn btn-lg btn-primary " style="margin-top: 20px; margin-bottom: 60px" >NEW DRIVER<i class="fa fa-plus"></i></button>' +
         '</div><div class="col-md-4 col-sm-4 col-xs-4"></div></div>';   //closing row
     //<!-- Modal add driver -->
     r += '<div id="addingDriver" class="modal fade" role="dialog">';
