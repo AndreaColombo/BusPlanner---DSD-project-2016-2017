@@ -244,7 +244,7 @@ $(document).ready(function() {
                 var result = getStatistics();
                 $("#main").html(result);
                 
-                
+
                 document.onload(drawChart(), drawChartStop());
             });
 
@@ -1232,13 +1232,13 @@ function setStopName(markers, cont){
 }
 
 function drawChart(){
-
+    console.log("ciao isi");
     var query = firebase.database().ref("UserRequest");
     query.once("value")
         .then(function(snapshot) {
             var variables = [];
             snapshot.forEach(function(d){
-                var route = d.child("route_id").val();
+                var route = d.child("route_id").val().toString();
                 var x = false;
                 for (var i = 0; i < variables.length && x == false; i++) {
                     if(variables[i].route == route ){

@@ -350,14 +350,15 @@ function getStatistics(){
     r += '</div>';
     r += '</div>';
 
+
+
     r += '<div class="row" style="margin-bottom: 60px">' +
         '<div class="col-md-6 col-sm-6 col-xs-6" >' +
-        '<div class="row"><div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-1 col-xs-11" id= "piechart" style="height: 400px;"></div></div>' +
-        '</div>' +
+        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechart" style="height: 400px; width: 300px"></div></div>' +
         '<div class="col-md-6 col-sm-6 col-xs-6" >' +
-        '<div class="row"><div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-1 col-xs-11" id= "piechartstop" style="height: 400px;"></div></div>' +
-        '</div>' +
+        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechartstop" style="height: 400px; width: 300px"></div></div>' +
         '</div>';
+        
 
     return r;
 }
