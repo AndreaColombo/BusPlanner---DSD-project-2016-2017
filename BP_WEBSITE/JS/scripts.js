@@ -354,9 +354,9 @@ function getStatistics(){
 
     r += '<div class="row" style="margin-bottom: 60px">' +
         '<div class="col-md-6 col-sm-6 col-xs-6" >' +
-        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechart" style="height: 400px"></div></div>' +
+        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechart" style="height: 300px; width:100%"></div></div>' +
         '<div class="col-md-6 col-sm-6 col-xs-6" >' +
-        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechartstop" style="height: 400px"></div></div>' +
+        '<div class="col-md-11 col-sm-11 col-xs-11" id= "piechartstop" style="height: 300px; width:100%"></div><div class="col-md-1 col-sm-1 col-xs-1" ></div></div>' +
         '</div>';
         
 

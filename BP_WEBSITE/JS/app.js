@@ -4,6 +4,7 @@ var password;
 var logout;
 var driverMap;
 var markerClusterer1;
+var positionMarker = null;
 
 $(document).ready(function() {
     
@@ -722,6 +723,8 @@ function getMapDriver(routeId) {
             }
         });
     });
+    
+    geolocation();
 }
 
 
@@ -1232,7 +1235,6 @@ function setStopName(markers, cont){
 }
 
 function drawChart(){
-    console.log("ciao isi");
     var query = firebase.database().ref("UserRequest");
     query.once("value")
         .then(function(snapshot) {
@@ -1282,7 +1284,7 @@ function drawChart(){
             chart.render();
         });
 }
-
+/*
 //d is the snapshot od the database
 function drawChartGoogle() {
 
@@ -1367,7 +1369,7 @@ function drawChartGoogle() {
         });
 
 }
-
+*/
 
 function deleteRoute(routeId) {
     if (confirm("Are you sure you want to cancel this route?") == true) {
@@ -1460,19 +1462,58 @@ function drawChartStop(){
 
             chart.render();
         });
-
-
 }
 
+function geolocation() {
+    var infoWindow = new google.maps.InfoWindow({map: driverMap});
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
 
-function drawChart1(){
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            driverMap.setCenter(pos);
+        }, function() {
+            handleLocationError(true, infoWindow, driverMap.getCenter());
+        });
+    } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, driverMap.getCenter());
+    }
+    autoUpdate();
+}
 
-    var firebaseData = firebase.database().ref("UserRequest").responseText;
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+}
 
-    // Create our data table out of JSON data loaded from server.
-    var data = new google.visualization.DataTable(firebaseData);
+function autoUpdate() {
+  navigator.geolocation.getCurrentPosition(function(position) {  
+    var newPoint = new google.maps.LatLng(position.coords.latitude, 
+                                          position.coords.longitude);
 
-    // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    chart.draw(data, {width: 400, height: 240});
+    if (positionMarker) {
+      // Marker already created - Move it
+      positionMarker.setPosition(newPoint);
+    }
+    else {
+      // Marker does not exist - Create it
+      positionMarker = new google.maps.Marker({
+        position: newPoint,
+        map: driverMap
+      });
+    }
+
+    // Center the map on the new position
+    driverMap.setCenter(newPoint);
+  }); 
+
+  // Call the autoUpdate() function every 5 seconds
+  setTimeout(autoUpdate, 1000);
 }
