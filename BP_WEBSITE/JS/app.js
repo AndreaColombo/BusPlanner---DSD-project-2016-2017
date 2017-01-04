@@ -724,9 +724,78 @@ function getMapDriver(routeId) {
         });
     });
     
-    geolocation();
+    
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    directionsDisplay.setMap(driverMap);
+    calculateAndDisplayRoute(directionsService, directionsDisplay, routeId);
+    /*
+    geolocation();*/
 }
 
+function calculateAndDisplayRoute(directionsService, directionsDisplay, routeId) {
+    
+    var dbRefBusStops = firebase.database().ref().child('Route').child('Route'+routeId).child('BusStops');
+    dbRefBusStops.once('value').then(function(snapshot){
+        var concatenatedResponses;
+        var waypts1 = [];
+        var waypts2 = [];
+        var count = 1;
+        snapshot.forEach(function(d){
+            var lat = d.child('Point').child('Latitude').val();
+            var long = d.child('Point').child('Longitude').val();
+            if(count <= 22){
+                waypts1.push({
+                location: new google.maps.LatLng(lat,long),
+                stopover: true
+                });
+            } else {
+                waypts2.push({
+                location: new google.maps.LatLng(lat,long),
+                stopover: true
+                });
+            }
+            count++;
+        });
+        var start = waypts1[0].location;
+        var end = waypts1[waypts1.length - 1].location;
+        waypts1.pop();
+        waypts1.splice(0,1);
+        
+        directionsService.route({
+          origin: start,
+          destination: end,
+          waypoints: waypts1,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            concatenatedResponses = response;
+            
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+        
+        var end2 = waypts2[waypts2.length - 1].location;
+        waypts2.pop();
+        directionsService.route({
+          origin: end,
+          destination: end2,
+          waypoints: waypts2,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            concatenatedResponses = concatenatedResponses.concat(response);
+            directionsDisplay.setDirections(concatenatedResponses);
+            
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+    });
+}
 
 function getMapUserRequest() {
 
