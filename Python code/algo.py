@@ -102,30 +102,32 @@ def main():
 
   hour_start=8
   hour_end=hour_start+12
+
   requests = random.randrange(1, 50)
   drop_in = random.randrange(1, 30)
   drop_out = random.randrange(1, 30)
 
-  if drop_in<requests:
-   trips = trip_generator(routes,hour_start,hour_end)
-   works = work_generator(8, trips)
-   solve_works, solve_rule_controler = solve(works, trips)
+
+  trips = trip_generator(routes,hour_start,hour_end)
+  works = work_generator(8, trips)
+  solve_works, solve_rule_controler = solve(works, trips)
 
 
-   k = ''.join(str(e) for e in solve_works)
-   k1 = k.replace("A", "Route 1")
-   k2 = k1.replace("B", "Route 2")
-   k3 = k2.replace("C", "Route 3")
-   k4 = k3.replace("D", "Route 4")
-   k5 = k4.replace("E", "Route 5")
-   print(k5)
-   print("------------")
+  k = ''.join(str(e) for e in solve_works)
+  k1 = k.replace("A", "Route 1")
+  k2 = k1.replace("B", "Route 2")
+  k3 = k2.replace("C", "Route 3")
+  k4 = k3.replace("D", "Route 4")
+  k5 = k4.replace("E", "Route 5")
+  print(k5)
+  print("------------")
 
-   for Route in k5.split(')]'):
+  for Route in k5.split(')]'):
     if(Route):
-     savedata(Route[9], Route[13],requests,drop_in,drop_out)
 
-   else:
+        savedata(Route[9], Route[13],random.randrange(1, 50),random.randrange(1, 30,2),random.randrange(1, 25))
+
+    else:
      print('')
 
 def savedata(R9,R13,a,i,o):
