@@ -106,7 +106,6 @@ def main():
   works = work_generator(8, trips)
   solve_works, solve_rule_controler = solve(works, trips)
 
-
   k = ''.join(str(e) for e in solve_works)
   k1 = k.replace("A", "Route 1")
   k2 = k1.replace("B", "Route 2")
@@ -119,7 +118,7 @@ def main():
   for Route in k5.split(')]'):
     if(Route):
 
-        savedata(random.randrange(1, 5), random.randrange(1, 30),random.randrange(1, 50),random.randrange(1, 30,2),random.randrange(1, 25))
+        savedata(random.randrange(1, 5), random.randrange(1, 5),random.randrange(1, 50),random.randrange(1, 30,2),random.randrange(1, 25))
 
     else:
      print('')
