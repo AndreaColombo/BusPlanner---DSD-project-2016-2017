@@ -102,12 +102,6 @@ def main():
 
   hour_start=8
   hour_end=hour_start+12
-
-  requests = random.randrange(1, 50)
-  drop_in = random.randrange(1, 30)
-  drop_out = random.randrange(1, 30)
-
-
   trips = trip_generator(routes,hour_start,hour_end)
   works = work_generator(8, trips)
   solve_works, solve_rule_controler = solve(works, trips)
@@ -125,7 +119,7 @@ def main():
   for Route in k5.split(')]'):
     if(Route):
 
-        savedata(Route[9], Route[13],random.randrange(1, 50),random.randrange(1, 30,2),random.randrange(1, 25))
+        savedata(random.randrange(1, 5), random.randrange(1, 30),random.randrange(1, 50),random.randrange(1, 30,2),random.randrange(1, 25))
 
     else:
      print('')
@@ -133,13 +127,13 @@ def main():
 def savedata(R9,R13,a,i,o):
    db= firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
    schedule = {
-     'Bus_id': R9,
+     'Bus_id': random.randrange(1, 5),
      'Route_id': R13,
      'Drop_in':i,
      'Drop_out': o,
      'User_request': a
    }
-   name = 'Schedule'+R9+''
+   name = 'Schedule'+str(R9)+''
    db.put("/AlgDynamic", name, schedule)
    print('result'+str(schedule))
 
