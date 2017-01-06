@@ -189,7 +189,7 @@ $(document).ready(function() {
                                                 $('#header').html(changeHeader);
                                                 var result = mainDriver(snapshot);
                                                 $('#main').html(result);
-                                                document.onload = getMapDriver(routeId);
+                                                document.onload = getMapDriver(routeId, busId);
                                             });
                                         });
                                     });
@@ -652,8 +652,9 @@ function getEmailAndPassword(txtEmail, txtPassword) {
     pass = txtPassword.value;
 }
 
-function getMapDriver(routeId) {
-    
+function getMapDriver(routeId, busId) {
+
+
     var uluru = {lat: -26.195246, lng: 28.034088};
         driverMap = new google.maps.Map(document.getElementById('map1'), {
             center: uluru,
@@ -736,7 +737,7 @@ function getMapDriver(routeId) {
     directionsDisplayTwo.setOptions( { suppressMarkers: true } );
     calculateAndDisplayRoute(directionsService, directionsDisplay,directionsDisplayTwo, routeId);
     /*
-    geolocation();*/
+    geolocation(busId);*/
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay, directionsDisplayTwo, routeId) {
@@ -1535,7 +1536,7 @@ function drawChartStop(){
         });
 }
 
-function geolocation() {
+function geolocation(busId) {
     var infoWindow = new google.maps.InfoWindow({map: driverMap});
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -1554,7 +1555,7 @@ function geolocation() {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, driverMap.getCenter());
     }
-    autoUpdate();
+    autoUpdate(busId);
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -1564,10 +1565,25 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                               'Error: Your browser doesn\'t support geolocation.');
 }
 
-function autoUpdate() {
-  navigator.geolocation.getCurrentPosition(function(position) {  
-    var newPoint = new google.maps.LatLng(position.coords.latitude, 
+function autoUpdate(busId) {
+    var inputLatitude = 0;
+    var inputLongitude = 0;
+  navigator.geolocation.getCurrentPosition(function(position) {
+    var newPoint = new google.maps.LatLng(position.coords.latitude,
                                           position.coords.longitude);
+
+      inputLatitude = position.coords.latitude;
+      inputLongitude = position.coords.longitude;
+      console.log(inputLatitude+" "+inputLongitude+ " the bus id is :"+ busId);
+
+      const dbRefBus = firebase.database().ref().child('Bus');
+      const dbRefBusN = dbRefBus.child('Bus'+ busId);
+
+      dbRefBusN.set({
+          Latitude: inputLatitude.value.toString(),
+          Longitude: inputLongitude.value.toString()
+
+      });
 
     if (positionMarker) {
       // Marker already created - Move it
@@ -1582,9 +1598,9 @@ function autoUpdate() {
     }
 
     // Center the map on the new position
-    driverMap.setCenter(newPoint);
-  }); 
+      driverMap.setCenter(newPoint);
+    });
 
-  // Call the autoUpdate() function every 5 seconds
-  setTimeout(autoUpdate, 1000);
+    // Call the autoUpdate() function every second
+    setTimeout(autoUpdate, 1000);
 }
