@@ -686,7 +686,7 @@ function getMapDriver(routeId) {
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: driverMap,
-                title: d.child('Stop_id').val()
+                title: d.child('Stop_id').val().toString()
             });
             allMarkers.push(marker);
             marker.addListener('click', function() {
@@ -1231,7 +1231,7 @@ function initeMapRoute(num){
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: routeMap,
-                label: d.child("Stop_id").val()
+                label: d.child("Stop_id").val().toString()
             });
             marker.addListener('click', function() {
                 infowindow.open(routeMap, marker);
