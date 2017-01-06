@@ -742,7 +742,7 @@ function getMapDriver(routeId) {
 function calculateAndDisplayRoute(directionsService, directionsDisplay, directionsDisplayTwo, routeId) {
     
     var dbRefBusStops = firebase.database().ref().child('Route').child('Route'+routeId).child('BusStops');
-    dbRefBusStops.once('value').then(function(snapshot){
+    dbRefBusStops.orderByChild("Stop_id").once('value').then(function(snapshot){
         var concatenatedResponses;
         var waypts1 = [];
         var waypts2 = [];
