@@ -100,43 +100,19 @@ def main():
 
   routes = 'ABCDE' #actualy it is a b c d e so 5 routes
 
-  a = []
-  b=[]
-  c = []
-  d=[]
-  gotit=0
-  #11 is hard coded can not get the total number of children a root has in firebase
-  db = firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
-  #for gotit in range(0,5):
-
-  result = db.get('/Timetable', '/Timetable'+ str(gotit) + '/number_of_deboarding_passengers')
-  onbo = db.get('/Timetable', '/Timetable'+ str(gotit) + '/number_of_onboarding_passengers')
-  coo= db.get('/Timetable', '/Timetable'+ str(gotit) + '','/ending_bus_stop/Point/Latitude')
-  coo2 = db.get('/Timetable', '/Timetable'+ str(gotit) + '', '/ending_bus_stop/Point/Longitude')
-
-  b.append(coo)
-  c.append(coo2)
-  d.append(onbo)
-  a.append(result)
-
-
-  if not result:
-      print('No more data')
-
   hour_start=8
   hour_end=hour_start+12
-  for o in d:
-   print (o)
-   for de in a:
-    print(de)
-  if o>de:
+  requests = random.randrange(1, 50)
+  drop_in = random.randrange(1, 30)
+  drop_out = random.randrange(1, 30)
+
+  if drop_in<requests:
    trips = trip_generator(routes,hour_start,hour_end)
    works = work_generator(8, trips)
    solve_works, solve_rule_controler = solve(works, trips)
 
 
    k = ''.join(str(e) for e in solve_works)
-
    k1 = k.replace("A", "Route 1")
    k2 = k1.replace("B", "Route 2")
    k3 = k2.replace("C", "Route 3")
@@ -147,16 +123,18 @@ def main():
 
    for Route in k5.split(')]'):
     if(Route):
-     savedata(Route[9], Route[13],random.choice(a))
+     savedata(Route[9], Route[13],requests,drop_in,drop_out)
 
    else:
      print('')
 
-def savedata(R9,R13,a):
+def savedata(R9,R13,a,i,o):
    db= firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
    schedule = {
      'Bus_id': R9,
      'Route_id': R13,
+     'Drop_in':i,
+     'Drop_out': o,
      'User_request': a
    }
    name = 'Schedule'+R9+''
