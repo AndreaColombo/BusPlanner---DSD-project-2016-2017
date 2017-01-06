@@ -743,7 +743,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, directio
     
     var dbRefBusStops = firebase.database().ref().child('Route').child('Route'+routeId).child('BusStops');
     dbRefBusStops.orderByChild("Stop_id").once('value').then(function(snapshot){
-        var concatenatedResponses;
         var waypts1 = [];
         var waypts2 = [];
         var count = 1;
