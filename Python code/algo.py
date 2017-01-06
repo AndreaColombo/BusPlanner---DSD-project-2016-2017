@@ -100,8 +100,8 @@ def main():
 
   routes = 'ABCDE' #actualy it is a b c d e so 5 routes
 
-  hour_start=8
-  hour_end=hour_start+12
+  hour_start=1
+  hour_end=hour_start+4
   trips = trip_generator(routes,hour_start,hour_end)
   works = work_generator(8, trips)
   solve_works, solve_rule_controler = solve(works, trips)
@@ -118,7 +118,7 @@ def main():
   for Route in k5.split(')]'):
     if(Route):
 
-        savedata(random.randrange(1, 5), random.randrange(1, 5),random.randrange(1, 50),random.randrange(1, 30,2),random.randrange(1, 25))
+        savedata(Route[9], Route[13],random.randrange(1, 50),random.randrange(1, 30,2),random.randrange(1, 25))
 
     else:
      print('')
@@ -126,7 +126,7 @@ def main():
 def savedata(R9,R13,a,i,o):
    db= firebase.FirebaseApplication('https://busplanner-f496d.firebaseio.com/')
    schedule = {
-     'Bus_id': random.randrange(1, 5),
+     'Bus_id': R9,
      'Route_id': R13,
      'Drop_in':i,
      'Drop_out': o,
