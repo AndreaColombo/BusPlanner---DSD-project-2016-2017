@@ -234,7 +234,7 @@ $(document).ready(function() {
     $("body").on("click", "#btnDriver", function (e){
 
         var query = firebase.database().ref().child("Driver");
-        query.once("value")
+        query.orderByChild('Driver_id').once("value")
             .then(function (snapshot) {
                 //bus is the function in script.js
                 var result = getDriver(snapshot);
@@ -1093,13 +1093,13 @@ function insertDriver(count){
 
     dbRef.once('child_added', snap => {
         var driversList = document.getElementById('driversListGroup');
-        driversList.innerHTML = driversList.innerHTML + '<div class="row" id="driverItem'+snap.child('Driver_id').val()+'" style=" margin: 10px"><div class="col-md-1 col-sm-1 col-xs-1"></div><div class="col-md-3 col-sm-3 col-xs-3">' +
+        driversList.innerHTML = driversList.innerHTML + '<div href="#" class="list-group-item row" id="driverItem'+snap.child('Driver_id').val()+'" style="margin:10px; border-radius:25px;"><div class="col-md-1 col-sm-1 col-xs-1"></div><div class="col-md-3 col-sm-3 col-xs-3">' +
              '<img src="Images/'+snap.child('Image').val() +'" class="img-circle" id="imageDriver">' +
              '</div>' +
-             '<div class="col-md-7 col-sm-7 col-xs-7">' +
+             '<div align="right" class="col-md-7 col-sm-7 col-xs-7">' +
                 '<h3 id="dName'+snap.child('Driver_id').val()+'">'+ snap.child('Driver_name').val()+'</h3>' +
                 '<p id="dDescription'+snap.child('Driver_id').val()+'" style="font-size: medium">'+snap.child('Description').val() +'</p><h4 align="center">'+
-        ' &emsp;<a href="#" data-toggle="modal" data-target="#modalView' + snap.child('Driver_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + snap.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + snap.child('Driver_id').val() + '">Delete</a></h4></div></div><div id="modalView' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + snap.child('Driver_name').val() + ' Information</h4></div><div class="modal-body"><p>Driver ID: ' + snap.child('Driver_id').val() + '<br>Driver Name: ' + snap.child('Driver_name').val() + '<br>Mobile Number: ' + snap.child('Mobile_number').val() + '<br>Date of birth: ' + snap.child('Date_birth').val() + '<br></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Driver ' + snap.child('Driver_name').val() + ' to modify</h4></div><div class="modal-body"><form>' +
+        ' <div class="btn-group" role="group" aria-label="..."><button data-toggle="modal" data-target="#modalView' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Info</button><button data-toggle="modal" data-target="#modalModify' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Modify</button><button data-toggle="modal" data-target="#modalDelete' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Delete</button></div></div><div id="modalView' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + snap.child('Driver_name').val() + ' Information</h4></div><div class="modal-body"><p>Driver ID: ' + snap.child('Driver_id').val() + '<br>Driver Name: ' + snap.child('Driver_name').val() + '<br>Mobile Number: ' + snap.child('Mobile_number').val() + '<br>Date of birth: ' + snap.child('Date_birth').val() + '<br></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Driver ' + snap.child('Driver_name').val() + ' to modify</h4></div><div class="modal-body"><form>' +
             '<div class="form-group">' +
             '<label for="id">Driver Id:</label>' +
             '<input type="text" class="form-control" id="driverId' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
