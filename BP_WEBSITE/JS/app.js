@@ -192,9 +192,8 @@ $(document).ready(function() {
                                                     
                                                 }  
                                             });
-                                            
+                                            console.log("bella li");
                                             query.orderByChild("Stop_id").once("value").then(function (snapshot) {
-                                                
                                                 var changeHeader = headerDriver();
                                                 $('#header').html(changeHeader);
                                                 var result = mainDriver(snapshot, dropin, dropout);
@@ -664,7 +663,6 @@ function getEmailAndPassword(txtEmail, txtPassword) {
 
 function getMapDriver(routeId, busId) {
 
-
     var uluru = {lat: -26.195246, lng: 28.034088};
         driverMap = new google.maps.Map(document.getElementById('map1'), {
             center: uluru,
@@ -746,8 +744,7 @@ function getMapDriver(routeId, busId) {
     directionsDisplayTwo.setMap(driverMap);
     directionsDisplayTwo.setOptions( { suppressMarkers: true } );
     calculateAndDisplayRoute(directionsService, directionsDisplay,directionsDisplayTwo, routeId);
-    /*
-    geolocation(busId);*/
+    geolocation(busId);
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay, directionsDisplayTwo, routeId) {
@@ -854,7 +851,7 @@ function getMapUserRequest() {
             var markerUser = new google.maps.Marker({
                 position: latLngUser,
                 map: driverMap,
-                title: d.child('id').val(),
+                title: d.child('id').val().toString(),
                 icon: iconUser
             });
             markerUser.addListener('click', function() {
@@ -1586,12 +1583,12 @@ function autoUpdate(busId) {
       inputLongitude = position.coords.longitude;
       console.log(inputLatitude+" "+inputLongitude+ " the bus id is :"+ busId);
 
-      const dbRefBus = firebase.database().ref().child('Bus');
-      const dbRefBusN = dbRefBus.child('Bus'+ busId);
 
-      dbRefBusN.set({
-          Latitude: inputLatitude.value.toString(),
-          Longitude: inputLongitude.value.toString()
+      const dbRefBus = firebase.database().ref().child('Bus');
+      const dbRefBusN = dbRefBus.child('Bus'+ busId.toString());
+      dbRefBusN.update({
+          Latitude: inputLatitude.toString(),
+          Longitude: inputLongitude.toString()
 
       });
 
@@ -1612,5 +1609,5 @@ function autoUpdate(busId) {
     });
 
     // Call the autoUpdate() function every second
-    setTimeout(autoUpdate, 1000);
+    setTimeout(autoUpdate.bind(null, busId), 3000);
 }
