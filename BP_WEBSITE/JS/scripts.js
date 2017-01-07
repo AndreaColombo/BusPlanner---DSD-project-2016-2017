@@ -899,7 +899,7 @@ function getRequest(data){
 
 
     r+="" +
-        "<table style='height: 500px' class=' table hover table table-striped'>" +
+        "<table style='height: 500px' class=' table table-hover table-striped'>" +
         "<thead class='thead-inverse'>"+
         "<tr>"+
         "<th>User</th>"+
