@@ -160,6 +160,8 @@ $(document).ready(function() {
                             var busId;
                             var routeId;
                             var query;
+                            var dropin;
+                            var dropout;
                             dbRefDriver.once('value').then(function(snapshot){
                                snapshot.forEach(function(d){
                                  if(loginId == d.child('Login_id').val()){
@@ -178,6 +180,8 @@ $(document).ready(function() {
                                         snapshot.forEach(function(d){
                                             if(busId == d.child('Bus_id').val()){
                                                 routeId = d.child('Route_id').val();
+                                                dropin = d.child('Drop_in').val();
+                                                dropout = d.child('Drop_out').val();
                                             }  
                                         });
                                         
@@ -193,7 +197,7 @@ $(document).ready(function() {
                                                 
                                                 var changeHeader = headerDriver();
                                                 $('#header').html(changeHeader);
-                                                var result = mainDriver(snapshot);
+                                                var result = mainDriver(snapshot, dropin, dropout);
                                                 $('#main').html(result);
                                                 document.onload = getMapDriver(routeId, busId);
                                             });
