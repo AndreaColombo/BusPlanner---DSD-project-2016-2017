@@ -166,25 +166,31 @@ $(document).ready(function() {
                                      driverId = d.child('Driver_id').val();
                                  }  
                                });
+                                
                                 dbRefBus.once('value').then(function(snapshot){
                                     snapshot.forEach(function(d){
                                         if(driverId == d.child('Driver_id').val()){
                                             busId = d.child('Bus_id').val();
                                         }  
                                     });
+                                    
                                     dbRefAlgDyn.once('value').then(function(snapshot){
                                         snapshot.forEach(function(d){
                                             if(busId == d.child('Bus_id').val()){
                                                 routeId = d.child('Route_id').val();
                                             }  
                                         });
+                                        
                                         dbRefRoute.once('value').then(function(snapshot){
                                             snapshot.forEach(function(d){
                                                 if(routeId == d.child('Route_id').val()){
                                                     query = dbRefRoute.child("Route"+routeId).child("BusStops");
+                                                    
                                                 }  
                                             });
+                                            
                                             query.orderByChild("Stop_id").once("value").then(function (snapshot) {
+                                                
                                                 var changeHeader = headerDriver();
                                                 $('#header').html(changeHeader);
                                                 var result = mainDriver(snapshot);
