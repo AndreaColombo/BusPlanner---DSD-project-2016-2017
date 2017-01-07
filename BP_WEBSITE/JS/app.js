@@ -814,7 +814,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, directio
 function getMapUserRequest() {
 
     var uluru = {lat: -26.195246, lng: 28.034088};
-    driverMap = new google.maps.Map(document.getElementById('mapRequest'), {
+    var requestMap = new google.maps.Map(document.getElementById('mapRequest'), {
         center: uluru,
         zoom: 10,
         styles: [{
@@ -850,12 +850,12 @@ function getMapUserRequest() {
             };
             var markerUser = new google.maps.Marker({
                 position: latLngUser,
-                map: driverMap,
+                map: requestMap,
                 title: d.child('id').val().toString(),
                 icon: iconUser
             });
             markerUser.addListener('click', function() {
-                infowindowUser.open(driverMap, markerUser);
+                infowindowUser.open(requestMap, markerUser);
             });
         });
     });
