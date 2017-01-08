@@ -521,7 +521,7 @@ function getBus(data) {
     r += '<form>' +
         '<div class="form-group">' +
         '<label for="id">Bus Id:</label>' +
-        '<input type="text" class="form-control" id="addBusId" value="'+count+'" disabled>' +
+        '<input type="text" class="form-control" id="addBusId" value="'+ count +'" disabled>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="capacity">Capacity:</label>' +
@@ -544,7 +544,7 @@ function getBus(data) {
         '<input type="text" class="form-control " id="addBusLongitude" >' +
         '</div>' +
         //i have to put in get data the dynamic index
-        '<button type="submit" onclick="insertBus('+count+')" id="submitModDriver" class="btn btn-default" data-dismiss="modal">Submit</button>' +
+        '<button type="submit" onclick=" insertBus('+count+')" id="submitModDriver" class="btn btn-default" data-dismiss="modal">Submit</button>' +
         '</form>';
     r += '</div>';
     r += '<div class="modal-footer">';

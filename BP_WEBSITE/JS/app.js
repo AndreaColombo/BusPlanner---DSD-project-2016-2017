@@ -950,10 +950,16 @@ function insertBus(count){
 
     const inputCapacity = document.getElementById("addBusCapacity");
     const inputType = document.getElementById("addBusType");
-    const inputDriver = document.getElementById("addBusDriver");
+    var inputDriver = document.getElementById("addBusDriver");
     const inputLatitude = document.getElementById("addBusLatitude");
     const inputLongitude = document.getElementById("addBusLongitude");
-
+    console.log(inputDriver.value);
+    if(isNaN(parseInt(inputDriver.value))===true){
+        inputDriver= 0;
+    }
+    else{
+        inputDriver = parseInt(inputDriver.value);
+    }
     const dbRefBus = firebase.database().ref('Bus');
 
     //save the new data in the database
@@ -962,12 +968,12 @@ function insertBus(count){
         Bus_capacity: inputCapacity.value.toString(),
         Bus_id: count,
         Bus_type: inputType.value.toString(),
-        Driver_id: parseInt(inputDriver.value),
+        Driver_id: inputDriver,
         Latitude: inputLatitude.value.toString(),
         Longitude: inputLongitude.value.toString()
 
     });
-    
+
     dbRefBus.once('child_added', snap => {
         var busList = document.getElementById('busListGroup');
         busList.innerHTML = busList.innerHTML + '<div class="list-group-item" id="busItem'+snap.child('Bus_id').val()+'" align="center"><h5>Bus Id: ' + snap.child('Bus_id').val() +
@@ -1009,6 +1015,7 @@ function insertBus(count){
             '<button href="#" type="submit" onclick="deleteBus(' + snap.child('Bus_id').val() + ')" id="deleteBus' + snap.child('Bus_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
             '</div></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
     });
+    return count+1;
 }
 /*
 function testHide(){
