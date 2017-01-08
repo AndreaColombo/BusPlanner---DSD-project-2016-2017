@@ -391,13 +391,24 @@ function getBus(data) {
     r+= '<ul class ="list-group" id="busListGroup">';
     data.forEach(function (d) {
         count++;
+        var available = d.child('Available').val();
+        var busSpan;
+        var spanClass;
+        if(available == true){
+            busSpan = "V";
+            spanClass = "label label-pill label-success";
+        }else{
+            busSpan = "X";
+            spanClass = "label label-pill label-danger";
+        }
 
         if(cont++ == 0){
-            r += '<div class="list-group-item" align="center" id="busItem'+d.child('Bus_id').val()+'" style="margin-top: 13px"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+            r += '<div class="list-group-item" align="center" id="busItem'+d.child('Bus_id').val()+'" style="margin-top: 13px;"><span id="label-pill" class="'+spanClass+'" > </span><h5>' + "Bus Id: " + d.child('Bus_id').val() +
                 ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
         }
         else {
-            r += '<div class="list-group-item" id="busItem'+d.child('Bus_id').val()+'" align="center"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+
+            r += '<div class="list-group-item" id="busItem'+d.child('Bus_id').val()+'" align="center"><span id="label-pill" class="'+spanClass+'" > </span><h5>' + "Bus Id: " + d.child('Bus_id').val() +
                 ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
         }
         //<!-- start modalView -->

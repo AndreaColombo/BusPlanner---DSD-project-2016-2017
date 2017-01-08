@@ -970,6 +970,7 @@ function insertBus(count){
         Bus_type: inputType.value.toString(),
         Driver_id: inputDriver,
         Latitude: inputLatitude.value.toString(),
+        Available: true,
         Longitude: inputLongitude.value.toString()
 
     });
