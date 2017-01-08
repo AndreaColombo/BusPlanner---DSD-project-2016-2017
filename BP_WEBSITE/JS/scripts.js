@@ -218,7 +218,7 @@ function headerFleet() {
     return r;
 }
 
-function headerDriver() {
+function headerDriver(driverName, driverId, driverImage) {
     var r = '';
     r+='<nav class="navbar navbar-default">';
             r+='<div class="container-fluid" style="min-height:70px">';
@@ -227,9 +227,11 @@ function headerDriver() {
                     r+='<a class="navbar-brand" style="padding-top:25px" href="#" id="btnLogo2Driver">BusPlanner</a>';
                 r+='</div>';
                 r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
-                    r+='<ul class="nav navbar-nav navbar-right">';
-                        r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
-                   r+='</ul>';
+                r+='<ul class="nav navbar-nav navbar-right">';
+                r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
+                r+='</ul>';
+                r+='<a class="navbar-brand navbar-right" style="color: black; font-size: small" href="#">'+driverName+'<br>Driver id: '+driverId+'</a> ';
+                r+= '<a class="navbar-brand navbar-right"  style="padding-left: 15px" href="#" id="btnLogo1Driver"><img alt="Brand" class="img-circle" style="max-height:40px; border: 1px solid;" src="Images/'+ driverImage +'"></a>';
                 r+='</div>';
             r+='</div>';
         r+='</nav>';

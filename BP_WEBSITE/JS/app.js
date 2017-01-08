@@ -162,10 +162,14 @@ $(document).ready(function() {
                             var query;
                             var dropin;
                             var dropout;
+                            var driverName;
+                            var driverImage;
                             dbRefDriver.once('value').then(function(snapshot){
                                snapshot.forEach(function(d){
                                  if(loginId == d.child('Login_id').val()){
                                      driverId = d.child('Driver_id').val();
+                                     driverName = d.child('Driver_name').val();
+                                     driverImage = d.child('Image').val();
                                  }  
                                });
                                 
@@ -192,9 +196,8 @@ $(document).ready(function() {
                                                     
                                                 }  
                                             });
-                                            console.log("bella li");
                                             query.orderByChild("Stop_id").once("value").then(function (snapshot) {
-                                                var changeHeader = headerDriver();
+                                                var changeHeader = headerDriver(driverName, driverId, driverImage);
                                                 $('#header').html(changeHeader);
                                                 var result = mainDriver(snapshot, dropin, dropout);
                                                 $('#main').html(result);
