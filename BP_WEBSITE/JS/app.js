@@ -896,9 +896,9 @@ function modifyBusData(num){
 
     dbRefBusN.set({
         Bus_capacity: inputCapacity.value.toString(),
-        Bus_id: inputBusId.value.toString(),
+        Bus_id: parseInt(inputBusId.value),
         Bus_type: inputType.value.toString(),
-        Driver_id: inputDriver.value.toString(),
+        Driver_id: parseInt(inputDriver.value),
         Latitude: inputLatitude.value.toString(),
         Longitude: inputLongitude.value.toString()
 
@@ -962,7 +962,7 @@ function insertBus(count){
         Bus_capacity: inputCapacity.value.toString(),
         Bus_id: count,
         Bus_type: inputType.value.toString(),
-        Driver_id: inputDriver.value.toString(),
+        Driver_id: parseInt(inputDriver.value),
         Latitude: inputLatitude.value.toString(),
         Longitude: inputLongitude.value.toString()
 
