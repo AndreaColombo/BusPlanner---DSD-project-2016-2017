@@ -1036,10 +1036,6 @@ function insertBus(count){
 
 }
 
-
-
-
-
 function insertRoute(markers){
     const inputRouteId = document.getElementById("addRouteId");
     const inputName = document.getElementById("addRouteName");
@@ -1050,11 +1046,9 @@ function insertRoute(markers){
     var alreadyExist = false;
     dbRefRoute.once("value").then(function(snapshot) {
         snapshot.forEach(function (d) {
-            console.log(d.child("Route_id").val() + "==" + inputRouteId.value);
             if (parseInt(d.child("Route_id").val()) == inputRouteId.value) {
                 alreadyExist = true;
             }
-            console.log("ciao isi");
         });
 
         if(alreadyExist == false) {
@@ -1494,7 +1488,7 @@ function geolocation(busId) {
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
-            driverMap.setCenter(pos);
+            //driverMap.setCenter(pos);
         }, function() {
             handleLocationError(true, infoWindow, driverMap.getCenter());
         });
