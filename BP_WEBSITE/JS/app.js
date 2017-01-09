@@ -953,7 +953,9 @@ function insertBus(count){
     var inputDriver = document.getElementById("addBusDriver");
     const inputLatitude = document.getElementById("addBusLatitude");
     const inputLongitude = document.getElementById("addBusLongitude");
+    var inputId = document.getElementById("addBusId");
     console.log(inputDriver.value);
+
     if(isNaN(parseInt(inputDriver.value))===true){
         inputDriver= 0;
     }
@@ -961,62 +963,90 @@ function insertBus(count){
         inputDriver = parseInt(inputDriver.value);
     }
     const dbRefBus = firebase.database().ref('Bus');
+    inputId = parseInt(inputId.value);
 
-    //save the new data in the database
+    var alreadyExist = false;
+    dbRefBus.once("value").then(function(snapshot){
+        snapshot.forEach(function(d){
+            console.log(d.child("Bus_id").val()+"=="+ inputId);
+           if(d.child("Bus_id").val() == inputId){
+               alreadyExist = true;
+           }
+        });
 
-    dbRefBus.child('Bus'+ count).set({
-        Bus_capacity: inputCapacity.value.toString(),
-        Bus_id: count,
-        Bus_type: inputType.value.toString(),
-        Driver_id: inputDriver,
-        Latitude: inputLatitude.value.toString(),
-        Available: true,
-        Longitude: inputLongitude.value.toString()
+        if(alreadyExist == false) {
+            dbRefBus.child('Bus' + count).set({
+                Bus_capacity: inputCapacity.value.toString(),
+                Bus_id: inputId,
+                Bus_type: inputType.value.toString(),
+                Driver_id: inputDriver,
+                Latitude: inputLatitude.value.toString(),
+                Available: true,
+                Longitude: inputLongitude.value.toString()
 
-    });
+            });
 
-    dbRefBus.once('child_added', snap => {
-        var busList = document.getElementById('busListGroup');
-        busList.innerHTML = busList.innerHTML + '<div class="list-group-item" id="busItem'+snap.child('Bus_id').val()+'" align="center"><h5>Bus Id: ' + snap.child('Bus_id').val() +
+            dbRefBus.once('child_added', snap => {
+                var busList = document.getElementById('busListGroup');
+            busList.innerHTML = busList.innerHTML + '<div class="list-group-item" id="busItem'+snap.child('Bus_id').val()+'" align="center"><span id="label-pill" class="label label-pill label-success" > </span><h5>Bus Id: ' + snap.child('Bus_id').val() +
                 ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + snap.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + snap.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + snap.child('Bus_id').val() + '">Delete</a></h5></div><div id="modalView' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Bus ' + snap.child('Bus_id').val() + ' Information</h4></div><div class="modal-body"><p>Bus capacity: ' + snap.child('Bus_capacity').val() + '<br>Bus Type:' + snap.child('Bus_type').val() + '<br>Driver Id: ' + snap.child('Driver_id').val() + '<br>Latitude: ' + snap.child('Latitude').val() + '<br>Longitude: ' + snap.child('Longitude').val() + '<br></p></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Bus ' + snap.child('Bus_id').val() + ' to modify</h4></div><div class="modal-body"><form>' +
-            '<div class="form-group">' +
-            '<label for="id">Bus Id:</label>' +
-            '<input type="text" class="form-control" id="busId' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_id").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="capacity">Capacity:</label>' +
-            '<input type="text" class="form-control" id="busCapacity' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_capacity").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="type">Type:</label>' +
-            '<input type="text" class="form-control" id="busType' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_type").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="driver">Driver:</label>' +
-            '<input type="text" class="form-control" id="busDriver' + snap.child('Bus_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="latitude">Latitude:</label>' +
-            '<input type="text" class="form-control " id="busLatitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Latitude").val() + '" disabled>' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="longitude">Longitude:</label>' +
-            '<input type="text" class="form-control " id="busLongitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Longitude").val() + '" disabled>' +
-            '</div>' +
-            //i have to put in get data the dynamic index
-            '<button href="#" type="submit" onclick="modifyBusData(' + snap.child('Bus_id').val() + ')" id="submitModBus' + snap.child('Bus_id').val() + '" class="btn btn-default">Submit</button>' +
-            '</form></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting the bus ' + snap.child('Bus_id').val() + '</h4></div><div class="modal-body"><div>' +
-            '<p>Bus capacity: ' + snap.child('Bus_capacity').val() + '<br>' +
-            'Bus Type:' + snap.child('Bus_type').val() + '<br>' +
-            'Driver Id: ' + snap.child('Driver_id').val() + '<br>' +
-            'Latitude: ' + snap.child('Latitude').val() + '<br>' +
-            'Longitude: ' + snap.child('Longitude').val() + '<br>' +
-            '</p>' +
-            //i have to put in get data the dynamic index
-            '<button href="#" type="submit" onclick="deleteBus(' + snap.child('Bus_id').val() + ')" id="deleteBus' + snap.child('Bus_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
-            '</div></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+                '<div class="form-group">' +
+                '<label for="id">Bus Id:</label>' +
+                '<input type="text" class="form-control" id="busId' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_id").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="capacity">Capacity:</label>' +
+                '<input type="text" class="form-control" id="busCapacity' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_capacity").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="type">Type:</label>' +
+                '<input type="text" class="form-control" id="busType' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_type").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="driver">Driver:</label>' +
+                '<input type="text" class="form-control" id="busDriver' + snap.child('Bus_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="latitude">Latitude:</label>' +
+                '<input type="text" class="form-control " id="busLatitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Latitude").val() + '" disabled>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="longitude">Longitude:</label>' +
+                '<input type="text" class="form-control " id="busLongitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Longitude").val() + '" disabled>' +
+                '</div>' +
+                //i have to put in get data the dynamic index
+                '<button href="#" type="submit" onclick="modifyBusData(' + snap.child('Bus_id').val() + ')" id="submitModBus' + snap.child('Bus_id').val() + '" class="btn btn-default">Submit</button>' +
+                '</form></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting the bus ' + snap.child('Bus_id').val() + '</h4></div><div class="modal-body"><div>' +
+                '<p>Bus capacity: ' + snap.child('Bus_capacity').val() + '<br>' +
+                'Bus Type:' + snap.child('Bus_type').val() + '<br>' +
+                'Driver Id: ' + snap.child('Driver_id').val() + '<br>' +
+                'Latitude: ' + snap.child('Latitude').val() + '<br>' +
+                'Longitude: ' + snap.child('Longitude').val() + '<br>' +
+                '</p>' +
+                //i have to put in get data the dynamic index
+                '<button href="#" type="submit" onclick="deleteBus(' + snap.child('Bus_id').val() + ')" id="deleteBus' + snap.child('Bus_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
+                '</div></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+            });
+        }
+        else{
+            alert("Bus not inserted, This bus id already exists!");
+        }
+
     });
-    return count+1;
+    /*routes.once("value").then(function(snapshot) {
+        var specificRoute;
+        var numberOfChildren = snapshot.numChildren();
+        for(var i=1; i<=numberOfChildren; i++) {
+            specificRoute = document.getElementById('Route'+i);
+            if(specificRoute.classList.contains('active')){
+                specificRoute.classList.remove('active');
+            }
+        }
+        document.getElementById('Route'+num).classList.add('active');
+    });
+*/
+
+
 }
 /*
 function testHide(){

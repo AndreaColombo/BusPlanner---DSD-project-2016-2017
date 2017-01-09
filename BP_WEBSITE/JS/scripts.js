@@ -532,7 +532,7 @@ function getBus(data) {
     r += '<form>' +
         '<div class="form-group">' +
         '<label for="id">Bus Id:</label>' +
-        '<input type="text" class="form-control" id="addBusId" value="'+ count +'" disabled>' +
+        '<input type="text" class="form-control" id="addBusId" value="'+ count +'">' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="capacity">Capacity:</label>' +
