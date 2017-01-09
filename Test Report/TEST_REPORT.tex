@@ -1,0 +1,55 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{Images/}}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{textcomp}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	filecolor=blue,      
+	urlcolor=cyan,
+}
+\title{
+	\textbf{D}istributed \textbf{S}oftware \textbf{D}evelopment: \textbf{BusPlanner}\\
+	\textbf{Test Report}\\
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=13cm, height=13cm]{Bus_logo}
+	\end{figure}
+	\date{}
+}
+\begin{document}
+	\begin{table}[t]
+		\centering
+		\begin{tabular}{| m{6cm} | m{6cm} |}
+			\hline
+			BusPlanner & Version: 1.0\\
+			\hline
+			Test Report & Date: 09-01-2017\\
+			\hline
+		\end{tabular}
+	\end{table}
+	\maketitle 
+	\begin{center}
+		\textbf{\Large Revision History}
+	\end{center}
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{| m{2cm} | m{2cm} | m{3cm} | m{5cm} |}
+			\hline
+			\textbf{Date} & \textbf{Version} & \textbf{Description} & \textbf{Author}\\
+			\hline
+			09-01-2017 & 1.0 & Initial draft & Isabella Agosti, Huy Hoang Nguyen\\
+			\hline
+			& & & \\
+			\hline
+		\end{tabular}
+	\end{table}
+\newpage
+	\tableofcontents
+	\include{Introduction}
+	\include{TestCasesAndResults}
+\end{document}

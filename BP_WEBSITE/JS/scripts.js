@@ -218,7 +218,7 @@ function headerFleet() {
     return r;
 }
 
-function headerDriver() {
+function headerDriver(driverName, driverId, driverImage) {
     var r = '';
     r+='<nav class="navbar navbar-default">';
             r+='<div class="container-fluid" style="min-height:70px">';
@@ -227,9 +227,11 @@ function headerDriver() {
                     r+='<a class="navbar-brand" style="padding-top:25px" href="#" id="btnLogo2Driver">BusPlanner</a>';
                 r+='</div>';
                 r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
-                    r+='<ul class="nav navbar-nav navbar-right">';
-                        r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
-                   r+='</ul>';
+                r+='<ul class="nav navbar-nav navbar-right">';
+                r+='<li><a id="btnLogout" href="#" style="padding-top:25px">Log out</a></li>';
+                r+='</ul>';
+                r+='<a class="navbar-brand navbar-right" style="color: black; font-size: small" href="#">'+driverName+'<br>Driver id: '+driverId+'</a> ';
+                r+= '<a class="navbar-brand navbar-right"  style="padding-left: 15px" href="#" id="btnLogo1Driver"><img alt="Brand" class="img-circle" style="max-height:40px; border: 1px solid;" src="Images/'+ driverImage +'"></a>';
                 r+='</div>';
             r+='</div>';
         r+='</nav>';
@@ -307,18 +309,18 @@ function mainFleet() {
     return r;
 }
 
-function mainDriver(data) {
+function mainDriver(data, dropin, dropout) {
     var r = "";
     r+='<div class = "row" style="margin-bottom:60px">';
     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
     r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container text-center" style="height:500px">';
     
-    r+='<h2>YOUR SCHEDULE TODAY</h2>';
+    r+='<h2>YOUR SCHEDULE TODAY<button type="button" title="Drop In" class="btn btn-success" style="margin-left:10px">'+dropin+'</button><button style="margin-left:10px" title="Drop Out" type="button" class="btn btn-danger">'+dropout+'</button></h2>';
     r+='<ul class="list-group">';
     var count = 1;
     data.forEach(function (d) {
-        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item"><span style="background-color:red" class="badge">14</span><span style="background-color:green" class="badge">13</span>'+data.child('BusStop'+count).child('Name').val()+'</a>';
+        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item">'+data.child('BusStop'+count).child('Name').val()+'</a>';
         count++;
     });
     r+='</ul>';
@@ -354,9 +356,9 @@ function getStatistics(){
 
     r += '<div class="row" style="margin-bottom: 60px">' +
         '<div class="col-md-6 col-sm-6 col-xs-6" >' +
-        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechart" style="height: 400px"></div></div>' +
+        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechart" style="height: 300px; width:100%"></div></div>' +
         '<div class="col-md-6 col-sm-6 col-xs-6" >' +
-        '<div class="col-md-1 col-sm-1 col-xs-1" ></div><div class="col-md-11 col-sm-11 col-xs-11" id= "piechartstop" style="height: 400px"></div></div>' +
+        '<div class="col-md-11 col-sm-11 col-xs-11" id= "piechartstop" style="height: 300px; width:100%"></div><div class="col-md-1 col-sm-1 col-xs-1" ></div></div>' +
         '</div>';
         
 
@@ -389,13 +391,24 @@ function getBus(data) {
     r+= '<ul class ="list-group" id="busListGroup">';
     data.forEach(function (d) {
         count++;
+        var available = d.child('Available').val();
+        var busSpan;
+        var spanClass;
+        if(available == true){
+            busSpan = "V";
+            spanClass = "label label-pill label-success";
+        }else{
+            busSpan = "X";
+            spanClass = "label label-pill label-danger";
+        }
 
         if(cont++ == 0){
-            r += '<div class="list-group-item" align="center" id="busItem'+d.child('Bus_id').val()+'" style="margin-top: 13px"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+            r += '<div class="list-group-item" align="center" id="busItem'+d.child('Bus_id').val()+'" style="margin-top: 13px;"><span id="label-pill" class="'+spanClass+'" > </span><h5>' + "Bus Id: " + d.child('Bus_id').val() +
                 ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
         }
         else {
-            r += '<div class="list-group-item" id="busItem'+d.child('Bus_id').val()+'" align="center"><h5>' + "Bus Id: " + d.child('Bus_id').val() +
+
+            r += '<div class="list-group-item" id="busItem'+d.child('Bus_id').val()+'" align="center"><span id="label-pill" class="'+spanClass+'" > </span><h5>' + "Bus Id: " + d.child('Bus_id').val() +
                 ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + d.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + d.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + d.child('Bus_id').val() + '">Delete</a></h5></div>';
         }
         //<!-- start modalView -->
@@ -519,7 +532,7 @@ function getBus(data) {
     r += '<form>' +
         '<div class="form-group">' +
         '<label for="id">Bus Id:</label>' +
-        '<input type="text" class="form-control" id="addBusId" value="'+count+'" disabled>' +
+        '<input type="text" class="form-control" id="addBusId" value="'+ count +'">' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="capacity">Capacity:</label>' +
@@ -542,7 +555,7 @@ function getBus(data) {
         '<input type="text" class="form-control " id="addBusLongitude" >' +
         '</div>' +
         //i have to put in get data the dynamic index
-        '<button type="submit" onclick="insertBus('+count+')" id="submitModDriver" class="btn btn-default" data-dismiss="modal">Submit</button>' +
+        '<button type="submit" onclick=" insertBus('+count+')" id="submitModDriver" class="btn btn-default" data-dismiss="modal">Submit</button>' +
         '</form>';
     r += '</div>';
     r += '<div class="modal-footer">';
@@ -749,7 +762,7 @@ function getDriver(data) {
     r += '<form>' +
         '<div class="form-group">' +
         '<label for="id">Driver ID:</label>' +
-        '<input type="text" class="form-control" id="addDriverId" value="' + count + '" disabled>' +
+        '<input type="text" class="form-control" id="addDriverId" value="' + count + '">' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="name">Name:</label>' +
@@ -895,11 +908,11 @@ function getRequest(data){
     r+="<div style='margin-top: 20px; margin-bottom: 70px' class='row'>" +
         "   <div class='col-md-5 col-sm-5 col-xs-5 '>" +
         "<div class='row'><div class='col-md-1 col-sm-1 col-xs-1'></div>" +
-        "<div class='col-md-11 col-sm-11 col-xs-11 container'> " ;
+        "<div class='col-md-11 col-sm-11 col-xs-11 scroll container ' style='height:500px'> " ;
 
 
     r+="" +
-        "<table style='height: 500px' class=' table hover table table-striped'>" +
+        "<table style='height: 500px' class=' table table-hover table-striped'>" +
         "<thead class='thead-inverse'>"+
         "<tr>"+
         "<th>User</th>"+

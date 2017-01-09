@@ -4,6 +4,7 @@ var password;
 var logout;
 var driverMap;
 var markerClusterer1;
+var positionMarker = null;
 
 $(document).ready(function() {
     
@@ -159,36 +160,48 @@ $(document).ready(function() {
                             var busId;
                             var routeId;
                             var query;
+                            var dropin;
+                            var dropout;
+                            var driverName;
+                            var driverImage;
                             dbRefDriver.once('value').then(function(snapshot){
                                snapshot.forEach(function(d){
                                  if(loginId == d.child('Login_id').val()){
                                      driverId = d.child('Driver_id').val();
+                                     driverName = d.child('Driver_name').val();
+                                     driverImage = d.child('Image').val();
                                  }  
                                });
+                                
                                 dbRefBus.once('value').then(function(snapshot){
                                     snapshot.forEach(function(d){
                                         if(driverId == d.child('Driver_id').val()){
                                             busId = d.child('Bus_id').val();
                                         }  
                                     });
+                                    
                                     dbRefAlgDyn.once('value').then(function(snapshot){
                                         snapshot.forEach(function(d){
                                             if(busId == d.child('Bus_id').val()){
                                                 routeId = d.child('Route_id').val();
+                                                dropin = d.child('Drop_in').val();
+                                                dropout = d.child('Drop_out').val();
                                             }  
                                         });
+                                        
                                         dbRefRoute.once('value').then(function(snapshot){
                                             snapshot.forEach(function(d){
                                                 if(routeId == d.child('Route_id').val()){
                                                     query = dbRefRoute.child("Route"+routeId).child("BusStops");
+                                                    
                                                 }  
                                             });
                                             query.orderByChild("Stop_id").once("value").then(function (snapshot) {
-                                                var changeHeader = headerDriver();
+                                                var changeHeader = headerDriver(driverName, driverId, driverImage);
                                                 $('#header').html(changeHeader);
-                                                var result = mainDriver(snapshot);
+                                                var result = mainDriver(snapshot, dropin, dropout);
                                                 $('#main').html(result);
-                                                document.onload = getMapDriver(routeId);
+                                                document.onload = getMapDriver(routeId, busId);
                                             });
                                         });
                                     });
@@ -223,7 +236,7 @@ $(document).ready(function() {
     $("body").on("click", "#btnDriver", function (e){
 
         var query = firebase.database().ref().child("Driver");
-        query.once("value")
+        query.orderByChild('Driver_id').once("value")
             .then(function (snapshot) {
                 //bus is the function in script.js
                 var result = getDriver(snapshot);
@@ -651,8 +664,8 @@ function getEmailAndPassword(txtEmail, txtPassword) {
     pass = txtPassword.value;
 }
 
-function getMapDriver(routeId) {
-    
+function getMapDriver(routeId, busId) {
+
     var uluru = {lat: -26.195246, lng: 28.034088};
         driverMap = new google.maps.Map(document.getElementById('map1'), {
             center: uluru,
@@ -685,7 +698,7 @@ function getMapDriver(routeId) {
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: driverMap,
-                title: d.child('Stop_id').val()
+                title: d.child('Stop_id').val().toString()
             });
             allMarkers.push(marker);
             marker.addListener('click', function() {
@@ -722,13 +735,89 @@ function getMapDriver(routeId) {
             }
         });
     });
+    
+    
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var directionsDisplayTwo = new google.maps.DirectionsRenderer;
+    // very important! Here we can modify the marker related to directionDisplay and so remove the markers A,B,C...
+    // I have delete the markers for the moment
+    directionsDisplay.setMap(driverMap);
+    directionsDisplay.setOptions( { suppressMarkers: true } );
+    directionsDisplayTwo.setMap(driverMap);
+    directionsDisplayTwo.setOptions( { suppressMarkers: true } );
+    calculateAndDisplayRoute(directionsService, directionsDisplay,directionsDisplayTwo, routeId);
+    geolocation(busId);
 }
 
+function calculateAndDisplayRoute(directionsService, directionsDisplay, directionsDisplayTwo, routeId) {
+    
+    var dbRefBusStops = firebase.database().ref().child('Route').child('Route'+routeId).child('BusStops');
+    dbRefBusStops.orderByChild("Stop_id").once('value').then(function(snapshot){
+        var waypts1 = [];
+        var waypts2 = [];
+        var count = 1;
+        snapshot.forEach(function(d){
+            var lat = d.child('Point').child('Latitude').val();
+            var long = d.child('Point').child('Longitude').val();
+            if(count <= 22){
+                waypts1.push({
+                location: new google.maps.LatLng(lat,long),
+                stopover: true
+                });
+            } else {
+                waypts2.push({
+                location: new google.maps.LatLng(lat,long),
+                stopover: true
+                });
+            }
+            count++;
+        });
+        var start = waypts1[0].location;
+        var end = waypts1[waypts1.length - 1].location;
+        waypts1.pop();
+        waypts1.splice(0,1);
+        
+        directionsService.route({
+          origin: start,
+          destination: end,
+          waypoints: waypts1,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+              //concatenatedResponses = response;
+              directionsDisplay.setDirections(response);
+
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+
+        var end2 = waypts2[waypts2.length - 1].location;
+        waypts2.pop();
+        directionsService.route({
+          origin: end,
+          destination: end2,
+          waypoints: waypts2,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+              //Array.prototype.push.apply(concatenatedResponses, response);
+              directionsDisplayTwo.setDirections(response);
+            
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+    });
+}
 
 function getMapUserRequest() {
 
     var uluru = {lat: -26.195246, lng: 28.034088};
-    driverMap = new google.maps.Map(document.getElementById('mapRequest'), {
+    var requestMap = new google.maps.Map(document.getElementById('mapRequest'), {
         center: uluru,
         zoom: 10,
         styles: [{
@@ -764,12 +853,12 @@ function getMapUserRequest() {
             };
             var markerUser = new google.maps.Marker({
                 position: latLngUser,
-                map: driverMap,
-                title: d.child('id').val(),
+                map: requestMap,
+                title: d.child('id').val().toString(),
                 icon: iconUser
             });
             markerUser.addListener('click', function() {
-                infowindowUser.open(driverMap, markerUser);
+                infowindowUser.open(requestMap, markerUser);
             });
         });
     });
@@ -807,9 +896,9 @@ function modifyBusData(num){
 
     dbRefBusN.set({
         Bus_capacity: inputCapacity.value.toString(),
-        Bus_id: inputBusId.value.toString(),
+        Bus_id: parseInt(inputBusId.value),
         Bus_type: inputType.value.toString(),
-        Driver_id: inputDriver.value.toString(),
+        Driver_id: parseInt(inputDriver.value),
         Latitude: inputLatitude.value.toString(),
         Longitude: inputLongitude.value.toString()
 
@@ -861,65 +950,103 @@ function insertBus(count){
 
     const inputCapacity = document.getElementById("addBusCapacity");
     const inputType = document.getElementById("addBusType");
-    const inputDriver = document.getElementById("addBusDriver");
+    var inputDriver = document.getElementById("addBusDriver");
     const inputLatitude = document.getElementById("addBusLatitude");
     const inputLongitude = document.getElementById("addBusLongitude");
+    var inputId = document.getElementById("addBusId");
+    console.log(inputDriver.value);
 
+    if(isNaN(parseInt(inputDriver.value))===true){
+        inputDriver= 0;
+    }
+    else{
+        inputDriver = parseInt(inputDriver.value);
+    }
     const dbRefBus = firebase.database().ref('Bus');
+    inputId = parseInt(inputId.value);
 
-    //save the new data in the database
+    var alreadyExist = false;
+    dbRefBus.once("value").then(function(snapshot){
+        snapshot.forEach(function(d){
+            console.log(d.child("Bus_id").val()+"=="+ inputId);
+           if(d.child("Bus_id").val() == inputId){
+               alreadyExist = true;
+           }
+        });
 
-    dbRefBus.child('Bus'+ count).set({
-        Bus_capacity: inputCapacity.value.toString(),
-        Bus_id: count,
-        Bus_type: inputType.value.toString(),
-        Driver_id: inputDriver.value.toString(),
-        Latitude: inputLatitude.value.toString(),
-        Longitude: inputLongitude.value.toString()
+        if(alreadyExist == false) {
+            dbRefBus.child('Bus' + inputId).set({
+                Bus_capacity: inputCapacity.value.toString(),
+                Bus_id: inputId,
+                Bus_type: inputType.value.toString(),
+                Driver_id: inputDriver,
+                Latitude: inputLatitude.value.toString(),
+                Available: true,
+                Longitude: inputLongitude.value.toString()
 
-    });
-    
-    dbRefBus.once('child_added', snap => {
-        var busList = document.getElementById('busListGroup');
-        busList.innerHTML = busList.innerHTML + '<div class="list-group-item" id="busItem'+snap.child('Bus_id').val()+'" align="center"><h5>Bus Id: ' + snap.child('Bus_id').val() +
+            });
+
+            dbRefBus.once('child_added', snap => {
+                var busList = document.getElementById('busListGroup');
+            busList.innerHTML = busList.innerHTML + '<div class="list-group-item" id="busItem'+snap.child('Bus_id').val()+'" align="center"><span id="label-pill" class="label label-pill label-success" > </span><h5>Bus Id: ' + snap.child('Bus_id').val() +
                 ' &emsp;<a href="#" data-toggle="modal"  data-target="#modalView' + snap.child('Bus_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + snap.child('Bus_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + snap.child('Bus_id').val() + '">Delete</a></h5></div><div id="modalView' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Bus ' + snap.child('Bus_id').val() + ' Information</h4></div><div class="modal-body"><p>Bus capacity: ' + snap.child('Bus_capacity').val() + '<br>Bus Type:' + snap.child('Bus_type').val() + '<br>Driver Id: ' + snap.child('Driver_id').val() + '<br>Latitude: ' + snap.child('Latitude').val() + '<br>Longitude: ' + snap.child('Longitude').val() + '<br></p></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Bus ' + snap.child('Bus_id').val() + ' to modify</h4></div><div class="modal-body"><form>' +
-            '<div class="form-group">' +
-            '<label for="id">Bus Id:</label>' +
-            '<input type="text" class="form-control" id="busId' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_id").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="capacity">Capacity:</label>' +
-            '<input type="text" class="form-control" id="busCapacity' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_capacity").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="type">Type:</label>' +
-            '<input type="text" class="form-control" id="busType' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_type").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="driver">Driver:</label>' +
-            '<input type="text" class="form-control" id="busDriver' + snap.child('Bus_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="latitude">Latitude:</label>' +
-            '<input type="text" class="form-control " id="busLatitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Latitude").val() + '" disabled>' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="longitude">Longitude:</label>' +
-            '<input type="text" class="form-control " id="busLongitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Longitude").val() + '" disabled>' +
-            '</div>' +
-            //i have to put in get data the dynamic index
-            '<button href="#" type="submit" onclick="modifyBusData(' + snap.child('Bus_id').val() + ')" id="submitModBus' + snap.child('Bus_id').val() + '" class="btn btn-default">Submit</button>' +
-            '</form></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting the bus ' + snap.child('Bus_id').val() + '</h4></div><div class="modal-body"><div>' +
-            '<p>Bus capacity: ' + snap.child('Bus_capacity').val() + '<br>' +
-            'Bus Type:' + snap.child('Bus_type').val() + '<br>' +
-            'Driver Id: ' + snap.child('Driver_id').val() + '<br>' +
-            'Latitude: ' + snap.child('Latitude').val() + '<br>' +
-            'Longitude: ' + snap.child('Longitude').val() + '<br>' +
-            '</p>' +
-            //i have to put in get data the dynamic index
-            '<button href="#" type="submit" onclick="deleteBus(' + snap.child('Bus_id').val() + ')" id="deleteBus' + snap.child('Bus_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
-            '</div></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+                '<div class="form-group">' +
+                '<label for="id">Bus Id:</label>' +
+                '<input type="text" class="form-control" id="busId' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_id").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="capacity">Capacity:</label>' +
+                '<input type="text" class="form-control" id="busCapacity' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_capacity").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="type">Type:</label>' +
+                '<input type="text" class="form-control" id="busType' + snap.child('Bus_id').val() + '" value="' + snap.child("Bus_type").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="driver">Driver:</label>' +
+                '<input type="text" class="form-control" id="busDriver' + snap.child('Bus_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="latitude">Latitude:</label>' +
+                '<input type="text" class="form-control " id="busLatitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Latitude").val() + '" disabled>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="longitude">Longitude:</label>' +
+                '<input type="text" class="form-control " id="busLongitude' + snap.child('Bus_id').val() + '" value="' + snap.child("Longitude").val() + '" disabled>' +
+                '</div>' +
+                //i have to put in get data the dynamic index
+                '<button href="#" type="submit" onclick="modifyBusData(' + snap.child('Bus_id').val() + ')" id="submitModBus' + snap.child('Bus_id').val() + '" class="btn btn-default">Submit</button>' +
+                '</form></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Bus_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting the bus ' + snap.child('Bus_id').val() + '</h4></div><div class="modal-body"><div>' +
+                '<p>Bus capacity: ' + snap.child('Bus_capacity').val() + '<br>' +
+                'Bus Type:' + snap.child('Bus_type').val() + '<br>' +
+                'Driver Id: ' + snap.child('Driver_id').val() + '<br>' +
+                'Latitude: ' + snap.child('Latitude').val() + '<br>' +
+                'Longitude: ' + snap.child('Longitude').val() + '<br>' +
+                '</p>' +
+                //i have to put in get data the dynamic index
+                '<button href="#" type="submit" onclick="deleteBus(' + snap.child('Bus_id').val() + ')" id="deleteBus' + snap.child('Bus_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
+                '</div></div><div class="modal-footer"><button href="#" type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+            });
+        }
+        else{
+            alert("Bus not inserted. This bus id already exists!");
+        }
+
     });
+    /*routes.once("value").then(function(snapshot) {
+        var specificRoute;
+        var numberOfChildren = snapshot.numChildren();
+        for(var i=1; i<=numberOfChildren; i++) {
+            specificRoute = document.getElementById('Route'+i);
+            if(specificRoute.classList.contains('active')){
+                specificRoute.classList.remove('active');
+            }
+        }
+        document.getElementById('Route'+num).classList.add('active');
+    });
+*/
+
+
 }
 /*
 function testHide(){
@@ -989,61 +1116,76 @@ function insertDriver(count){
     const inputNumber = document.getElementById("addNumber");
     const inputDescription = document.getElementById("addDescription");
     const inputImage = document.getElementById("addImage");
+    var inputId = document.getElementById("addDriverId");
 
+    inputId = parseInt(inputId.value);
     const dbRef = firebase.database().ref('Driver');
 
-    //save the new data in the databse
+    var alreadyExist = false;
+    dbRef.once("value").then(function(snapshot) {
+        snapshot.forEach(function (d) {
+            console.log(d.child("Driver_id").val() + "==" + inputId);
+            if (d.child("Driver_id").val() == inputId) {
+                alreadyExist = true;
+            }
+        });
 
-    dbRef.child('Driver'+ count).set({
-        Driver_id: count,
-        Driver_name: inputName.value.toString(),
-        Mobile_number: inputNumber.value.toString(),
-        Description: inputDescription.value.toString(),
-        Image: inputImage.value.toString()
-    });
+        if(alreadyExist == false) {
+            dbRef.child('Driver'+ inputId).set({
+                Driver_id: inputId ,
+                Driver_name: inputName.value.toString(),
+                Mobile_number: inputNumber.value.toString(),
+                Description: inputDescription.value.toString(),
+                Image: inputImage.value.toString()
+            });
 
-    dbRef.once('child_added', snap => {
-        var driversList = document.getElementById('driversListGroup');
-        driversList.innerHTML = driversList.innerHTML + '<div class="row" id="driverItem'+snap.child('Driver_id').val()+'" style=" margin: 10px"><div class="col-md-1 col-sm-1 col-xs-1"></div><div class="col-md-3 col-sm-3 col-xs-3">' +
-             '<img src="Images/'+snap.child('Image').val() +'" class="img-circle" id="imageDriver">' +
-             '</div>' +
-             '<div class="col-md-7 col-sm-7 col-xs-7">' +
+            dbRef.once('child_added', snap => {
+                var driversList = document.getElementById('driversListGroup');
+            driversList.innerHTML = driversList.innerHTML + '<div href="#" class="list-group-item row" id="driverItem'+snap.child('Driver_id').val()+'" style="margin:10px; border-radius:25px;"><div class="col-md-1 col-sm-1 col-xs-1"></div><div class="col-md-3 col-sm-3 col-xs-3">' +
+                '<img src="Images/'+snap.child('Image').val() +'" class="img-circle" id="imageDriver">' +
+                '</div>' +
+                '<div align="right" class="col-md-7 col-sm-7 col-xs-7">' +
                 '<h3 id="dName'+snap.child('Driver_id').val()+'">'+ snap.child('Driver_name').val()+'</h3>' +
                 '<p id="dDescription'+snap.child('Driver_id').val()+'" style="font-size: medium">'+snap.child('Description').val() +'</p><h4 align="center">'+
-        ' &emsp;<a href="#" data-toggle="modal" data-target="#modalView' + snap.child('Driver_id').val() + '">Info</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalModify' + snap.child('Driver_id').val() + '">Modify</a>&emsp;' + '<a href="#" data-toggle="modal" data-target="#modalDelete' + snap.child('Driver_id').val() + '">Delete</a></h4></div></div><div id="modalView' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + snap.child('Driver_name').val() + ' Information</h4></div><div class="modal-body"><p>Driver ID: ' + snap.child('Driver_id').val() + '<br>Driver Name: ' + snap.child('Driver_name').val() + '<br>Mobile Number: ' + snap.child('Mobile_number').val() + '<br>Date of birth: ' + snap.child('Date_birth').val() + '<br></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Driver ' + snap.child('Driver_name').val() + ' to modify</h4></div><div class="modal-body"><form>' +
-            '<div class="form-group">' +
-            '<label for="id">Driver Id:</label>' +
-            '<input type="text" class="form-control" id="driverId' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="capacity">Name:</label>' +
-            '<input type="text" class="form-control" id="driverName' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_name").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="type">Date of birth:</label>' +
-            '<input type="text" class="form-control" id="driverDateBirth' + snap.child('Driver_id').val() + '" value="' + snap.child("Date_birth").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="driver">Mobile number:</label>' +
-            '<input type="text" class="form-control" id="driverNumber' + snap.child('Driver_id').val() + '" value="' + snap.child("Mobile_number").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="latitude">Description:</label>' +
-            '<input type="text" class="form-control " id="driverDescription' + snap.child('Driver_id').val() + '" value="' + snap.child("Description").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="longitude">Image:</label>' +
-            '<input type="text" class="form-control " id="driverImage' + snap.child('Driver_id').val() + '" value="' + snap.child("Image").val() + '">' +
-            '</div>' +
-            //i have to put in get data the dynamic index
-            '<button type="submit" onclick="modifyDriverData(' + snap.child('Driver_id').val() + ')" id="submitModBus' + snap.child('Driver_id').val() + '" class="btn btn-default">Submit</button>' +
-            '</form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting ' + snap.child('Driver_name').val() + ' from the driver list</h4></div><div class="modal-body"><div>' +
-            '<p>Driver ID: ' + snap.child('Driver_id').val() + '<br>' +
-            'Driver Name: ' + snap.child('Driver_name').val() + '<br>' +
-            'Mobile Number: ' + snap.child('Mobile_number').val() + '<br>' +
-            'Date of birth: ' + snap.child('Date_birth').val() + '<br>' +
-            '</p><button type="submit" onclick="deleteDriver(' + snap.child('Driver_id').val() + ')" id="deleteDriver' + snap.child('Driver_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
-            '</div></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+                ' <div class="btn-group" role="group" aria-label="..."><button data-toggle="modal" data-target="#modalView' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Info</button><button data-toggle="modal" data-target="#modalModify' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Modify</button><button data-toggle="modal" data-target="#modalDelete' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Delete</button></div></div><div id="modalView' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + snap.child('Driver_name').val() + ' Information</h4></div><div class="modal-body"><p>Driver ID: ' + snap.child('Driver_id').val() + '<br>Driver Name: ' + snap.child('Driver_name').val() + '<br>Mobile Number: ' + snap.child('Mobile_number').val() + '<br>Date of birth: ' + snap.child('Date_birth').val() + '<br></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Driver ' + snap.child('Driver_name').val() + ' to modify</h4></div><div class="modal-body"><form>' +
+                '<div class="form-group">' +
+                '<label for="id">Driver Id:</label>' +
+                '<input type="text" class="form-control" id="driverId' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="capacity">Name:</label>' +
+                '<input type="text" class="form-control" id="driverName' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_name").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="type">Date of birth:</label>' +
+                '<input type="text" class="form-control" id="driverDateBirth' + snap.child('Driver_id').val() + '" value="' + snap.child("Date_birth").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="driver">Mobile number:</label>' +
+                '<input type="text" class="form-control" id="driverNumber' + snap.child('Driver_id').val() + '" value="' + snap.child("Mobile_number").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="latitude">Description:</label>' +
+                '<input type="text" class="form-control " id="driverDescription' + snap.child('Driver_id').val() + '" value="' + snap.child("Description").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="longitude">Image:</label>' +
+                '<input type="text" class="form-control " id="driverImage' + snap.child('Driver_id').val() + '" value="' + snap.child("Image").val() + '">' +
+                '</div>' +
+                //i have to put in get data the dynamic index
+                '<button type="submit" onclick="modifyDriverData(' + snap.child('Driver_id').val() + ')" id="submitModBus' + snap.child('Driver_id').val() + '" class="btn btn-default">Submit</button>' +
+                '</form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting ' + snap.child('Driver_name').val() + ' from the driver list</h4></div><div class="modal-body"><div>' +
+                '<p>Driver ID: ' + snap.child('Driver_id').val() + '<br>' +
+                'Driver Name: ' + snap.child('Driver_name').val() + '<br>' +
+                'Mobile Number: ' + snap.child('Mobile_number').val() + '<br>' +
+                'Date of birth: ' + snap.child('Date_birth').val() + '<br>' +
+                '</p><button type="submit" onclick="deleteDriver(' + snap.child('Driver_id').val() + ')" id="deleteDriver' + snap.child('Driver_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
+                '</div></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+        });
+
+        }else{
+            alert("Driver not inserted. This driver id already exists!");
+        }
     });
 }
 
@@ -1152,7 +1294,7 @@ function initeMapRoute(num){
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: routeMap,
-                label: d.child("Stop_id").val()
+                label: d.child("Stop_id").val().toString()
             });
             marker.addListener('click', function() {
                 infowindow.open(routeMap, marker);
@@ -1189,16 +1331,12 @@ function initeMapAddRoute(){
     // Add a marker to the map and push to the array.
     function addMarker(location) {
 
-
-
-
         var marker = new google.maps.Marker({
             position: location,
             map: map,
             label: (cont++).toString(),
 
         });
-
 
         var nameStop = document.getElementById("stopName").value.toString();
 
@@ -1232,7 +1370,6 @@ function setStopName(markers, cont){
 }
 
 function drawChart(){
-    console.log("ciao isi");
     var query = firebase.database().ref("UserRequest");
     query.once("value")
         .then(function(snapshot) {
@@ -1282,7 +1419,7 @@ function drawChart(){
             chart.render();
         });
 }
-
+/*
 //d is the snapshot od the database
 function drawChartGoogle() {
 
@@ -1367,7 +1504,7 @@ function drawChartGoogle() {
         });
 
 }
-
+*/
 
 function deleteRoute(routeId) {
     if (confirm("Are you sure you want to cancel this route?") == true) {
@@ -1460,19 +1597,73 @@ function drawChartStop(){
 
             chart.render();
         });
-
-
 }
 
+function geolocation(busId) {
+    var infoWindow = new google.maps.InfoWindow({map: driverMap});
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
 
-function drawChart1(){
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            driverMap.setCenter(pos);
+        }, function() {
+            handleLocationError(true, infoWindow, driverMap.getCenter());
+        });
+    } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, driverMap.getCenter());
+    }
+    autoUpdate(busId);
+}
 
-    var firebaseData = firebase.database().ref("UserRequest").responseText;
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+}
 
-    // Create our data table out of JSON data loaded from server.
-    var data = new google.visualization.DataTable(firebaseData);
+function autoUpdate(busId) {
+    var inputLatitude = 0;
+    var inputLongitude = 0;
+  navigator.geolocation.getCurrentPosition(function(position) {
+    var newPoint = new google.maps.LatLng(position.coords.latitude,
+                                          position.coords.longitude);
 
-    // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    chart.draw(data, {width: 400, height: 240});
+      inputLatitude = position.coords.latitude;
+      inputLongitude = position.coords.longitude;
+      console.log(inputLatitude+" "+inputLongitude+ " the bus id is :"+ busId);
+
+
+      const dbRefBus = firebase.database().ref().child('Bus');
+      const dbRefBusN = dbRefBus.child('Bus'+ busId.toString());
+      dbRefBusN.update({
+          Latitude: inputLatitude.toString(),
+          Longitude: inputLongitude.toString()
+
+      });
+
+    if (positionMarker) {
+      // Marker already created - Move it
+      positionMarker.setPosition(newPoint);
+    }
+    else {
+      // Marker does not exist - Create it
+      positionMarker = new google.maps.Marker({
+        position: newPoint,
+        map: driverMap
+      });
+    }
+
+    // Center the map on the new position
+      driverMap.setCenter(newPoint);
+    });
+
+    // Call the autoUpdate() function every second
+    setTimeout(autoUpdate.bind(null, busId), 3000);
 }

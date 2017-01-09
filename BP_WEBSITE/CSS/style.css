@@ -140,3 +140,16 @@ div.scroll {
     margin: 20px;
 
 }
+
+
+
+#label-pill {
+    padding-right: .6em;
+    padding-left: .6em;
+    border-radius: 10rem;
+    margin-top: 7px;
+    margin-left: 5px;
+    float:right;
+    height: 20px;
+    width: 20px;
+}
