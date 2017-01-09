@@ -1033,33 +1033,11 @@ function insertBus(count){
         }
 
     });
-    /*routes.once("value").then(function(snapshot) {
-        var specificRoute;
-        var numberOfChildren = snapshot.numChildren();
-        for(var i=1; i<=numberOfChildren; i++) {
-            specificRoute = document.getElementById('Route'+i);
-            if(specificRoute.classList.contains('active')){
-                specificRoute.classList.remove('active');
-            }
-        }
-        document.getElementById('Route'+num).classList.add('active');
-    });
-*/
-
 
 }
-/*
-function testHide(){
-    var div = document.getElementsByName("listRoute");
-    if (div.style.display !== "none") {
-        div.style.display = "none";
-    }
-    else {
-        div.style.display = "block";
-    }
 
-}
-*/
+
+
 
 
 function insertRoute(markers){
@@ -1242,26 +1220,6 @@ function deleteDriver(num){
     document.getElementById('driverItem'+num).remove();
 }
 
-function drawChart456() {
-
-    var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['Work',     11],
-        ['Eat',      2],
-        ['Commute',  2],
-        ['Watch TV', 2],
-        ['Sleep',    7]
-    ]);
-
-    var options = {
-        title: 'My Daily Activities'
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-    chart.draw(data, options);
-}
-
 
 function initeMapRoute(num){
     
@@ -1379,10 +1337,6 @@ function initeMapAddRoute(){
     };
 }
 
-function setStopName(markers, cont){
-    var busStopName = document.getElementById("busStopNameMap").toString();
-    markers[cont].name = busStopName;
-}
 
 function drawChart(){
     var query = firebase.database().ref("UserRequest");
@@ -1434,92 +1388,7 @@ function drawChart(){
             chart.render();
         });
 }
-/*
-//d is the snapshot od the database
-function drawChartGoogle() {
 
-    var variables = [];
-    var route1 = 1;
-    var route2 = 1;
-    var route3 = 1;
-    var route4 = 1;
-    var route5 = 1;
-
-    var query = firebase.database().ref("UserRequest");
-    query.once("value")
-        .then(function(snapshot) {
-            snapshot.forEach(function(d){
-                var route = d.child("route_id").val();
-
-                var x = false;
-                for (var i = 0; i < variables.length && x == false; i++) {
-                    if(variables[i].route == route ){
-                        variables[i].utilization++;
-                        x = true;
-                    }
-                }
-
-                if(variables.length == 0 || x == false){
-                    variables.push({ route: route, utilization: 1})
-                }
-
-                route1 = variables[0].utilization;
-                route2 = variables[1].utilization;
-                route3 = variables[2].utilization;
-                route4 = variables[3].utilization;
-                route5 = variables[4].utilization;
-
-                data = new google.visualization.DataTable();
-                data.addColumn('string', 'Topping');
-                data.addColumn('number', 'Slices');
-                data.addRows([
-                    ['Route 1', route1],
-                    ['Route 2', route2],
-                    ['Route 3', route3],
-                    ['Route 4', route4],
-                    ['Route 5', route5]
-                ]);
-
-                var options = {
-                    title: 'Route utilization'
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-                chart.draw(data, options);
-            });
-
-            route1 = variables[0].utilization;
-            route2 = variables[1].utilization;
-            route3 = variables[2].utilization;
-            route4 = variables[3].utilization;
-            route5 = variables[4].utilization;
-
-            data = new google.visualization.DataTable();
-            data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices');
-            data.addRows([
-                ['Route 1', route1],
-                ['Route 2', route2],
-                ['Route 3', route3],
-                ['Route 4', route4],
-                ['Route 5', route5]
-            ]);
-
-            var options = {
-                title: 'Route utilization'
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-            chart.draw(data, options);
-
-
-
-        });
-
-}
-*/
 
 function deleteRoute(routeId) {
     if (confirm("Are you sure you want to cancel this route?") == true) {

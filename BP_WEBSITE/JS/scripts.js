@@ -52,13 +52,6 @@ function headerUser() {
                 r+='</div>';
                 r+='<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">';
                     r+='<ul class="nav navbar-nav navbar-right">';
-    /*
-                        r+='<li><a id="btnMap" href="#" style="padding-top:25px">MAP</a></li>';
-                        r+='<li><a id="btnRead" href="#" style="padding-top:25px">Read JSON</a></li>';
-		                r+='<li><a id="btnWrite" href="#" style="padding-top:25px">Write JSON</a></li>';
-                        r+='<li><a id="signup" href="#" style="padding-top:25px">Sign up</a></li>';
-                        r+='<li><a id="btnLogin" href="#" style="padding-top:25px">Log in</a></li>';
-                        */
                     r+='</ul>';
                 r+='</div>';
             r+='</div>';
@@ -733,7 +726,7 @@ function getDriver(data) {
         r += '</div>';
         //<!-- end delete Modal -->
 
-        //could be an errot there
+        
 
 
 
@@ -992,33 +985,7 @@ function getRequest(data){
         "<div class='col-md-1 col-sm-1 col-xs-1'></div></div>" +
         "</div></div>" +
         "</div>";
-
-    /*
-     google.charts.load('current', {'packages':['corechart']});
-     google.charts.setOnLoadCallback(drawChart);
-     function drawChart() {
-
-     var data = google.visualization.arrayToDataTable([
-     ['Task', 'Hours per Day'],
-     ['Work',     11],
-     ['Eat',      2],
-     ['Commute',  2],
-     ['Watch TV', 2],
-     ['Sleep',    7]
-     ]);
-
-     var options = {
-     title: 'My Daily Activities'
-     };
-
-     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-     chart.draw(data, options);
-     }
-     */
-
-
-
+    
     return r;
 
 }
