@@ -762,7 +762,7 @@ function getDriver(data) {
     r += '<form>' +
         '<div class="form-group">' +
         '<label for="id">Driver ID:</label>' +
-        '<input type="text" class="form-control" id="addDriverId" value="' + count + '" disabled>' +
+        '<input type="text" class="form-control" id="addDriverId" value="' + count + '">' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="name">Name:</label>' +

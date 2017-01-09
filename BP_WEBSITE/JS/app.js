@@ -975,7 +975,7 @@ function insertBus(count){
         });
 
         if(alreadyExist == false) {
-            dbRefBus.child('Bus' + count).set({
+            dbRefBus.child('Bus' + inputId).set({
                 Bus_capacity: inputCapacity.value.toString(),
                 Bus_id: inputId,
                 Bus_type: inputType.value.toString(),
@@ -1029,7 +1029,7 @@ function insertBus(count){
             });
         }
         else{
-            alert("Bus not inserted, This bus id already exists!");
+            alert("Bus not inserted. This bus id already exists!");
         }
 
     });
@@ -1116,61 +1116,76 @@ function insertDriver(count){
     const inputNumber = document.getElementById("addNumber");
     const inputDescription = document.getElementById("addDescription");
     const inputImage = document.getElementById("addImage");
+    var inputId = document.getElementById("addDriverId");
 
+    inputId = parseInt(inputId.value);
     const dbRef = firebase.database().ref('Driver');
 
-    //save the new data in the databse
+    var alreadyExist = false;
+    dbRef.once("value").then(function(snapshot) {
+        snapshot.forEach(function (d) {
+            console.log(d.child("Driver_id").val() + "==" + inputId);
+            if (d.child("Driver_id").val() == inputId) {
+                alreadyExist = true;
+            }
+        });
 
-    dbRef.child('Driver'+ count).set({
-        Driver_id: count,
-        Driver_name: inputName.value.toString(),
-        Mobile_number: inputNumber.value.toString(),
-        Description: inputDescription.value.toString(),
-        Image: inputImage.value.toString()
-    });
+        if(alreadyExist == false) {
+            dbRef.child('Driver'+ inputId).set({
+                Driver_id: inputId ,
+                Driver_name: inputName.value.toString(),
+                Mobile_number: inputNumber.value.toString(),
+                Description: inputDescription.value.toString(),
+                Image: inputImage.value.toString()
+            });
 
-    dbRef.once('child_added', snap => {
-        var driversList = document.getElementById('driversListGroup');
-        driversList.innerHTML = driversList.innerHTML + '<div href="#" class="list-group-item row" id="driverItem'+snap.child('Driver_id').val()+'" style="margin:10px; border-radius:25px;"><div class="col-md-1 col-sm-1 col-xs-1"></div><div class="col-md-3 col-sm-3 col-xs-3">' +
-             '<img src="Images/'+snap.child('Image').val() +'" class="img-circle" id="imageDriver">' +
-             '</div>' +
-             '<div align="right" class="col-md-7 col-sm-7 col-xs-7">' +
+            dbRef.once('child_added', snap => {
+                var driversList = document.getElementById('driversListGroup');
+            driversList.innerHTML = driversList.innerHTML + '<div href="#" class="list-group-item row" id="driverItem'+snap.child('Driver_id').val()+'" style="margin:10px; border-radius:25px;"><div class="col-md-1 col-sm-1 col-xs-1"></div><div class="col-md-3 col-sm-3 col-xs-3">' +
+                '<img src="Images/'+snap.child('Image').val() +'" class="img-circle" id="imageDriver">' +
+                '</div>' +
+                '<div align="right" class="col-md-7 col-sm-7 col-xs-7">' +
                 '<h3 id="dName'+snap.child('Driver_id').val()+'">'+ snap.child('Driver_name').val()+'</h3>' +
                 '<p id="dDescription'+snap.child('Driver_id').val()+'" style="font-size: medium">'+snap.child('Description').val() +'</p><h4 align="center">'+
-        ' <div class="btn-group" role="group" aria-label="..."><button data-toggle="modal" data-target="#modalView' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Info</button><button data-toggle="modal" data-target="#modalModify' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Modify</button><button data-toggle="modal" data-target="#modalDelete' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Delete</button></div></div><div id="modalView' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + snap.child('Driver_name').val() + ' Information</h4></div><div class="modal-body"><p>Driver ID: ' + snap.child('Driver_id').val() + '<br>Driver Name: ' + snap.child('Driver_name').val() + '<br>Mobile Number: ' + snap.child('Mobile_number').val() + '<br>Date of birth: ' + snap.child('Date_birth').val() + '<br></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Driver ' + snap.child('Driver_name').val() + ' to modify</h4></div><div class="modal-body"><form>' +
-            '<div class="form-group">' +
-            '<label for="id">Driver Id:</label>' +
-            '<input type="text" class="form-control" id="driverId' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="capacity">Name:</label>' +
-            '<input type="text" class="form-control" id="driverName' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_name").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="type">Date of birth:</label>' +
-            '<input type="text" class="form-control" id="driverDateBirth' + snap.child('Driver_id').val() + '" value="' + snap.child("Date_birth").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="driver">Mobile number:</label>' +
-            '<input type="text" class="form-control" id="driverNumber' + snap.child('Driver_id').val() + '" value="' + snap.child("Mobile_number").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="latitude">Description:</label>' +
-            '<input type="text" class="form-control " id="driverDescription' + snap.child('Driver_id').val() + '" value="' + snap.child("Description").val() + '">' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="longitude">Image:</label>' +
-            '<input type="text" class="form-control " id="driverImage' + snap.child('Driver_id').val() + '" value="' + snap.child("Image").val() + '">' +
-            '</div>' +
-            //i have to put in get data the dynamic index
-            '<button type="submit" onclick="modifyDriverData(' + snap.child('Driver_id').val() + ')" id="submitModBus' + snap.child('Driver_id').val() + '" class="btn btn-default">Submit</button>' +
-            '</form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting ' + snap.child('Driver_name').val() + ' from the driver list</h4></div><div class="modal-body"><div>' +
-            '<p>Driver ID: ' + snap.child('Driver_id').val() + '<br>' +
-            'Driver Name: ' + snap.child('Driver_name').val() + '<br>' +
-            'Mobile Number: ' + snap.child('Mobile_number').val() + '<br>' +
-            'Date of birth: ' + snap.child('Date_birth').val() + '<br>' +
-            '</p><button type="submit" onclick="deleteDriver(' + snap.child('Driver_id').val() + ')" id="deleteDriver' + snap.child('Driver_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
-            '</div></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+                ' <div class="btn-group" role="group" aria-label="..."><button data-toggle="modal" data-target="#modalView' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Info</button><button data-toggle="modal" data-target="#modalModify' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Modify</button><button data-toggle="modal" data-target="#modalDelete' + snap.child('Driver_id').val() + '" type="button" class="btn btn-default">Delete</button></div></div><div id="modalView' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">' + snap.child('Driver_name').val() + ' Information</h4></div><div class="modal-body"><p>Driver ID: ' + snap.child('Driver_id').val() + '<br>Driver Name: ' + snap.child('Driver_name').val() + '<br>Mobile Number: ' + snap.child('Mobile_number').val() + '<br>Date of birth: ' + snap.child('Date_birth').val() + '<br></p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalModify' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Insert the value of the Driver ' + snap.child('Driver_name').val() + ' to modify</h4></div><div class="modal-body"><form>' +
+                '<div class="form-group">' +
+                '<label for="id">Driver Id:</label>' +
+                '<input type="text" class="form-control" id="driverId' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_id").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="capacity">Name:</label>' +
+                '<input type="text" class="form-control" id="driverName' + snap.child('Driver_id').val() + '" value="' + snap.child("Driver_name").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="type">Date of birth:</label>' +
+                '<input type="text" class="form-control" id="driverDateBirth' + snap.child('Driver_id').val() + '" value="' + snap.child("Date_birth").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="driver">Mobile number:</label>' +
+                '<input type="text" class="form-control" id="driverNumber' + snap.child('Driver_id').val() + '" value="' + snap.child("Mobile_number").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="latitude">Description:</label>' +
+                '<input type="text" class="form-control " id="driverDescription' + snap.child('Driver_id').val() + '" value="' + snap.child("Description").val() + '">' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label for="longitude">Image:</label>' +
+                '<input type="text" class="form-control " id="driverImage' + snap.child('Driver_id').val() + '" value="' + snap.child("Image").val() + '">' +
+                '</div>' +
+                //i have to put in get data the dynamic index
+                '<button type="submit" onclick="modifyDriverData(' + snap.child('Driver_id').val() + ')" id="submitModBus' + snap.child('Driver_id').val() + '" class="btn btn-default">Submit</button>' +
+                '</form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><div id="modalDelete' + snap.child('Driver_id').val() + '" class="modal fade" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Deleting ' + snap.child('Driver_name').val() + ' from the driver list</h4></div><div class="modal-body"><div>' +
+                '<p>Driver ID: ' + snap.child('Driver_id').val() + '<br>' +
+                'Driver Name: ' + snap.child('Driver_name').val() + '<br>' +
+                'Mobile Number: ' + snap.child('Mobile_number').val() + '<br>' +
+                'Date of birth: ' + snap.child('Date_birth').val() + '<br>' +
+                '</p><button type="submit" onclick="deleteDriver(' + snap.child('Driver_id').val() + ')" id="deleteDriver' + snap.child('Driver_id').val() + '" class="btn btn-default" data-dismiss="modal">Delete</button>' +
+                '</div></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div>';
+        });
+
+        }else{
+            alert("Driver not inserted. This driver id already exists!");
+        }
     });
 }
 
