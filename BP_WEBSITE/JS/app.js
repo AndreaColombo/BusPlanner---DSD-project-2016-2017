@@ -1069,36 +1069,51 @@ function insertRoute(markers){
     const dbRefRoute = firebase.database().ref('Route');
     const dbRefBus = firebase.database().ref();
 
-    //save the new data in the databse
-
-    dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()).set({
-        Route_id: inputRouteId.value.toString(),
-        Route_name: inputName.value.toString(),
-        id: inputRouteId.value.toString(),
-    });
-
-    for(var i=0; i < markers.length; i++){
-        var name = markers[i].name;
-        var latitude = markers[i].marker.getPosition().lat();
-        var longitude = markers[i].marker.getPosition().lng();
-        var stopNumber = markers[i].stopNumber;
-        dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()+'/BusStops/'+'BusStops'+stopNumber.toString()).set({
-            Name: name,
-            Stop_id: stopNumber.toString(),
+    var alreadyExist = false;
+    dbRefRoute.once("value").then(function(snapshot) {
+        snapshot.forEach(function (d) {
+            console.log(d.child("Route_id").val() + "==" + inputRouteId.value);
+            if (parseInt(d.child("Route_id").val()) == inputRouteId.value) {
+                alreadyExist = true;
+            }
+            console.log("ciao isi");
         });
 
+        if(alreadyExist == false) {
+            dbRefBus.child('Route/' + 'Route' + inputRouteId.value.toString()).set({
+                Route_id: inputRouteId.value.toString(),
+                Route_name: inputName.value.toString(),
+                id: inputRouteId.value.toString(),
+            });
+            for (var i = 0; i < markers.length; i++) {
+                var name = markers[i].name;
+                var latitude = markers[i].marker.getPosition().lat();
+                var longitude = markers[i].marker.getPosition().lng();
+                var stopNumber = markers[i].stopNumber;
+                dbRefBus.child('Route/' + 'Route' + inputRouteId.value.toString() + '/BusStops/' + 'BusStops' + stopNumber.toString()).set({
+                    Name: name,
+                    Stop_id: stopNumber.toString(),
+                });
 
-        dbRefBus.child('Route/'+'Route'+ inputRouteId.value.toString()+'/BusStops/'+'BusStops'+stopNumber.toString() + '/Point').set({
-            Latitude: latitude.toString(),
-            Longitude: longitude.toString(),
-        });
-    }
 
-    dbRefRoute.once('child_added', snap => {
-        var routeList = document.getElementById('listRoute');
-        
-        routeList.innerHTML = routeList.innerHTML + '<a href="#" id="Route'+inputRouteId.value.toString()+'" onclick="initeMapRoute('+inputRouteId.value.toString()+')" class="list-group-item">'+inputName.value.toString()+'<span class="badge" onclick="deleteRoute('+ inputRouteId.value.toString() +')">x</span></a>';
+                dbRefBus.child('Route/' + 'Route' + inputRouteId.value.toString() + '/BusStops/' + 'BusStops' + stopNumber.toString() + '/Point').set({
+                    Latitude: latitude.toString(),
+                    Longitude: longitude.toString(),
+                });
+            }
+
+            dbRefRoute.once('child_added', snap => {
+                var routeList = document.getElementById('listRoute');
+
+            routeList.innerHTML = routeList.innerHTML + '<a href="#" id="Route' + inputRouteId.value.toString() + '" onclick="initeMapRoute(' + inputRouteId.value.toString() + ')" class="list-group-item">' + inputName.value.toString() + '<span class="badge" onclick="deleteRoute(' + inputRouteId.value.toString() + ')">x</span></a>';
+            });
+
+        }
+        else{
+            alert("MOTHAFAKAA");
+        }
     });
+
 }
 
 function deleteBus(num){
