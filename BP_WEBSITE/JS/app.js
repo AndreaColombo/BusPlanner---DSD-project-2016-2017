@@ -1082,7 +1082,7 @@ function insertRoute(markers){
 
         }
         else{
-            alert("MOTHAFAKAA");
+            alert("Route not inserted. This route id already exists!");
         }
     });
 
@@ -1488,7 +1488,7 @@ function geolocation(busId) {
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
-            //driverMap.setCenter(pos);
+            driverMap.setCenter(pos);
         }, function() {
             handleLocationError(true, infoWindow, driverMap.getCenter());
         });
@@ -1539,7 +1539,7 @@ function autoUpdate(busId) {
     }
 
     // Center the map on the new position
-      driverMap.setCenter(newPoint);
+      //driverMap.setCenter(newPoint);
     });
 
     // Call the autoUpdate() function every second
