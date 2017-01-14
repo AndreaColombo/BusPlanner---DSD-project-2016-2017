@@ -33,6 +33,7 @@ $(document).ready(function() {
     const dbRefBus = firebase.database().ref().child('Bus');
     const dbRefAlgDyn = firebase.database().ref().child('AlgDynamic');
     const dbRefRoute = firebase.database().ref().child('Route');
+    const dbRefTimetable = firebase.database().ref().child('Timetable');
     
     $( "body" ).on( "click", "#btnUser",function(e){
         var result = mainUser();
@@ -108,24 +109,6 @@ $(document).ready(function() {
         e.preventDefault(); 
     });
     
-    $('body').on('click', '#btnLogo1Driver', function(e) {
-        //document.getElementById('map').classList.add('hide');
-        //document.getElementById('main').classList.remove('hide');
-        var result = mainDriver();
-        $("#main").html(result);
-        window.location.hash = "homeDriver";
-        e.preventDefault(); 
-    });
-    
-    $('body').on('click', '#btnLogo2Driver', function(e) {
-        //document.getElementById('map').classList.add('hide');
-        //document.getElementById('main').classList.remove('hide');
-        var result = mainDriver();
-        $("#main").html(result);
-        window.location.hash = "homeDriver";
-        e.preventDefault(); 
-    });
-    
     $('body').on('click', '#btnLogout', function(e) {
         //document.getElementById('map').classList.add('hide');
         var result = homeFleetAndDriver();
@@ -160,8 +143,6 @@ $(document).ready(function() {
                             var busId;
                             var routeId;
                             var query;
-                            var dropin;
-                            var dropout;
                             var driverName;
                             var driverImage;
                             dbRefDriver.once('value').then(function(snapshot){
@@ -180,29 +161,16 @@ $(document).ready(function() {
                                         }  
                                     });
                                     
-                                    dbRefAlgDyn.once('value').then(function(snapshot){
+                                    dbRefTimetable.once('value').then(function(snapshot){
                                         snapshot.forEach(function(d){
-                                            if(busId == d.child('Bus_id').val()){
-                                                routeId = d.child('Route_id').val();
-                                                dropin = d.child('Drop_in').val();
-                                                dropout = d.child('Drop_out').val();
-                                            }  
-                                        });
-                                        
-                                        dbRefRoute.once('value').then(function(snapshot){
-                                            snapshot.forEach(function(d){
-                                                if(routeId == d.child('Route_id').val()){
-                                                    query = dbRefRoute.child("Route"+routeId).child("BusStops");
-                                                    
-                                                }  
-                                            });
-                                            query.orderByChild("Stop_id").once("value").then(function (snapshot) {
+                                            if(busId == d.child('bus_id').val()){
+                                                routeId = d.child('route_id').val();
                                                 var changeHeader = headerDriver(driverName, driverId, driverImage);
                                                 $('#header').html(changeHeader);
-                                                var result = mainDriver(snapshot, dropin, dropout);
+                                                var result = mainDriver(d.child('steps'));
                                                 $('#main').html(result);
                                                 document.onload = getMapDriver(routeId, busId);
-                                            });
+                                            }  
                                         });
                                     });
                                 });

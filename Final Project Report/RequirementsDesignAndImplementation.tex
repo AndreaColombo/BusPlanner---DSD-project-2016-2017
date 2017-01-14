@@ -1,0 +1,71 @@
+\section{REQUIREMENTS, DESIGN AND IMPLEMENTATION}
+\subsection{Actors}
+\begin{itemize}
+	\item \textbf{Fleet manager}, who performs the following activities:
+	\begin{itemize}
+		\item Login.
+		\item Get bus location.
+		\item Add/Remove/Modify bus.
+		\item Assign drivers to buses.
+		\item Add/Remove route.
+		\item Add/Remove/Modify driver.
+		\item View the user requests on a map.
+		\item View previous user requests.
+		\item View routes utilization.
+	\end{itemize}
+	\item \textbf{Bus driver}, who performs the following activities:
+	\begin{itemize}
+		\item Login.
+		\item View schedule with user requests.
+	\end{itemize}
+	\item \textbf{Passenger}, who generates the user requests for a bus, specifying at which stop he/she wants to get on and off the bus.
+\end{itemize}
+
+\subsection{Functional Requirements}
+\subsubsection{Use case}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{UseCase}
+\end{figure}
+
+\subsubsection{User stories}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| m{2.2cm} | m{6cm} | m{3.8cm} |}
+		\hline
+		\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+		\hline
+		UserStory1 & As fleet manager I want to be able to log into (or logout) the system with my account at any time. & Done in Sprint 1.\\
+		\hline
+		UserStory2 & As fleet manager I want to be able to add, modify or remove a bus. & Done in Sprint 1.\\
+		\hline
+		UserStory3 & As fleet manager I want to be able to add, modify or remove a driver. & Done in Sprint 2.\\
+		\hline
+		UserStory4 & As fleet manager I want to be able to view user requests on a map. & Done in Sprint 3.\\
+		\hline
+		UserStory5 & As fleet manager I want to be able to view previous user requests. & Done in Sprint 3.\\
+		\hline
+		UserStory6 & As fleet manager I want to be able to get the position of all the buses. & Done in Sprint 2.\\
+		\hline
+		UserStory7 & As fleet manager I want to be able to get the utilization of all the routes. & Done in Sprint 3.\\
+		\hline
+		UserStory8 & As fleet manager I want to be able to add or remove a route. & Done in Sprint 2.\\
+		\hline
+		UserStory9 & As a bus driver I want to be able to log into (or logout) the system with my account at any time. & Done in Sprint 1.\\
+		\hline
+		UserStory10 & As a bus driver I want to be able to see the schedule of the route I have to cover, with the user requests I need to satisfy. & Done in Sprint 2.\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{High-Level Architecture}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{SystemArchitecture}
+\end{figure}
+
+\subsection{Technologies used}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{TechnologiesUsed}
+\end{figure}

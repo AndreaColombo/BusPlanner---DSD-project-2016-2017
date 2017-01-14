@@ -302,18 +302,19 @@ function mainFleet() {
     return r;
 }
 
-function mainDriver(data, dropin, dropout) {
+function mainDriver(steps) {
     var r = "";
+    
     r+='<div class = "row" style="margin-bottom:60px">';
     r+='<div class="col-md-5 col-sm-5 col-xs-5">';
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
     r+='<div class="col-md-11 col-sm-11 col-xs-11 scroll container text-center" style="height:500px">';
     
-    r+='<h2>YOUR SCHEDULE TODAY<button type="button" title="Drop In" class="btn btn-success" style="margin-left:10px">'+dropin+'</button><button style="margin-left:10px" title="Drop Out" type="button" class="btn btn-danger">'+dropout+'</button></h2>';
+    r+='<h2>YOUR SCHEDULE TODAY</h2>';
     r+='<ul class="list-group">';
     var count = 1;
-    data.forEach(function (d) {
-        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item">'+data.child('BusStop'+count).child('Name').val()+'</a>';
+    steps.forEach(function (d) {
+        r+='<a href="#" onclick="changeMarker('+count+')" class="list-group-item">'+d.child('bus_stop').child('Name').val()+'<span class="badge" style="background-color:red">'+d.child('number_of_deboarding_passengers').val()+'</span><span class="badge" style="background-color:green">'+d.child('number_of_onboarding_passengers').val()+'</span></a>';
         count++;
     });
     r+='</ul>';
@@ -324,9 +325,7 @@ function mainDriver(data, dropin, dropout) {
     r+='<div class="col-md-11 col-sm-11 col-xs-11" id="map1"></div>';
     r+='<div class="col-md-1 col-sm-1 col-xs-1"></div>';
     r+='</div>';
-    
     r+='</div>';
-    
     return r;
 }
 
