@@ -1,0 +1,71 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{Images/}}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	filecolor=blue,      
+	urlcolor=cyan,
+}
+
+\title{
+	\textbf{D}istributed \textbf{S}oftware \textbf{D}evelopment: \textbf{BusPlanner}\\
+	\textbf{Setup Guide and Login Credential}\\
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=13cm, height=13cm]{Bus_logo}
+	\end{figure}
+\date{}
+}
+
+\begin{document}
+	\begin{table}[t]
+		\centering
+		\begin{tabular}{| m{6cm} | m{6cm} |}
+			\hline
+			BusPlanner & Version: 1.0\\
+			\hline
+			Setup guide and Login credential & Date: 20-01-2017\\
+			\hline
+		\end{tabular}
+	\end{table}
+	\maketitle
+	
+	\section{Installation}
+	BusPlanner consists in a website accessible at this web address \url{https://busplanner-f496d.firebaseapp.com/#home} .\\
+	If you want to run BusPlanner locally, you have to unzip the file loaded in the BusPlanner Final Product's section in the DSD website and open the HTML file index.html in the folder "BP\_WEBSITE".
+	    \subsection{GitHub Repository}
+	    \url{https://github.com/AndreaColombo/BusPlanner---DSD-project-2016-2017.git}
+	    \subsection{Firebase Repository}
+	    You can take a look about the database structure in the dedicated Firebase section at this link:
+	    \begin{itemize}
+	        \item \url{https://console.firebase.google.com/project/busplanner-f496d/overview} 
+	    \end{itemize}
+	    The credentials that you have to use to
+	    enter in the firebase console are:
+	    \begin{itemize}
+	        \item \textbf{Username:} john.doe.example.prova@gmail.com 
+	        \item \textbf{Password:} SK3-sQS-rgs-5KS
+	    \end{itemize}
+	    
+	\section{Login Credential}
+	The Fleet Manager interface is available inserting the right log in credential in the "Fleet managers \& Bus driver" section, for example:
+	\begin{itemize}
+	       \item \textbf{Username:} Ste
+	       \item \textbf{Password:} ciao
+	\end{itemize}
+	
+	The Bus Driver interface is available inserting the right log in credential in the "Fleet managers \& Bus driver" section, for example:
+	\begin{itemize}
+	       \item \textbf{Username:} Albi
+	       \item \textbf{Password:} que123rty456
+	\end{itemize}
+	You can find the list of all the available log in credentials in the Database under "Login" wording. \\Keep in mind that the bus driver credential have the attribute "User\_type\_id" set to "2", while for fleet manager is setted to "1".
+	
+	
+
+\end{document}
